@@ -2,7 +2,7 @@
 
 
 
-**\*\*Version :\*\*** 1.3 — spécification de conception détaillée  
+**\*\*Version :\*\*** 1.5 — cahier des charges consolidé avec addenda UI v1.4 et foule/animations v1.5  
 
 **\*\*Statut :\*\*** référence de conception proposée ; les valeurs marquées « à valider » doivent être confirmées par prototype et tests. Aucune fonctionnalité n'est réputée implémentée.  
 
@@ -2237,3 +2237,571 @@ Avant de coder un système :
 - **Aucune téléportation, aucun portail, aucun déplacement instantané.**
 - **Tout chiffre non validé par test reste une proposition.**
 
+---
+
+# ADDENDUM DE SPÉCIFICATION — VERSION 1.4
+## Direction artistique, UX/UI et règles de présentation
+
+> **Statut :** complément intégré à la référence de conception. Les propositions ci-dessous précisent la direction visuelle et les comportements d'interface. Les durées, tailles et valeurs chiffrées restent des bases de prototype à valider par des tests. Cette section complète les règles précédentes ; en cas de conflit, les décisions explicites de cette section priment pour l'interface et l'expérience utilisateur.
+
+## 41. Intention visuelle de l'interface
+
+L'interface de **BROKEN CANVAS** doit évoquer un **atelier de restauration interdit** : une toile encore humide, des pigments qui réagissent à la présence du joueur, des cadres fendus, du papier ancien et de l'encre vivante.
+
+L'identité visuelle doit être immédiatement reconnaissable sans nuire à la lecture du combat. L'interface est organique, élégante et inquiétante, mais les informations utiles restent prioritaires sur la décoration.
+
+### 41.1 Principes directeurs
+
+1. **Lisibilité avant ornement.** Les textures et animations ne doivent jamais masquer une valeur, une icône, un télégraphe ennemi ou le personnage.
+2. **Une cause visuelle identifiable.** Toute éclaboussure ou déformation importante doit être liée à un événement identifiable : dégâts reçus, montée de niveau, choix confirmé, arrivée d'un boss ou déblocage.
+3. **Un langage cohérent.** Les mêmes formes, couleurs et animations doivent conserver le même sens dans tous les menus.
+4. **Une intensité contextuelle.** L'interface peut devenir plus agitée lorsque la menace augmente, mais elle doit redevenir calme dès que la pression retombe.
+5. **Une séparation entre décor et gameplay.** Les effets décoratifs de l'interface ne doivent pas se confondre avec les attaques, les zones dangereuses ou les projectiles du jeu.
+
+## 42. Palette et matériaux
+
+### 42.1 Palette principale
+
+| Couleur | Code | Usage principal |
+|---|---|---|
+| Noir d'encre | `#171615` | Fond, panneaux sombres, silhouettes d'interface |
+| Ivoire papier | `#F0E6D2` | Texte principal, papier, cartes claires |
+| Vermillon | `#A9272D` | Danger, dégâts, alerte, sélection urgente |
+| Vert pigment | `#66745D` | Confirmation positive, soin, amélioration bénéfique |
+
+Le vermillon ne doit pas devenir une couleur décorative omniprésente : il sert de signal de danger, d'alerte ou d'action importante. Le vert pigment signale un retour positif, sans être l'unique moyen de comprendre l'information.
+
+Les couleurs de rareté des objets restent distinctes de cette palette fonctionnelle :
+- Commun : vert de rareté dédié ;
+- Peu commun : bleu ;
+- Épique : violet ;
+- Légendaire : jaune.
+
+La rareté doit toujours être accompagnée d'un libellé, d'un symbole ou d'une autre indication ; la couleur seule ne suffit pas.
+
+### 42.2 Matériaux visuels
+
+- **Papier fibreux :** cartes de choix, archives, fiches de personnages et descriptions.
+- **Encre liquide :** transitions, jauges animées et confirmations.
+- **Pigment sec :** icônes, marques et éléments de collection.
+- **Cadre brisé :** élément sélectionné, contenu rare ou événement important.
+- **Trait de pinceau :** séparateurs, surlignages et indicateurs de progression.
+
+Les panneaux qui portent une information essentielle doivent conserver un fond suffisamment opaque et un contraste élevé. Les textures restent des finitions, jamais un obstacle à la lecture.
+
+## 43. HUD en jeu
+
+Le HUD doit être lisible pendant les combats denses, sans prendre inutilement de place à l'écran.
+
+### 43.1 Organisation recommandée
+
+- **Bas de l'écran :** grande jauge de Pigment/expérience, dessinée comme un trait d'encre liquide ; niveau du joueur à proximité.
+- **Haut gauche :** santé du joueur, bouclier éventuel et effets négatifs actifs.
+- **Haut gauche ou zone adjacente :** Instruments équipés, rangs et état d'évolution.
+- **Haut droit :** Reliques et passifs actifs, présentés sous forme d'icônes compactes.
+- **Haut centre :** chronomètre, phase ou vague actuelle, annonces de boss.
+- **Zone haute droite ou sous le chronomètre :** niveau de menace et objectif actif, si ces informations sont nécessaires à la phase en cours.
+- **Boss :** barre de santé dédiée, avec nom et indication de phase si cela améliore la lecture.
+
+Cette organisation est une base : elle doit être testée en résolution cible et ajustée si les informations se chevauchent.
+
+### 43.2 Feedback de danger
+
+Quand le joueur subit des dégâts importants, un débordement vermillon bref peut apparaître sur les bords de l'écran. Il peut devenir plus marqué lorsque la santé est faible, mais ne doit jamais masquer le centre de l'action.
+
+Les alertes prioritaires sont, dans l'ordre :
+1. attaque dangereuse imminente ;
+2. dégâts reçus et état critique du joueur ;
+3. arrivée ou changement de phase d'un boss ;
+4. gain de niveau et choix disponible ;
+5. récompenses et informations secondaires.
+
+Les animations décoratives doivent céder la place aux alertes de gameplay.
+
+## 44. Menu principal et navigation
+
+Le menu principal doit ressembler à une toile encore vierge dans un atelier inquiétant. Le personnage peut apparaître dans l'atelier, accompagné d'un lent écoulement d'encre. L'ambiance est contemplative et discrète ; les animations ne doivent pas retarder l'accès au jeu.
+
+### 44.1 Entrées du menu
+
+- **Nouvelle toile :** lancer une partie.
+- **Les artistes :** sélectionner un personnage et consulter son passif.
+- **Le catalogue :** consulter les Instruments, évolutions, Reliques et ennemis découverts.
+- **Options :** commandes, audio, affichage et accessibilité.
+- **Quitter :** fermer le jeu.
+
+Toute option non encore implémentée doit être masquée ou clairement indiquée comme indisponible ; elle ne doit pas sembler fonctionnelle si elle ne l'est pas.
+
+### 44.2 Sélection
+
+Lorsqu'un élément est sélectionné, une trace de pinceau temporaire peut souligner son cadre. La sélection doit rester clairement visible au clavier, à la manette et à la souris.
+
+Les transitions doivent être courtes et interrompables. Le joueur ne doit pas être forcé d'attendre une longue animation avant de confirmer ou d'annuler une action.
+
+## 45. Choix d'amélioration et écran d'évolution
+
+### 45.1 Choix de niveau
+
+Lors d'une montée de niveau, le jeu se met en **pause réelle** et présente trois choix lorsque trois options valides peuvent être générées. Chaque carte doit afficher :
+- nom de l'amélioration ;
+- type d'effet ;
+- Instrument, Relique ou statistique concerné ;
+- rang actuel et nouveau rang, si applicable ;
+- rareté ;
+- valeur du bonus et, si possible, comparaison avant/après ;
+- description courte et concrète de l'effet.
+
+Les cartes apparaissent par des traits de pinceau. Le survol peut révéler un léger relief. Après confirmation, la carte sélectionnée est absorbée par l'encre, l'effet est appliqué une seule fois, puis le jeu reprend avec un feedback bref.
+
+Si trois choix valides ne sont pas disponibles, le système doit afficher le nombre d'options valides disponibles ou proposer des choix de remplacement conformes aux règles de progression. Il ne doit jamais afficher une amélioration invalide.
+
+### 45.2 Rareté et évolution : distinction obligatoire
+
+La rareté décrit la valeur d'un bonus statistique ordinaire ; elle ne signifie pas que l'attaque change de comportement.
+
+Une évolution est une transformation mécanique dédiée. Elle possède :
+- un nom distinct ;
+- une illustration ou un aperçu visuel distinct ;
+- une description de la nouvelle mécanique ;
+- les prérequis affichés ;
+- les synergies principales, lorsqu'elles sont connues.
+
+L'interface ne doit jamais faire passer une amélioration statistique rare pour une évolution.
+
+### 45.3 Règles d'évolution
+
+Les paliers de niveau de joueur **10, 15 et 20** sont les occasions prévues pour proposer une évolution, sous réserve que les prérequis soient réunis. Le rang requis de l'Instrument et le Sceau d'Évolution restent des conditions séparées dans la spécification de gameplay.
+
+Parcours d'interface :
+1. annoncer qu'une possibilité d'évolution est disponible ;
+2. montrer les Instruments éligibles et leurs prérequis ;
+3. permettre de choisir un Instrument ;
+4. présenter au moins deux branches d'évolution distinctes pour chaque Instrument concerné ;
+5. afficher clairement les effets et synergies de chaque branche ;
+6. demander une confirmation unique avant d'appliquer la transformation.
+
+Si aucun Instrument n'est éligible au palier atteint, le joueur reçoit une récompense alternative. Le Sceau ne doit pas être consommé sans transformation obtenue ; sa conservation suit les règles du système de progression.
+
+## 46. Pause, victoire, défaite et résultats
+
+### 46.1 Pause
+
+L'écran de pause apparaît comme une feuille sombre posée sur la toile. **Reprendre** est l'action la plus visible. Le jeu ne doit infliger aucun dégât ni continuer la progression du combat pendant une pause.
+
+Le curseur est visible et déverrouillé dans les menus. La caméra ne doit pas reprendre le contrôle du curseur tant que le menu est ouvert.
+
+### 46.2 Victoire
+
+La composition visuelle se stabilise, les pigments cessent de se disperser et le cadre de l'œuvre se reconstitue progressivement. L'animation reste assez courte pour que le bilan soit rapidement accessible.
+
+### 46.3 Défaite
+
+L'encre envahit progressivement la toile, puis laisse apparaître le bilan et les options. L'effet doit pouvoir être réduit ou désactivé via les options d'accessibilité.
+
+### 46.4 Bilan de run
+
+Afficher au minimum :
+- durée de survie ;
+- niveau atteint ;
+- nombre d'ennemis éliminés ;
+- Instruments utilisés et évolutions obtenues ;
+- Reliques collectées ;
+- découvertes ou déblocages obtenus ;
+- récompenses permanentes, si applicables.
+
+Les commandes **Recommencer** et **Retour au menu** doivent fonctionner et réinitialiser correctement l'état temporaire de la run.
+
+## 47. Jauges et feedbacks visuels
+
+- **Santé :** trait d'encre contenu dans une forme lisible ; les changements de santé doivent rester faciles à estimer.
+- **Expérience :** le Pigment se répand dans la jauge jusqu'au prochain niveau.
+- **Menace :** un cadre peut se fissurer ou se tendre à mesure que la pression monte, sans devenir difficile à lire.
+- **Récompense importante :** accent de pigment doré, réservé aux événements significatifs.
+- **Acquisition de Relique :** tampon visuel bref, accompagné du nom et de l'effet.
+- **Dégâts reçus :** flash HUD bref, sans flash blanc plein écran obligatoire.
+
+Chaque animation doit communiquer une information identifiable et rester secondaire par rapport aux télégraphes des ennemis.
+
+## 48. Micro-interactions — durées de départ
+
+Ces durées sont des repères à tester, pas des contraintes définitives.
+
+| Interaction | Durée cible initiale |
+|---|---:|
+| Survol d'un bouton : trace de pinceau | 100–160 ms |
+| Confirmation d'un choix : absorption par l'encre | 180–280 ms |
+| Montée de niveau : éclaboussure de pigment | 250–400 ms |
+| Acquisition de Relique : tampon | 300–450 ms |
+| Feedback HUD de dégâts | 100–180 ms |
+| Arrivée d'un boss : bords d'encre et titre | 600–900 ms |
+| Déblocage permanent : trait doré | 350–600 ms |
+
+Les durées ne doivent jamais empêcher une action immédiate. Les animations doivent être interrompables ou abrégées quand une nouvelle alerte plus importante survient.
+
+### 48.1 Règles d'animation
+
+- Respecter une impression de viscosité, de direction et de masse de l'encre.
+- Relier les effets majeurs à leur origine visuelle.
+- Arrêter ou réduire les animations décoratives lorsque l'écran est inactif.
+- Éviter que les effets d'arrière-plan rivalisent avec les attaques.
+- Limiter le nombre de particules et les effets simultanés.
+- Ne jamais utiliser une animation seule pour transmettre une information essentielle.
+
+## 49. Accessibilité et ergonomie
+
+Prévoir dès le prototype :
+- taille de l'interface réglable ;
+- texte de taille suffisante et contraste contrôlé ;
+- icônes accompagnées de libellés ou d'infobulles utiles ;
+- information jamais transmise uniquement par la couleur ;
+- option de réduction des éclaboussures, animations, secousses de caméra et effets plein écran ;
+- navigation complète au clavier et à la manette ;
+- pause réelle pendant les choix d'amélioration ;
+- comparaison explicite des statistiques avant/après ;
+- commandes affichées selon le périphérique utilisé, si possible.
+
+Les options d'accessibilité doivent modifier réellement le comportement visuel concerné. Une option affichée mais non fonctionnelle ne doit pas être présentée comme disponible.
+
+## 50. Mise en œuvre technique de l'interface sous Unity 6 URP
+
+### 50.1 Séparation des couches
+
+Séparer autant que possible :
+1. **HUD fonctionnel :** chiffres, barres, icônes et alertes prioritaires ;
+2. **décoration papier :** cadres, fibres, bordures et fonds ;
+3. **effets d'encre :** masques, éclaboussures et transitions ;
+4. **texte :** hiérarchie, contraste et tailles cohérentes.
+
+La décoration et les effets ne doivent pas contrôler la logique du jeu. Les systèmes de gameplay doivent rester fonctionnels même si les effets visuels sont désactivés.
+
+### 50.2 Shaders et effets
+
+Les effets d'encre peuvent être construits progressivement avec des masques, gradients, bruit et seuils. Commencer par des solutions simples et mesurables avant de créer des shaders complexes.
+
+Priorités :
+- transitions de panneaux ;
+- remplissage de jauges ;
+- apparition des cartes ;
+- feedback de dégâts ;
+- annonce d'arrivée de boss.
+
+### 50.3 Composants réutilisables
+
+Créer des composants réutilisables pour :
+- cartes de choix ;
+- jauges ;
+- icônes d'Instrument ;
+- icônes de Relique ;
+- alertes ;
+- infobulles ;
+- notifications de découverte ;
+- annonces de boss.
+
+Les données affichées doivent venir des systèmes de jeu et des assets de données, plutôt que d'être dupliquées manuellement dans plusieurs écrans.
+
+### 50.4 Performance
+
+- Éviter les mises à jour coûteuses à chaque frame lorsqu'elles ne sont pas nécessaires.
+- Limiter le surdessin, les transparences superposées et les effets plein écran.
+- Pooler les effets répétés si les tests montrent que cela est utile.
+- Tester l'interface pendant une vague dense, pas seulement dans le menu.
+- Garder le HUD lisible aux résolutions cibles et avec les options d'accessibilité activées.
+
+## 51. Ordre de production de l'interface
+
+Développer l'interface par étapes vérifiables :
+
+1. HUD fonctionnel simple, sans effets décoratifs coûteux.
+2. Choix d'amélioration en pause réelle.
+3. Pause, victoire, défaite et bilan de run.
+4. Écran d'évolution dédié.
+5. Menu principal et sélection de personnage.
+6. Transitions d'encre et matériaux papier.
+7. Micro-interactions et finitions visuelles.
+8. Options d'accessibilité et optimisation.
+
+Chaque étape doit rester utilisable avant de passer à la suivante. Ne pas commencer par les shaders ou les animations complexes au détriment des systèmes fonctionnels.
+
+## 52. Tests d'acceptation UX/UI
+
+### 52.1 Lisibilité en combat
+- Le joueur peut identifier sa santé, son niveau et la progression du Pigment en quelques secondes.
+- Les télégraphes du boss restent visibles malgré les effets du HUD.
+- Les dégâts reçus sont perceptibles sans masquer le centre de l'action.
+- Les Instruments et Reliques restent identifiables lorsque l'écran est chargé.
+
+### 52.2 Choix et progression
+- Le jeu est réellement en pause pendant les choix.
+- Une sélection ne s'applique qu'une seule fois.
+- Les valeurs avant/après correspondent au résultat réel.
+- La rareté ne laisse pas croire à une nouvelle mécanique.
+- Les évolutions affichent les prérequis et leurs différences.
+- L'absence de choix d'évolution valide déclenche une alternative sans bloquer la progression.
+
+### 52.3 Navigation
+- Tous les menus sont utilisables à la souris, au clavier et à la manette.
+- Le curseur est libre dans les menus et la pause.
+- Reprendre, recommencer, retourner au menu et quitter déclenchent les bonnes actions.
+- Les éléments indisponibles sont clairement identifiés.
+
+### 52.4 Accessibilité et performance
+- La réduction des animations diminue effectivement les effets concernés.
+- L'information reste compréhensible sans distinguer les couleurs.
+- L'interface demeure lisible pendant une vague dense.
+- Les effets décoratifs ne provoquent pas de baisse de performance inacceptable sur la configuration cible.
+
+## 53. Recommandations consolidées pour le prototype
+
+Pour le premier prototype, conserver le périmètre de contenu défini précédemment : un personnage, le Musée des Ombres, trois Instruments, quatre Reliques, quatre ennemis communs, un élite et un boss.
+
+Pour l'interface, viser d'abord la **fonctionnalité et la lisibilité**, puis appliquer l'identité « atelier de restauration interdit » par couches. Les éléments décoratifs ne doivent pas retarder la validation du déplacement, du saut, de l'esquive, du combat, de la progression, de la pause et des écrans de fin.
+
+La version 1.4 consolide donc la direction artistique et l'expérience utilisateur sans transformer chaque idée esthétique en obligation technique immédiate. Les valeurs de prototype doivent être testées et les décisions validées reportées dans le document de référence.
+
+---
+
+# FIN DU CAHIER DES CHARGES — VERSION 1.4
+
+
+---
+
+# ADDENDUM DE SPÉCIFICATION — VERSION 1.5
+## Hordes, simulation centralisée, navigation et animations adaptatives à la distance
+
+> **Statut :** proposition technique pour le prototype de BROKEN CANVAS. Les valeurs numériques ci-dessous sont des valeurs de départ à mesurer, pas des performances garanties. La version 1.5 conserve les décisions de conception précédentes et les complète ; elle ne signifie pas que les systèmes sont déjà implémentés ou validés.
+
+## 54. Objectif de la version 1.5
+
+L'objectif est de construire une base capable de gérer une horde importante dans Unity 6 URP tout en préservant :
+- des déplacements lisibles et réactifs du joueur ;
+- des ennemis qui suivent le joueur sans traverser les murs ;
+- des collisions stables et des interactions de combat cohérentes ;
+- des animations dont le coût dépend de la distance et de l'importance de l'ennemi ;
+- une fréquence d'images stable autant que possible ;
+- une architecture accessible à un développeur débutant et extensible après le prototype.
+
+**Le nombre de 1 000 ennemis est une valeur de test de charge, pas une densité de jeu prévue.** Le jeu n'est pas conçu pour afficher normalement 1 000 ennemis simultanément. Ce nombre sert à mesurer les limites, détecter les pics de coût et vérifier que les systèmes ne se dégradent pas brutalement. Le nombre réel de la horde en jeu sera défini après les tests de lisibilité, de gameplay et de performances.
+
+## 55. Principes d'architecture retenus
+
+### 55.1 Séparer trois responsabilités
+
+1. **Données de l'ennemi :** santé, vitesse, dégâts, type, état, cible, récompense et paramètres.
+2. **Simulation :** décision, direction, navigation, déplacement, collisions nécessaires et combat.
+3. **Présentation :** mesh, animation, matériau, effets visuels et niveau de détail.
+
+La présence visuelle d'un ennemi ne doit pas imposer automatiquement une simulation complète. Inversement, un ennemi ne doit pas devenir invulnérable ou cesser de participer au gameplay simplement parce qu'il est éloigné de la caméra.
+
+### 55.2 Contrôleur central de simulation
+
+Créer un `EnemySimulationManager` chargé d'organiser les mises à jour des ennemis actifs. Il répartit le travail entre plusieurs lots ou ticks et applique une fréquence selon la priorité de chaque ennemi.
+
+Le manager doit :
+- conserver une collection d'ennemis actifs sans rechercher leurs composants dans toute la scène à chaque frame ;
+- permettre l'enregistrement et le retrait propres des ennemis ;
+- répartir les mises à jour coûteuses dans le temps pour éviter les pics ;
+- privilégier les ennemis proches, visibles, en combat ou sur le point d'interagir avec le joueur ;
+- diminuer la fréquence des calculs des ennemis éloignés lorsque cela ne change pas sensiblement le gameplay ;
+- gérer correctement pause, mort, désactivation, réutilisation par pooling et changement de scène ;
+- exposer des compteurs de diagnostic : ennemis actifs, ennemis proches, fréquence de simulation et durée approximative des traitements.
+
+Le contrôleur central ne doit pas exécuter un lot arbitrairement grand sans mesurer son coût. La taille des lots doit être configurable et testée.
+
+### 55.3 Ne pas imposer une architecture ECS/DOTS dès le départ
+
+Le prototype commence avec des composants C# et une simulation centralisée simple. Unity Entities/DOTS, Job System et Burst ne seront envisagés que si le Profiler montre qu'une optimisation de cette ampleur est nécessaire et si le prototype classique ne répond pas aux objectifs. Éviter d'ajouter prématurément une dépendance et une complexité d'outillage.
+
+## 56. Déplacement du joueur et physique des ennemis
+
+### 56.1 Joueur
+
+Le joueur utilise initialement un `CharacterController` pour un contrôle direct du déplacement, du saut et de l'esquive. Les ennemis ne doivent pas pouvoir pousser ou bloquer de façon imprévisible le contrôleur du joueur par une accumulation de forces physiques.
+
+### 56.2 Ennemis ordinaires
+
+Ne pas imposer un `Rigidbody` dynamique à chaque ennemi simplement pour rendre la foule « physique ». Utiliser le mécanisme le plus simple qui réponde au comportement attendu :
+- mouvement cinématique ou contrôlé pour les ennemis ordinaires qui poursuivent le joueur ;
+- colliders simples pour empêcher la traversée des murs et détecter les interactions nécessaires ;
+- `Rigidbody` dynamique seulement lorsque la simulation physique est réellement utile, par exemple pour une réaction au recul, une chute, une impulsion ou un état de mort physique ;
+- désactivation ou simplification des interactions physiques qui ne contribuent pas au gameplay.
+
+Les ennemis ordinaires ne doivent pas nécessairement entrer en collision physiquement les uns avec les autres. Leur espacement peut être géré par un évitement local et des règles de séparation. Cela limite les interactions inutiles entre toutes les paires d'ennemis.
+
+### 56.3 Boss, élites et réactions importantes
+
+Les boss et certains élites peuvent utiliser une logique de mouvement et de collision plus riche, car leur lecture et leur précision sont prioritaires. Ils restent soumis aux mêmes exigences de stabilité et de profilage.
+
+### 56.4 Cohérence avec la boucle physique Unity
+
+Ne pas déplacer un `Rigidbody` dynamique en écrivant directement sa position à chaque frame. Choisir une méthode de mouvement compatible avec son mode physique et respecter la séparation entre simulation d'IA, `Update` et `FixedUpdate`. La fréquence de l'IA et celle de la physique peuvent être différentes, mais leur échange de données doit rester cohérent.
+
+## 57. Navigation : suivre le joueur sans traverser les murs
+
+La poursuite directe par le vecteur « ennemi vers joueur » n'est pas suffisante. Elle doit être complétée par une navigation qui comprend les obstacles.
+
+### 57.1 Solution recommandée pour la horde
+
+Pour les ennemis ordinaires, étudier en priorité une **grille de navigation ou un champ de direction partagé** :
+1. représenter les zones praticables et les obstacles fixes ;
+2. calculer une destination ou un champ de coût depuis la position du joueur ;
+3. permettre à de nombreux ennemis de consulter une direction commune selon leur cellule ;
+4. actualiser le champ à une fréquence contrôlée lorsque le joueur change de zone ;
+5. compléter la direction globale par un évitement local pour les piliers, les angles et les autres ennemis.
+
+Cette approche réduit le besoin de calculer un chemin complet indépendamment pour chaque ennemi. Elle convient particulièrement à une arène avec une destination principale qui est le joueur.
+
+### 57.2 Alternative de prototype
+
+Un `NavMeshAgent` peut servir à valider rapidement la navigation avec quelques ennemis. Ne pas supposer que 1 000 agents avec recalculs de chemin fréquents seront performants. Mesurer avant de choisir cette solution pour la horde entière.
+
+### 57.3 Évitement local et limites
+
+Les raycasts, sondes ou règles de steering peuvent aider un ennemi à contourner un obstacle proche, mais ils ne remplacent pas une navigation globale : ils peuvent échouer dans les culs-de-sac ou contre des murs qui bloquent tout passage.
+
+La solution doit garantir :
+- aucune traversée des murs statiques ;
+- pas de téléportation de correction pour sortir d'un obstacle ;
+- comportement raisonnable dans les couloirs et autour des piliers ;
+- récupération contrôlée si un ennemi reste bloqué ;
+- distinction entre collision de décor, séparation de foule et collision de combat.
+
+Les murs et les piliers de la scène doivent utiliser des colliders adaptés. Les couches de collision doivent être configurées explicitement afin d'éviter les interactions coûteuses ou inutiles.
+
+## 58. Animations des ennemis adaptatives à la distance du joueur
+
+### 58.1 Principe
+
+La distance au joueur sert à choisir **la qualité et la fréquence de la représentation visuelle**, pas à supprimer les règles de gameplay. Les distances ci-dessous sont une baseline à ajuster avec les modèles, la taille de l'écran et le Profiler.
+
+| Niveau | Distance indicative au joueur | Animation recommandée |
+|---|---:|---|
+| LOD 0 — proche | 0 à 12 m | Animation complète, transitions fluides, effets et réactions détaillées |
+| LOD 1 — moyenne | 12 à 28 m | Animation simplifiée, fréquence d'évaluation réduite, effets secondaires limités |
+| LOD 2 — lointaine | 28 à 45 m | Animation très simplifiée ou poses pré-calculées, mise à jour visuelle moins fréquente |
+| LOD 3 — très lointaine / hors écran | Plus de 45 m ou non visible durablement | Pas d'animation détaillée ; pose ou animation à faible fréquence, voire présentation réduite si l'ennemi n'a pas besoin d'être rendu |
+
+Ces seuils sont des valeurs initiales, pas des distances définitives. La visibilité, la taille projetée à l'écran, l'état de combat et le type d'ennemi peuvent modifier le niveau sélectionné.
+
+### 58.2 Priorités qui passent avant la distance
+
+Un ennemi peut être proche mais hors champ, ou éloigné mais engagé dans une attaque dangereuse. Les priorités suivantes priment sur la simple distance :
+- boss et élites : animations et télégraphes de combat suffisamment lisibles ;
+- attaque imminente, attaque en cours, étourdissement ou mort : conserver la pose et le timing nécessaires à la lecture du gameplay ;
+- ennemi touché par le joueur ou participant à une interaction importante : ne pas retarder la réaction au point de rendre l'impact confus ;
+- ennemi ordinaire éloigné et hors écran : niveau de détail minimal.
+
+La simulation des dégâts, la santé, les récompenses et l'état de combat doivent rester corrects même si l'animation est réduite.
+
+### 58.3 Fréquence visuelle indicative
+
+Point de départ à mesurer :
+- LOD 0 : animation évaluée à la fréquence normale du jeu ;
+- LOD 1 : évaluation visuelle environ une fois sur deux, avec interpolation ou maintien de pose si nécessaire ;
+- LOD 2 : évaluation visuelle environ 5 à 10 fois par seconde ;
+- LOD 3 : mise à jour seulement à faible fréquence, à l'entrée dans une zone pertinente ou lors d'un changement d'état important.
+
+La fréquence réelle doit être ajustée pour éviter les saccades visuelles. Le système doit répartir les mises à jour entre les ennemis afin qu'ils ne changent pas tous de pose sur la même frame.
+
+### 58.4 Choix de technologie
+
+Commencer par un système simple :
+- Animator classique pour le joueur, le boss et les ennemis proches ;
+- réduction de fréquence ou simplification de l'animation pour les ennemis ordinaires à distance ;
+- tester les poses pré-calculées en meshes pour les types d'ennemis nombreux et visuellement répétitifs ;
+- utiliser GPU instancing ou une solution de rendu groupé seulement après vérification de la compatibilité des meshes, matériaux et shaders URP.
+
+Les meshes pré-calculés sont une option d'optimisation, pas une obligation pour tous les ennemis. Leur coût mémoire, le nombre de poses, la qualité des transitions et le gain réel doivent être mesurés. Ne pas créer une énorme bibliothèque de meshes avant d'avoir validé un ennemi test.
+
+### 58.5 Calcul de la distance et changement de LOD
+
+- Éviter un calcul de distance coûteux ou des recherches de composants répétées pour chaque ennemi à chaque frame.
+- Utiliser une distance au carré lorsque seule la comparaison avec des seuils est nécessaire.
+- Calculer les niveaux de détail visuels à une fréquence contrôlée, avec des groupes décalés dans le temps.
+- Ajouter une marge de transition (« hysteresis ») pour éviter qu'un ennemi alterne sans cesse entre deux niveaux près d'un seuil.
+- Envisager la distance à la caméra et la taille à l'écran en complément de la distance au joueur.
+- Conserver des valeurs configurables par type d'ennemi plutôt que de disperser les seuils dans les scripts.
+
+## 59. Rendu, pooling et effets
+
+### 59.1 Pooling
+
+Utiliser un pool pour les ennemis ordinaires, les projectiles et les effets fréquemment créés. Lorsqu'un ennemi meurt, remettre à zéro ses états, événements, effets, santé, cibles et données de simulation avant sa réutilisation. Éviter les abonnements d'événements en double.
+
+### 59.2 Rendu
+
+- Réutiliser les matériaux et meshes quand cela est possible.
+- Utiliser des LOD et le GPU instancing lorsque compatibles.
+- Limiter les matériaux uniques, transparences coûteuses, ombres inutiles et effets superposés.
+- Éviter qu'un ennemi éloigné utilise le même nombre de particules et de détails qu'un ennemi au premier plan.
+- Conserver une silhouette claire et des couleurs de danger lisibles conformément à la direction artistique de BROKEN CANVAS.
+
+### 59.3 Effets et sons
+
+Réduire ou supprimer les effets cosmétiques à distance, sans supprimer les signaux essentiels d'une attaque dangereuse. Limiter les sons simultanés répétitifs de la foule et regrouper les règles audio si nécessaire.
+
+## 60. Test map de performance
+
+Créer une scène séparée : `TestMap_EnemySandbox`.
+
+Elle doit contenir :
+- un sol plat et des limites solides ;
+- des piliers, murs, angles et couloirs ;
+- quelques rampes pour tester le joueur ;
+- des points d'apparition configurables ;
+- un affichage de diagnostic montrant le nombre d'ennemis actifs, le niveau d'animation et le temps de simulation ;
+- un moyen de sélectionner rapidement une charge de test : 10, 50, 100, 250, 500 et 1 000 ennemis.
+
+Le test à 1 000 ennemis est un stress test. Il ne fixe pas le nombre normal d'ennemis dans une partie. Les tests doivent être reproductibles : même scène, même configuration graphique, mêmes comportements et même matériel.
+
+## 61. Méthode de profilage
+
+Mesurer séparément :
+- temps CPU de l'IA et du contrôleur central ;
+- temps CPU de la physique ;
+- temps CPU consacré aux animations ;
+- temps GPU et draw calls ;
+- allocations mémoire et pics de garbage collection ;
+- nombre d'objets actifs et nombre de collisions ;
+- fluidité du joueur lorsque la foule est proche.
+
+Tester dans l'éditeur pour itérer, puis confirmer dans une build Windows de développement. Ne pas annoncer une capacité de 1 000 ennemis avant d'avoir enregistré les résultats sur la machine cible. L'objectif prioritaire est une expérience fluide avec le nombre d'ennemis réellement visé pour le jeu, pas un record de foule.
+
+## 62. Critères d'acceptation
+
+Le prototype de foule est validé lorsque :
+1. le joueur se déplace, saute et esquive sans être immobilisé par la foule ;
+2. les ennemis ne traversent pas les murs et contournent les obstacles avec un comportement acceptable ;
+3. la navigation ne recalcule pas inutilement un chemin complet pour chaque ennemi à chaque frame ;
+4. le système central ajoute et retire des ennemis sans références invalides ;
+5. le pooling fonctionne après de nombreux cycles apparition/mort/réapparition ;
+6. les animations deviennent progressivement moins coûteuses avec la distance ;
+7. les attaques importantes des boss et élites restent lisibles ;
+8. les ennemis éloignés continuent de participer correctement au gameplay ;
+9. les tests 10 → 1 000 permettent d'identifier le goulot d'étranglement ;
+10. les résultats de performances sont consignés avec la configuration matérielle et graphique utilisée.
+
+## 63. Ordre d'implémentation recommandé
+
+1. Construire la test map grise.
+2. Valider le déplacement du joueur et les collisions de décor.
+3. Implémenter un ennemi qui poursuit le joueur et ne traverse pas les murs.
+4. Ajouter l'évitement local puis une navigation globale adaptée aux hordes.
+5. Centraliser les mises à jour de simulation et ajouter les diagnostics.
+6. Ajouter le pooling et tester les cycles de vie.
+7. Ajouter les niveaux d'animation par distance sur un seul type d'ennemi.
+8. Mesurer Animator classique, poses pré-calculées et rendu instancié avant de choisir.
+9. Augmenter progressivement le nombre d'ennemis et profiler chaque palier.
+10. Réutiliser l'architecture validée dans le Musée des Ombres.
+
+## 64. Consigne de développement pour l'assistant IA
+
+Avant d'implémenter ces systèmes :
+- inspecter la version réelle des scripts et de la scène ;
+- proposer des modifications ciblées et compatibles avec le projet existant ;
+- commencer par le cas minimal et le tester avant d'étendre à la foule ;
+- expliquer les réglages Inspector, les couches de collision et les références nécessaires ;
+- distinguer les hypothèses des résultats réellement mesurés ;
+- ne jamais prétendre qu'une build compile ou atteint une performance donnée sans l'avoir exécutée et mesurée ;
+- ne pas introduire ECS/DOTS, un système de navigation complexe ou une dépendance externe sans justifier le besoin par des mesures.
+
+**Décision de référence v1.5 :** le nombre de 1 000 ennemis sert uniquement de palier de stress test. L'animation des ennemis doit s'adapter à la distance et à la priorité de gameplay. Le choix final entre animation classique, poses pré-calculées et rendu instancié sera pris après comparaison dans la test map, et non présumé d'avance.
