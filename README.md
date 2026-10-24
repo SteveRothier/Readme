@@ -1,6 +1,6 @@
 # BROKEN CANVAS — Cahier des charges
 
-- **Version :** 3.3 — simplification du périmètre livrable et clarification technique ; document unique, il remplace toutes les versions précédentes
+- **Version :** 3.4 — cartes fondées sur une toile vivante et matérialisation progressive ; document unique, il remplace toutes les versions précédentes
 - **Statut :** référence de conception proposée. Les valeurs chiffrées sont des valeurs de départ à confirmer par prototype et tests. Aucune fonctionnalité n'est réputée implémentée. La priorité est un jeu court, amusant et livrable par une personne débutante ; les systèmes non indispensables sont reportés.
 - **Moteur :** Unity 6, URP, C#
 - **Plateforme :** PC Windows
@@ -62,7 +62,7 @@ BROKEN CANVAS est un survivor roguelite 3D solo sur PC Windows, développé sous
 
 Les Instruments ont cinq rangs de base. Dans la vision complète, une évolution se débloque grâce à un Sceau d'Évolution, un Instrument au rang 5 et un niveau de joueur minimal. Pour le MVP simplifié, implémenter une seule évolution de démonstration avec une condition simple et visible ; les paliers 10/15/20 et les multiples branches sont ajoutés après validation de la boucle.
 
-La première version livrable est volontairement plus simple que la vision complète : un personnage, une petite arène du Musée des Ombres, deux Instruments au départ (un seul au tout premier prototype), deux Reliques, trois ennemis communs, le Colosse de Marbre et une version simplifiée du Conservateur Sans Visage. La run complète est d'abord raccourcie à 8–12 minutes pour tester le plaisir de jeu ; la cible de 20–30 minutes ne sera rétablie qu'après validation. Les événements, Fractures, contrats, mini-carte, surfaces complexes, progression permanente, mode Infini et contenu supplémentaire sont reportés.
+La première version livrable est volontairement plus simple que la vision complète : un personnage, une petite arène du Musée des Ombres construite sur une toile presque vierge, deux Instruments au départ (un seul au tout premier prototype), deux Reliques, trois ennemis communs, le Colosse de Marbre et une version simplifiée du Conservateur Sans Visage. La matérialisation du décor est d’abord scénarisée et limitée à quelques éléments modulaires. La run complète est d'abord raccourcie à 8–12 minutes pour tester le plaisir de jeu ; la cible de 20–30 minutes ne sera rétablie qu'après validation. Les événements, Fractures, contrats, mini-carte, surfaces complexes, progression permanente, mode Infini et contenu supplémentaire sont reportés.
 
 La priorité est de construire une base stable, lisible et testable, puis d'ajouter le contenu par étapes sans perdre l'identité artistique du jeu.
 
@@ -123,7 +123,7 @@ Piliers :
 | Actions manuelles | Déplacement, saut, esquive et caméra |
 | Esquive | Manuelle, avec courte invulnérabilité (§3.4) |
 | Durée cible | 20 à 30 minutes, boss compris ; mode prototype raccourci pour itérer |
-| Difficulté | Une seule difficulté progressive : aucun choix de difficulté (§12.4) |
+| Difficulté | Choix au lancement : Normal, Difficile ou Expert ; la difficulté augmente la variété du canvas et la complexité des rencontres sans changer l’identité des cartes (§12.4, §13.5) |
 | Modes de jeu | Normal (V1) et Infini (Futur) (§2.3) |
 | Première carte | Musée des Ombres |
 | Emplacements maximum | 6 Instruments et 6 Reliques ; le MVP peut utiliser une limite plus basse |
@@ -651,6 +651,8 @@ Profils de conception (qualitatifs, à convertir en nombres après un premier pr
 - aucun chiffre d'équilibrage important dupliqué dans plusieurs scripts.
 
 Les effets temporaires, les améliorations de run et les bonus permanents sont appliqués par un **système de modificateurs** défini, et non en remplaçant les valeurs de base. Le calcul final est inspectable et testable.
+
+Chaque personnage possède un arbre de talents dédié décrit au §28. Les arbres partagent une structure et des règles techniques, mais leurs talents identitaires sont propres à leur Instrument et à leur passif. Les arbres complets sont du contenu post-prototype ; pour le MVP, seule une tranche réduite de l’arbre de L’Exilé est implémentée.
 
 ### 5.4 Personnages futurs à prototyper après la V1
 
@@ -1290,7 +1292,7 @@ La difficulté peut augmenter par :
 
 Elle ne se contente pas d'augmenter toutes les statistiques de façon uniforme. La vitesse des projectiles et la taille des télégraphes restent équitables. Une difficulté lisible demande au joueur de mieux se déplacer, sauter, esquiver et choisir ses améliorations.
 
-Il n'existe **qu'une seule difficulté progressive** : le jeu ne propose aucun choix de difficulté.
+Le joueur choisit une difficulté au lancement de la run : **Normal, Difficile ou Expert**. Cette sélection règle la variété des configurations, la fréquence/complexité des événements et la pression des ennemis, sans modifier l’identité fondamentale ni les limites principales de la carte. Les valeurs exactes sont calibrées après tests. Le mode Infini pourra reprendre ces profils, avec une progression de menace propre au mode.
 
 ### 12.5 Transitions
 
@@ -1311,58 +1313,87 @@ Au début de l'introduction du boss :
 
 ## 13. Cartes et navigation
 
-### 13.1 Principes de conception
+### 13.1 Principe central : la toile vierge devient un monde
 
-Les cartes sont **grandes** : elles se parcourent et s'explorent, elles ne se réduisent pas à une arène d'un seul écran. Valeur de départ : environ 300 à 500 m de côté, soit 1 à 1,5 minute pour les traverser à la vitesse de référence (§3.2). Cette taille impose une navigation lisible (§13.4), une navigation d'ennemis locale (§20.4) et des apparitions hors caméra à bonne distance du joueur ; elle est validée dans la test map (§20.7).
+Toutes les runs commencent sur le même principe visuel : **une toile presque vierge**, gris ivoire, dont la trame est légèrement visible. La toile est la surface jouable et la base de l’identité artistique de BROKEN CANVAS. Elle peut être abîmée, grattée, déchirée sur ses bords et encadrée par des morceaux de cadres brisés, mais le centre de combat reste suffisamment stable et lisible.
 
-Chaque carte contient :
+Au fil de l’exploration, des combats ou d’événements prédéfinis, des marques apparaissent sur la toile et certains éléments peints prennent progressivement forme en 3D : un trait s’épaissit en crête de pigment, un contour dessiné devient une statue, un cadre esquissé devient un obstacle solide. Le phénomène doit donner l’impression que le monde est peint puis matérialisé, sans nécessiter une simulation réelle de peinture.
 
-- une aire de déplacement assez large pour esquiver les hordes ;
-- des obstacles qui créent des décisions sans bloquer le déplacement en permanence ;
-- des couloirs assez larges pour que les contrôles restent fiables ;
-- des zones de respiration et des zones plus dangereuses ;
-- des repères visuels permettant de se réorienter ;
-- une zone de combat de boss adaptée aux attaques prévues.
+**Règles de production :**
+- Le sol jouable reste un maillage simple et stable pour le MVP.
+- Les plis et crêtes sculptés sont d’abord des reliefs fixes, principalement décoratifs ou placés hors des zones de déplacement essentielles.
+- La matérialisation utilise des éléments modulaires prédéfinis et des animations/effets de transition ; aucune génération procédurale complexe de maillage n’est requise.
+- Les objets qui apparaissent ne doivent pas surgir sous le joueur, bloquer une esquive en cours, enfermer le personnage ou créer une collision invisible.
+- Une fois matérialisé, un élément conserve une collision stable et lisible, si cet élément est prévu comme obstacle. Les éléments purement visuels n’ont pas de collider.
+- Le MVP utilise seulement deux ou trois types de matérialisation visuelle. Les transformations influençant réellement le cheminement ou les combats sont reportées après validation du prototype.
 
-Les sauts ont une utilité concrète, mais aucun saut de précision n'est requis pour terminer une partie standard. Les murs et piliers ont des colliders clairs ; les objets purement visuels ne créent pas de collisions invisibles.
+### 13.2 Structure et lisibilité des cartes
 
-### 13.2 V1 — Musée des Ombres
+Chaque carte est un ensemble de points d’apparition prévus pour ses éléments modulaires, et non un monde entièrement reconstruit aléatoirement. Elle comprend :
+- une aire de combat dégagée pour les esquives, les sauts et la lecture des attaques ;
+- des reliefs doux et des obstacles aux contours lisibles, avec des chemins de contournement ;
+- des zones où les traces de peinture et les objets matérialisés donnent une identité visuelle forte sans surcharger le combat ;
+- des bords déchirés et des cadres brisés servant de limites visuelles ;
+- une zone de boss ouverte, sans obstacle nouvellement matérialisé pendant une attaque télégraphiée.
 
-Grande galerie avec tableaux déchirés, statues, colonnes, cadres corrompus, sol de pierre et flaques d'encre.
+Les sauts ont une utilité concrète, mais aucun saut de précision n’est requis pour terminer une run standard. Les pentes et les reliefs ne doivent pas piéger le `CharacterController`. Les dimensions exactes sont définies dans la scène prototype et ajustées après tests ; la taille initiale recommandée est une petite arène, pas une grande carte d’exploration.
 
-- Établir une boucle principale facile à comprendre.
-- Utiliser salles, cadres, vitrines et piliers comme éléments de composition ; les obstacles varient les déplacements sans piéger le joueur ni bloquer constamment la caméra.
-- Éviter les petits accessoires qui piègent le `CharacterController`.
-- Conserver des chemins de contournement.
-- Prévoir une arène suffisamment ouverte pour esquiver et lire les attaques, avec un espace de boss assez dégagé.
-- Introduire progressivement les deux pigments du MVP : noir d'encre et vermillon.
+### 13.3 V1 — Musée des Ombres
 
-Les dimensions suivent la valeur de départ du §13.1 ; limites, obstacles et position du boss sont à définir (§26.2).
+Le Musée des Ombres est la première carte et le seul environnement requis pour le MVP. Au début de la run, le joueur apparaît sur une toile gris ivoire presque vierge, entourée de bords effilochés, de quelques fragments de cadres et d’un vide sombre.
 
-### 13.3 Cartes futures
+Pendant la run, des événements visuels font émerger progressivement un petit nombre d’éléments :
+1. **Cadre brisé :** des traits noirs se dessinent, puis un cadre se matérialise près du bord de l’arène.
+2. **Sculpture :** une silhouette dessinée se remplit de pigment et devient une statue simple, placée hors du chemin critique.
+3. **Marque de peinture :** un coup de pinceau vermillon ou noir apparaît au sol ; pour le MVP, son effet de gameplay reste limité aux surfaces déjà définies au §10.
 
-1. **Atelier des Damnés :** chevalets, pots de peinture, toiles inachevées et zones d'encre.
-2. **Corridor Impossible :** architecture répétitive et cadres flottants. *(La version d'origine mentionnait des portails : à retirer, §26.2.)*
-3. **Galerie des Portraits :** miroirs, statues sans visage et apparitions surprises.
-4. **Bassin des Pigments :** réserve souterraine, rivières de peinture et zones instables.
-5. **Toile Originelle :** monde abstrait peint, changements visuels pendant le boss final.
+L’ordre et l’emplacement de ces apparitions peuvent varier parmi des points prévalidés, mais le prototype n’exige pas que la disposition complète soit générée aléatoirement. La zone centrale reste assez dégagée pour le combat. Le boss n’est jamais entouré de nouveaux obstacles apparus pendant ses télégraphes.
 
-Pistes d'arènes pour la progression future :
+### 13.4 Cartes futures et identité propre
 
-- **Atelier abandonné :** arène relativement ouverte pour apprendre les systèmes.
-- **Galerie brisée :** piliers et cadres qui influencent les trajectoires.
-- **Musée englouti :** espace plus contraint avec zones de peinture dangereuses.
+Chaque carte future conserve le principe de la toile vierge, mais possède ses propres formes, matériaux, éléments modulaires et événements de matérialisation. Ne pas mélanger tous les thèmes dans une seule carte.
 
-Ces pistes recoupent en partie les cartes ci-dessus ; la liste définitive est à arbitrer. Les événements aléatoires sont décrits au §14.1.
+1. **Atelier des Damnés :** chevalets, pinceaux géants, pots et outils apparaissent à partir de traits et de taches épaisses.
+2. **Corridor Impossible :** des lignes de perspective deviennent des arches, des colonnes et des cadres flottants ; aucun portail ni téléportation n’est nécessaire.
+3. **Galerie des Portraits :** des visages esquissés émergent, puis deviennent des masques, des bustes et des silhouettes sans visage.
+4. **Bassin des Pigments :** les taches deviennent des mares et des crêtes de peinture, avec des îlots de toile laissés visibles.
+5. **Toile Originelle :** des formes abstraites se construisent à partir de traits, avec une matérialisation plus étrange réservée au contenu avancé.
 
-Varier d'abord la disposition et la lumière plutôt que de produire des modèles uniques pour chaque carte. Ces contenus ne modifient pas le périmètre du MVP.
+Ces cartes sont du contenu futur, hors MVP. Chacune devra être conçue à partir d’un petit kit modulaire réutilisable plutôt que d’exiger un ensemble de modèles entièrement uniques.
 
-### 13.4 Navigation
+### 13.5 Variété entre les runs
 
-Les cartes étant grandes (§13.1), le joueur dispose de deux aides de navigation.
+La variété doit donner l’impression de découvrir une nouvelle composition de la même œuvre, sans rendre la production imprévisible. Elle repose sur trois couches :
+- **Identité fixe de la carte :** palette, types d’objets, silhouettes, motifs et événements possibles.
+- **Variation de run :** choix de quelques éléments, points d’apparition, ordre de matérialisation et événements parmi une liste validée.
+- **Présentation :** variations légères de marques, d’éclairage et de traces de pigments, sans altérer la lisibilité.
+
+Pour le MVP, utiliser un petit nombre de configurations prédéfinies ou des sélections aléatoires parmi des points prévalidés. Ne pas générer automatiquement une géométrie de niveau, des chemins de navigation ou des collisions complexes. La différence entre les runs doit être visible, mais ne doit pas être vendue comme une carte entièrement nouvelle si seuls quelques éléments changent.
+
+**La difficulté choisie augmente la variété autorisée**, pas seulement les statistiques :
+- **Normal :** configurations simples, peu de structures simultanées, combinaisons de menaces faciles à lire et événements espacés.
+- **Difficile :** bibliothèque de configurations plus large, plus de variantes et de matérialisations, davantage de combinaisons d’ennemis et d’événements plus exigeants.
+- **Expert :** accès à presque toutes les configurations validées, combinaisons plus complexes, transformations plus nombreuses et événements plus risqués.
+
+Les limites, la silhouette globale et l’identité artistique de chaque carte restent constantes à toutes les difficultés. La zone de combat centrale, les issues de déplacement et l’espace de télégraphie du boss restent garantis. La génération utilise des règles de sécurité et des emplacements autorisés : aucune structure ne se matérialise sous le joueur, pendant une esquive ou dans une voie d’évasion indispensable. Les difficultés supérieures ne doivent pas créer des configurations impossibles ou des attaques illisibles.
+
+La génération est **semi-aléatoire** au MVP. Une future seed devra reproduire au minimum la difficulté, la configuration initiale, l’ordre des matérialisations et les événements. Aucun écran de seed ni outil de partage de seed n’est requis au MVP.
+
+### 13.6 Vue finale du canvas et œuvre de la run
+
+À la victoire ou à la défaite, la caméra peut s’élever et reculer pour révéler la toile entière vue du dessus. Cette séquence est conçue comme une récompense visuelle et un récapitulatif de la composition produite par la run : structures matérialisées, marques de peinture, sculptures et zones liées aux événements.
+
+- **Version MVP visée si le coût reste faible :** transition de caméra vers une vue aérienne fixe ou quasi verticale, avec une courte pause de présentation.
+- **Évolution ultérieure :** séquence montrant le canvas se peindre du début à la fin, à partir des événements de matérialisation enregistrés pendant la run.
+- Le jeu n’a pas besoin d’enregistrer une vidéo ni chaque position du joueur. Il conserve seulement les données utiles à la composition finale : configuration choisie, éléments apparus et événements majeurs.
+- La caméra de bilan ne change pas le résultat de la run et ne doit pas empêcher l’affichage des récompenses, de la victoire ou de la défaite.
+
+### 13.6 Navigation
+
+Pour le MVP, la petite arène ne nécessite pas de mini-carte. Les aides de navigation ci-dessous sont prévues pour une version future avec des cartes plus grandes.
 
 - **Mini-carte (V1) :** un plan du musée en vue de dessus, simplifié, qui montre la position et l'orientation du joueur ainsi que les marqueurs d’objectifs (mini-boss, coffres, Fractures, autels, événement actif). Elle ne montre pas les ennemis ordinaires, pour préserver la lisibilité. Son emplacement dans le HUD est au §17.4.
-- **Marqueurs d'objectifs en bord d'écran (V1) :** de discrètes flèches indiquent la direction des objectifs importants situés hors du champ de vision. Pour le MVP : le mini-boss et le boss.
+- **Marqueurs d’objectifs (Futur) :** des indicateurs peuvent guider vers des objectifs éloignés si les cartes futures le nécessitent. Pour le MVP, le boss est annoncé par l’interface et la caméra, sans système de navigation dédié.
 - **Révélation progressive (Futur) :** le plan se peint à mesure que le joueur explore.
 - **Présentation proposée :** mini-carte fixe orientée nord en haut ; seule la flèche du joueur tourne. Rayon représenté d’environ 80 m, taille proche de 15 % de la hauteur d’écran, opacité de 75 %, coin inférieur droit. Ces valeurs sont des points de départ.
 - Le joueur est toujours affiché ; les ennemis ordinaires ne le sont jamais. Mini-boss et boss sont marqués dès leur annonce ; les marqueurs d’objectif, événements et récompenses apparaissent lorsqu’ils sont découverts ou actifs. Les coffres communs futurs peuvent être révélés dans un rayon de 40 m.
@@ -1586,9 +1617,9 @@ Quand le joueur a débloqué tous les personnages et terminé toutes les cartes 
 
 ### 16.1 Direction artistique
 
-Palette principale : noir d'encre, charbon, ivoire, toile vieillie et rouge vermillon. Les autres couleurs de pigments sont réservées aux effets de gameplay et aux objets particuliers. La palette et les matériaux de l'interface sont détaillés au §17.2.
+Palette principale : toile gris ivoire presque monochrome, noir d’encre, charbon et ombres profondes. Le cyan distingue le joueur et certains effets bénéfiques ; le rouge vermillon signale les attaques et impacts ; le violet est réservé à la corruption et à certains ennemis spéciaux. Ces accents restent rares pour ressortir nettement sur la toile. Les cadres brisés, les bords déchirés, les fibres visibles et les traces effacées renforcent l’impression d’une œuvre vivante. La palette et les matériaux de l'interface sont détaillés au §17.2.
 
-Privilégier les silhouettes lisibles, les modèles stylisés réutilisables, les effets reconnaissables et les télégraphes de boss qui ne se confondent pas avec les attaques du joueur. Réutiliser matériaux, accessoires, éclairages et éléments de décor d'une carte à l'autre.
+Privilégier les silhouettes lisibles, les modèles stylisés réutilisables, les effets reconnaissables et les télégraphes de boss qui ne se confondent pas avec les attaques du joueur. Les formes en relief doivent paraître sculptées dans des couches de toile ou de peinture solidifiée, mais rester simples à modéliser. Réutiliser matériaux, accessoires, éclairages et éléments de décor d'une carte à l'autre.
 
 ### 16.2 Effets
 
@@ -1856,7 +1887,7 @@ La décoration et les effets ne contrôlent jamais la logique du jeu : les syst�
 
 ## 18. Menu Options
 
-Le menu Options est accessible depuis le menu principal (§17.3) et depuis le menu pause ; le jeu reste en pause pendant qu'il est ouvert. Il comporte **cinq onglets : Jeu, Vidéo, Commandes, Audio et Effets**. Il n'y a **aucune option de difficulté** : le jeu propose une seule difficulté progressive (§12.4).
+Le menu Options est accessible depuis le menu principal (§17.3) et depuis le menu pause ; le jeu reste en pause pendant qu'il est ouvert. Il comporte **cinq onglets : Jeu, Vidéo, Commandes, Audio et Effets**. La difficulté de la run est choisie avant son lancement : Normal, Difficile ou Expert (§12.4).
 
 ### 18.1 Règles communes
 
@@ -2901,6 +2932,24 @@ Ne pas passer à l'étape suivante tant que les conditions de l'étape actuelle 
 
 ## 27. Décisions et journal des changements
 
+### Version 3.4
+
+- Les cartes reposent désormais sur une toile presque vierge au début de chaque run.
+- Des éléments peints peuvent se matérialiser progressivement en 3D à partir de points et de modules prédéfinis.
+- Le Musée des Ombres sert de prototype : cadre brisé, sculpture et marque de peinture.
+- Les cartes futures ont chacune une identité visuelle et des familles de matérialisation propres.
+- La variété entre runs utilise des configurations validées plutôt qu’une génération procédurale complexe.
+- La navigation avancée est repoussée hors MVP ; la direction artistique précise le contraste toile ivoire/noir et accents cyan, vermillon, violet.
+
+### Version 3.5
+
+- Ajout des arbres de talents complets proposés pour les six personnages, avec branches verticales reliables, reset et talents statistiques/identitaires.
+- Remplacement de la difficulté unique par trois difficultés sélectionnables : Normal, Difficile et Expert.
+- Les difficultés supérieures augmentent la variété autorisée du canvas et la complexité des événements/rencontres, tout en préservant l’identité, les limites de carte et les voies d’évasion.
+- Le Cercle du Peintre est l’événement prioritaire du MVP.
+- Ajout de la vue aérienne finale du canvas ; l’animation complète de peinture reste une évolution future.
+- Les chiffres de talents et paramètres de difficulté sont des valeurs de conception à tester, non des résultats d’équilibrage validés.
+
 ### 27.1 Registre des décisions retenues
 
 | Sujet | Décision retenue | Section |
@@ -2918,7 +2967,7 @@ Ne pas passer à l'étape suivante tant que les conditions de l'étape actuelle 
 | Sceau d'Évolution | Consommé seulement lors d'une évolution appliquée ; conservé sinon | §6.6 |
 | Évolutions | Au moins deux branches mutuellement exclusives par Instrument | §6.6 |
 | Pigments de terrain du MVP | Encre noire et Vermillon uniquement | §10.4 |
-| Modes de jeu | Normal et Infini ; ni mode journalier ni run à graine | §2.3 |
+| Modes de jeu | Normal et Infini ; ni mode journalier ni seed exposée au joueur au MVP. Difficulté sélectionnable : Normal, Difficile, Expert | §2.3, §12.4 |
 | Structure de la run | Pilotée par le chronomètre et les phases ; aucune jauge ni zone de corruption | §12.1 |
 | Taille des cartes | Grandes cartes (valeur de départ : 300 à 500 m de côté) | §13.1 |
 | Navigation | Mini-carte et marqueurs d'objectifs, réglables séparément | §13.4, §18 |
@@ -2932,7 +2981,10 @@ Ne pas passer à l'étape suivante tant que les conditions de l'étape actuelle 
 | Navigation de la horde | Grille ou champ de direction partagé, avec évitement local | §20.4 |
 | Phases d'une run | Six phases A à F pilotées par le chronomètre de run | §12.1 |
 | Noms du menu principal | Nouvelle toile, Les artistes, Le catalogue, Options, Quitter | §17.3 |
-| Difficulté | Une seule difficulté progressive ; aucune option de difficulté | §12.4 |
+| Difficulté | Choix au lancement : Normal, Difficile ou Expert ; la difficulté élargit les configurations et la complexité sans changer l’identité de la carte | §12.4, §13.5 |
+| Arbres de talents | Un arbre vertical réinitialisable par personnage, talents statistiques et identitaires, branches reliables ; seul un sous-ensemble de L’Exilé au MVP | §28 |
+| Canvas final | Vue aérienne de fin de run ; reconstitution animée de toute la peinture reportée | §13.6 |
+| Variété du terrain | Sélection semi-aléatoire parmi configurations validées ; plus de configurations et de complexité aux difficultés élevées ; seed reproductible future | §13.5 |
 | Menu Options | Cinq onglets : Jeu, Vidéo, Commandes, Audio, Effets | §18 |
 | Réglages d'interface | Pas d'option de taille d'interface, de taille du texte, de contraste élevé ni de réinitialisation de la sauvegarde ; rappel des commandes à l'écran : option disponible | §17.11, §18 |
 | Sauvegarde | Format versionné ; run temporaire jamais restaurée | §19.6 |
@@ -2967,7 +3019,7 @@ Les propositions ci-dessous sont des points de départ, pas des décisions. Quan
 | 13 | Évolution du Cadre Fracturé | Toile Réfléchissante : déviation physique de projectiles sur une trajectoire visible, sans portail ni téléportation | §6.1, §7.1 |
 | 14 | Règles de cumul précises de chaque statut | Règles disponibles au §4.6 ; à choisir statut par statut | §4.6 |
 | 15 | Effectif final de personnages | Six prévus ; trois pistes d'extension (Patineur, Encré, Marionnettiste) | §5.4 |
-| 16 | Liste définitive des cartes futures | Deux listes se recoupent partiellement | §13.3 |
+| 16 | Liste définitive des cartes futures | Musée des Ombres, Atelier des Damnés, Corridor Impossible, Galerie des Portraits, Bassin des Pigments, Toile Originelle ; ordre de production futur à confirmer | §13.3 |
 | 17 | Nom définitif, coûts et valeurs finales des retouches de la ressource permanente | « Fragments de Toile » provisoire ; gains de départ au §15.2 | §15.2 |
 | 18 | Format et emplacement du fichier de sauvegarde | Format versionné requis ; format exact à choisir | §19.6 |
 | 19 | Dimensions exactes du Musée des Ombres, limites, obstacles, position du boss | Valeur de départ : 300 à 500 m de côté (§13.1) ; à valider dans la test map | §13.1, §13.2 |
@@ -2990,10 +3042,271 @@ Pour chaque changement important, ajouter une ligne : version, date, sujet, anci
 | 1.5 | — | Hordes : simulation centralisée, navigation, animations adaptatives à la distance, test map |
 | 1.6 | — | Contrôles et sensations de jeu : vitesse unique, saut, esquive, caméra, combat, profils de personnages, boss du MVP, cartes, validation |
 | 2.0 | 2026-10-18 | **Consolidation** en un document unique organisé par thème. Les règles répétées dans plusieurs versions sont fusionnées en un seul endroit. Contradictions tranchées : nombre d'ennemis présents au boss (dissolution retenue), pause complète retenue, esquive en l'air et direction par défaut retenues, découpage des phases de run unifié en six phases A à F, conditions d'évolution unifiées (rang + Sceau + palier), probabilités de rareté fixes au prototype, noms du menu alignés sur l'interface (« Nouvelle toile », etc.), deux arborescences de dossiers fusionnées en une. Conflit signalé et laissé ouvert : évolution « Portail de la Toile » contre l'interdiction de téléportation (§26.2, n° 13). Mentions de portails retirées de la Miniature Fracturée et du Corridor Impossible |
-| 2.1 | 2026-10-19 | Ajout du menu Options (§18) : cinq onglets Jeu, Vidéo, Commandes, Audio, Effets. Une seule difficulté progressive : l'option de difficulté et la décision ouverte correspondante sont supprimées. Doublons de la liste d'origine fusionnés (champ de vision, tremblement de caméra) ou distingués (dégâts affichés, vignette de dégâts). Réglages d'accessibilité du §17.11 absents de la liste (tranché en 2.2) |
+| 2.1 | 2026-10-19 | Ajout du menu Options (§18) : cinq onglets Jeu, Vidéo, Commandes, Audio, Effets. À cette version, une seule difficulté progressive était retenue ; la version 3.5 remplace cette règle par trois difficultés sélectionnables. Doublons de la liste d'origine fusionnés (champ de vision, tremblement de caméra) ou distingués (dégâts affichés, vignette de dégâts). Réglages d'accessibilité du §17.11 absents de la liste (tranché en 2.2) |
 | 2.2 | 2026-10-19 | Décision : aucune option de taille d'interface, de taille du texte, de contraste élevé ni de réinitialisation de la sauvegarde (exigences retirées des §17.11 et §22.9 ; la sauvegarde de développement du §19.6 reste un outil interne). Ajout de l'option « Rappel des commandes à l'écran » dans l'onglet Jeu (§18). Décision ouverte n° 25 supprimée |
 | 2.3 | 2026-10-20 | Intégration des propositions validées : modes Normal et Infini sans corruption (§2.3), grandes cartes (§13.1), navigation (§13.4), objectifs secondaires (§14.2), défis facultatifs et contrats (§14.3), événements aléatoires (§14.1), coffres (§14.4), bonus de run (§14.5), synergies par tags (§8), emplacements pleins (§6.2, §7.2, §9.5), fin de run (§2.5), progression permanente (§15.2), défis permanents, Archives, statistiques et fin de jeu (§15.3 à §15.6), sauvegarde (§19.6), apprentissage (§17.10), équilibrage des combinaisons (§23.5), options mini-carte et marqueurs (§18). Incohérence entre §6.2, §7.2 et §9.5 sur les emplacements pleins résolue. Décision ouverte « contrats de restauration » remplacée par deux nouvelles (n° 24 et 25) |
 | 3.0 | 2026-10-20 | **Réorganisation complète** en 26 chapitres, du général au particulier : projet (1–2), joueur et combat (3–8), progression, monde et récompenses (9–15), présentation (16–18), technique (19–20), production (21–26). Principaux déplacements : le combat passe avant les personnages et les Instruments (4) ; les synergies deviennent un chapitre (8) ; progression en partie, peinture, ennemis et vagues se suivent (9 à 12) ; objectifs, événements, coffres et bonus de run sont réunis (14) ; progression permanente, Archives et statistiques sont réunies (15) ; direction artistique, effets et audio sont réunis (16) ; l'interface (17) et le menu Options (18) sont séparés ; la sauvegarde rejoint l'architecture technique (19.6) ; les hordes et la performance passent côté technique (20) ; les principes de production de l'ancien §1.1 sont fusionnés avec les règles pour l'assistant IA (25). Tous les renvois sont renumérotés. Aucune règle ni valeur de gameplay n'est modifiée |
 | 3.1 | 2026-10-22 | Intégration des propositions détaillées de chronologie de run, bonus instantanés/temporaires/de run, économie permanente, navigation, contrats et contenu ennemi. Ajout des familles Artilleur et Essaim, remplacement de la famille Plongeon, reformulation du Portrait Effacé pour interdire la téléportation, et clarification de la hiérarchie ennemis communs → mini-boss → boss sans catégorie d’élites distincte. Ajout de propositions de mini-boss et de règles de placement. Les chiffres restent à tester. |
 | 3.2 | 2026-10-22 | Décisions validées : mini-boss MVP = Colosse de Marbre ; boss MVP = Conservateur Sans Visage ; quatre ennemis communs au MVP et Essaim reporté à un test ultérieur ; boss Normal à 20:00 ; paliers d’évolution 10, 15 et 20 selon le nombre d’évolutions déjà choisies ; suppression de la catégorie « élite » et rattachement des récompenses à une source explicite. Harmonisation du résumé, du périmètre MVP, des ennemis, de la chronologie, des récompenses, du mode Infini, des Archives, des critères d’acceptation et du registre de décisions. Les valeurs de combat du boss restent à tester. |
 | 3.3 | 2026-10-23 | Audit de cohérence et simplification pour une production solo débutante : MVP ramené à une petite arène, une run prototype de 8–12 minutes, deux Instruments au maximum après le prototype initial, deux Reliques, trois ennemis communs et une évolution démonstrative. Clarification de la pause et des états, du circuit unique de dégâts, du contrat de déplacement, du ciblage automatique et des transitions de boss. Navigation de foule avancée, mini-carte, surfaces complexes, événements, contrats, Infini et méta-progression sont reportés. Plan de production réordonné autour du plaisir de jeu et d'un build Windows complet. |
+| 3.4 | 2026-10-24 | Direction artistique et cartes : toile presque vierge, matérialisation progressive à partir de modules prévalidés, identité propre à chaque carte, variété contrôlée entre runs. |
+| 3.5 | 2026-10-24 | Ajout des arbres de talents détaillés pour les six personnages (statistiques + talents identitaires, branches verticales reliables, reset), sélection de difficulté Normal/Difficile/Expert qui augmente la variété autorisée du canvas et la complexité des rencontres sans changer l’identité des cartes, Cercle du Peintre prioritaire pour le MVP, vue aérienne finale du canvas et séquence de peinture en direct reportée. Les talents et chiffres restent à prototyper et équilibrer. |
+
+
+## 28. Arbres de talents des personnages
+
+### 28.1 Objectif et principes
+
+Chaque personnage possède **son propre arbre vertical**, conçu autour de son Instrument de départ et de son passif. L’arbre combine les améliorations statistiques simples de l’option A avec des talents identitaires qui changent ou renforcent le style de jeu. Il ne remplace ni les rangs d’Instrument (1 à 5), ni les évolutions d’Instrument, ni les bonus choisis pendant une run.
+
+Principes obligatoires :
+- Chaque palier présente **2 ou 3 choix**. Le joueur choisit un talent à ce palier.
+- L’arbre est visuellement vertical, mais les branches peuvent se rejoindre : un talent choisi peut ouvrir plusieurs chemins et les chemins ne sont pas des classes fermées.
+- Les liens affichés dans l’interface représentent les prérequis. Un talent ne peut être choisi que si au moins un de ses prérequis est acquis.
+- L’arbre peut être **réinitialisé**. La réinitialisation rembourse les points investis dans l’arbre et remet les choix à zéro ; elle ne retire pas les niveaux de personnage, les Instruments, les Reliques ou les déblocages. Le coût éventuel de réinitialisation est une décision de méta-progression ultérieure ; pendant le prototypage, reset gratuit.
+- Les statistiques sont des modificateurs, jamais des remplacements directs des valeurs de base. Le calcul final passe par le système central de modificateurs (§5.3, §19).
+- Les talents qui changent un comportement doivent expliquer leur effet, leur condition, leur durée et leurs limites. Pas de chance aléatoire cachée ni d’effet sans retour visuel.
+- Les talents statistiques ne doivent pas dépasser les plafonds globaux du jeu ni rendre le personnage invulnérable ou supprimer les décisions de déplacement.
+
+### 28.2 Structure commune et règles de progression
+
+Chaque arbre comprend un nœud d’identité initial, trois branches thématiques et quatre paliers de spécialisation. Chaque branche présente deux talents candidats par palier dans cette proposition ; l’interface pourra montrer trois choix lorsque des nœuds de liaison ou talents transversaux deviennent disponibles. Les talents listés ci-dessous forment la **version de conception complète proposée**, pas un contenu à produire intégralement dans le MVP.
+
+- **Palier I — Fondation :** statistiques modestes ou amélioration de base du passif.
+- **Palier II — Spécialisation :** amélioration plus marquée de l’arme, de la mobilité ou du passif.
+- **Palier III — Connexion :** nœuds pouvant ouvrir une branche voisine ; choix plus distinctifs, sans évolution complète d’Instrument.
+- **Palier IV — Signature :** talent fort qui approfondit un style de jeu, avec contrepartie ou limite lorsque nécessaire.
+- Les talents d’un même palier ne sont pas tous obligatoires. Les prérequis peuvent être reliés à un talent de la branche ou à un nœud transversal commun. Le joueur peut traverser d’une branche à l’autre dès qu’il possède un nœud de liaison compatible.
+- Pour garder l’arbre lisible, viser environ **18 à 24 talents proposés par personnage** à terme, mais n’implémenter qu’un petit sous-ensemble pour les tests initiaux.
+- Les chiffres ci-dessous sont des valeurs de départ à tester. Les talents identitaires sont décrits comme comportements attendus ; leur implémentation ne doit pas contourner le circuit central de dégâts (§4).
+
+### 28.3 L’Exilé — Pinceau du Dernier Trait
+
+**Identité :** polyvalence, éliminations qui entretiennent le Trait fondateur, coups de pinceau fiables. Nœud central : **Trait fondateur** — les éliminations renforcent temporairement les dégâts du Pinceau du Dernier Trait ; le bonus retombe après une période sans élimination.
+
+**Branche A — Puissance du trait**
+- **I-A1, Pigment dense :** dégâts du Pinceau +5 %.
+- **I-A2, Trait net :** le premier coup porté à une cible en pleine santé inflige +8 % de dégâts ; une même cible ne peut subir ce bonus qu’une fois toutes les quelques secondes.
+- **II-A1, Élan du peintre :** une élimination prolonge le bonus du Trait fondateur de 0,5 s.
+- **II-A2, Pointe incisive :** +3 points de pourcentage de chance de critique si cette statistique est active ; sinon, +4 % de dégâts.
+- **III-A1, Large balayage :** largeur du trait augmentée de 10 %, avec une légère hausse du temps de récupération si nécessaire pour l’équilibrage.
+- **III-A2, Encre persistante :** les cibles touchées restent marquées visuellement brièvement, facilitant le suivi ; pas de dégâts supplémentaires automatiques.
+- **IV-A1, Dernier mot :** à pleine puissance du Trait fondateur, le Pinceau inflige +10 % de dégâts supplémentaires.
+- **IV-A2, Signature profonde :** après plusieurs éliminations rapides, la prochaine attaque du Pinceau est renforcée ; déclenchement limité et clairement indiqué.
+
+**Branche B — Mobilité de l’exilé**
+- **I-B1, Pas de côté :** distance d’esquive +5 %.
+- **I-B2, Souffle retrouvé :** récupération de l’esquive réduite de 3 %, sans passer sous le minimum autorisé.
+- **II-B1, Saut dessiné :** impulsion de saut +5 %.
+- **II-B2, Retrait maîtrisé :** courte réduction de dégâts après la fin d’une esquive, sans prolonger l’invulnérabilité de l’esquive elle-même.
+- **III-B1, Trait en mouvement :** dégâts du Pinceau +5 % pendant un court instant après un saut, sans exiger de rester en l’air.
+- **III-B2, Reprise :** une élimination réduit légèrement le temps de récupération restant de l’esquive ; plafond de réduction par seconde.
+- **IV-B1, Fuite créatrice :** après une esquive réussie qui évite un coup, la prochaine attaque du Pinceau est renforcée.
+- **IV-B2, Corps léger :** vitesse de déplacement +3 %, plafonnée par la limite globale de mobilité.
+
+**Branche C — Maîtrise du Trait fondateur**
+- **I-C1, Enchaînement :** durée du bonus de Trait fondateur +10 %.
+- **I-C2, Première marque :** la première élimination de chaque vague donne une petite prolongation du bonus.
+- **II-C1, Cadence du pinceau :** cadence d’attaque +4 %.
+- **II-C2, Trace vive :** le bonus du passif se cumule plus vite, mais son plafond ne change pas.
+- **III-C1, Rémanence :** lors d’une élimination sous bonus actif, une marque visuelle frappe une cible proche ; dégâts modestes, sans chaîne récursive.
+- **III-C2, Discipline :** après une courte période sans subir de dégâts, +5 % de dégâts jusqu’au prochain coup reçu.
+- **IV-C1, Trait fondateur accompli :** le bonus du passif expire plus lentement et son indicateur devient plus précis.
+- **IV-C2, Dernière touche :** si le bonus du passif est sur le point d’expirer, la prochaine élimination le rafraîchit entièrement ; une seule fois par activation.
+
+### 28.4 La Virtuose — Rapière Vermillon
+
+**Identité :** attaques rapides et critiques, marquage de cibles, repositionnement. Nœud central : **Coup de maître** — un coup critique marque une cible ; le prochain critique contre cette cible reçoit un bonus défini par les données du personnage.
+
+**Branche A — Duel et précision**
+- **I-A1, Pointe précise :** dégâts de la Rapière +5 %.
+- **I-A2, Main sûre :** chance de critique +3 points ; si le système critique est désactivé, dégâts +4 %.
+- **II-A1, Ouverture :** dégâts +8 % contre une cible marquée par Coup de maître.
+- **II-A2, Fente courte :** portée de la Rapière +8 %, sans toucher à la portée de ciblage globale.
+- **III-A1, Duel prolongé :** frapper plusieurs fois la même cible augmente brièvement les dégâts contre elle, avec un plafond et une remise à zéro après changement de cible.
+- **III-A2, Contre-pointe :** après une esquive qui évite une attaque, le prochain coup critique inflige un bonus modéré.
+- **IV-A1, Coup parfait :** consommer la marque de Coup de maître inflige un bonus supplémentaire une fois par marque.
+- **IV-A2, Exécution vermillon :** bonus de dégâts contre les ennemis sous 25 % de santé, limité pour éviter les éliminations instantanées de boss.
+
+**Branche B — Danse vermillon**
+- **I-B1, Pas de danse :** distance d’esquive +5 %.
+- **I-B2, Récupération élégante :** récupération de l’esquive réduite de 3 %.
+- **II-B1, Fente mobile :** après un déplacement ou un saut, la prochaine attaque reçoit +5 % de portée ou de dégâts (un seul effet sera retenu au prototypage).
+- **II-B2, Talon vif :** vitesse de déplacement +3 %.
+- **III-B1, Passage sûr :** après une esquive réussie, réduction de dégâts très courte, distincte de l’invulnérabilité native.
+- **III-B2, Pirouette :** une élimination réduit légèrement la récupération d’esquive, avec un plafond par seconde.
+- **IV-B1, Danse sans faute :** une esquive parfaitement synchronisée renforce la prochaine attaque ; fenêtre généreuse et feedback visuel clair.
+- **IV-B2, Duel mobile :** les attaques n’imposent pas de ralentissement de déplacement supplémentaire, si un tel ralentissement existe.
+
+**Branche C — Maîtrise des marques**
+- **I-C1, Marque vive :** la marque de Coup de maître dure +15 %.
+- **I-C2, Sang-froid :** +5 % de dégâts contre les cibles non marquées.
+- **II-C1, Marque partagée :** lorsque la cible marquée meurt, une cible proche reçoit une marque faible ; pas de propagation en chaîne.
+- **II-C2, Rythme parfait :** cadence d’attaque +4 %.
+- **III-C1, Focalisation :** les attaques critiques contre une cible marquée augmentent légèrement la prochaine chance de critique, avec plafond.
+- **III-C2, Riposte ciblée :** la première attaque contre une cible marquée après une esquive est renforcée.
+- **IV-C1, Signature du maître :** consommer une marque restaure une petite fraction de la ressource de talent éventuelle ; si aucune ressource n’existe, bonus de dégâts fixe.
+- **IV-C2, Marque décisive :** le bonus du prochain critique contre une cible marquée augmente, mais la marque ne peut pas se cumuler sur une même cible.
+
+### 28.5 Le Graveur — Arbalète à Encre
+
+**Identité :** précision à distance et montée en puissance du passif Perspective. Nœud central : **Perspective** — les attaques à distance gagnent en puissance jusqu’à une limite clairement affichée.
+
+**Branche A — Précision**
+- **I-A1, Pointe gravée :** dégâts des projectiles +5 %.
+- **I-A2, Œil du graveur :** portée de ciblage +8 %, dans les limites de lisibilité.
+- **II-A1, Trait rectiligne :** vitesse des projectiles +10 %.
+- **II-A2, Point faible :** +3 points de critique ou +4 % de dégâts si les critiques ne sont pas retenus.
+- **III-A1, Tir tendu :** dégâts augmentés contre les cibles éloignées, plafonnés et sans bonus à travers les murs.
+- **III-A2, Pointe perforante :** le projectile peut traverser une cible supplémentaire avec dégâts réduits ; à valider techniquement et en lisibilité.
+- **IV-A1, Gravure parfaite :** à charge maximale de Perspective, le prochain tir inflige un bonus, puis la charge reste soumise aux règles normales.
+- **IV-A2, Point de fuite :** les tirs contre une cible isolée gagnent un bonus modéré ; aucune condition basée sur une distance impossible à lire.
+
+**Branche B — Positionnement**
+- **I-B1, Recul contrôlé :** distance d’esquive +5 %.
+- **I-B2, Appui stable :** après un court instant sans déplacement, dégâts à distance +4 %.
+- **II-B1, Saut du graveur :** contrôle aérien +5 % ou impulsion de saut +5 % (choisir une seule statistique dans l’implémentation).
+- **II-B2, Repli préparé :** après l’esquive, vitesse de déplacement +5 % pendant un bref instant.
+- **III-B1, Ligne de tir :** la sélection de cible privilégie une cible visible et éloignée si elle est presque aussi proche que la cible actuelle.
+- **III-B2, Déplacement tactique :** cadence d’attaque +4 % après un changement de position.
+- **IV-B1, Tireur insaisissable :** éviter une attaque par esquive améliore le prochain tir.
+- **IV-B2, Hauteur utile :** après un saut, le premier tir gagne un bonus modéré ; ne nécessite pas de saut de précision.
+
+**Branche C — Perspective**
+- **I-C1, Profondeur :** le bonus de Perspective atteint son plafond un peu plus vite.
+- **I-C2, Distance constante :** le bonus de Perspective se dissipe plus lentement.
+- **II-C1, Angle gravé :** les tirs à charge élevée infligent +5 % de dégâts.
+- **II-C2, Encre dense :** les projectiles appliquent une marque visuelle brève facilitant le suivi.
+- **III-C1, Écho lointain :** toucher une cible à distance maximale prolonge légèrement Perspective.
+- **III-C2, Gravure patiente :** après un court instant sans tir, le prochain projectile est renforcé.
+- **IV-C1, Perspective absolue :** une fois le plafond atteint, la première attaque contre une nouvelle cible reçoit un bonus ; déclenchement limité.
+- **IV-C2, Ligne maîtresse :** le bonus maximal de Perspective augmente légèrement, mais sa montée demande davantage de tirs réussis.
+
+### 28.6 L’Alchimiste — Palette Catalytique
+
+**Identité :** pigments, zones et réactions contrôlées. Nœud central : **Mélange instable** — certains effets de pigments peuvent provoquer une réaction de zone, à probabilité limitée et avec un signal visuel net.
+
+**Branche A — Catalyse**
+- **I-A1, Pigment concentré :** dégâts des réactions +5 %.
+- **I-A2, Mélange stable :** fréquence de déclenchement des réactions améliorée légèrement, dans un plafond défini.
+- **II-A1, Vermillon brûlant :** les effets vermillon infligent un petit bonus de dégâts.
+- **II-A2, Encre adhérente :** les effets d’encre persistent légèrement plus longtemps, sans augmenter la taille de leurs zones.
+- **III-A1, Réaction secondaire :** une réaction réussie laisse une petite marque de pigment sans dégâts en chaîne.
+- **III-A2, Catalyse rapide :** cadence d’attaque +4 %.
+- **IV-A1, Mélange critique :** une réaction renforcée survient après plusieurs applications réussies, avec indicateur et temps de recharge.
+- **IV-A2, Formule concentrée :** dégâts de réaction +10 %, mais durée des zones légèrement réduite si nécessaire à l’équilibrage.
+
+**Branche B — Contrôle de zone**
+- **I-B1, Goutte large :** rayon des zones +5 %.
+- **I-B2, Sol préparé :** durée des zones +8 %.
+- **II-B1, Bordure sûre :** le contour des zones dangereuses devient plus visible et se dessine plus tôt.
+- **II-B2, Pas de côté :** distance d’esquive +5 %.
+- **III-B1, Tache persistante :** les zones ralentissent légèrement les ennemis ordinaires ; effet réduit ou désactivé sur boss.
+- **III-B2, Répartition :** une zone touche les ennemis présents au moment de son activation, sans appliquer plusieurs fois le même tick.
+- **IV-B1, Bassin catalytique :** après plusieurs réactions, la prochaine zone gagne un rayon modéré ; déclenchement plafonné.
+- **IV-B2, Champ maîtrisé :** dégâts reçus réduits de 3 % tant que le joueur reste hors de ses propres zones dangereuses ; ne crée pas d’immunité.
+
+**Branche C — Maîtrise des pigments**
+- **I-C1, Encre noire :** bonus de dégâts contre les ennemis marqués par l’encre +4 %.
+- **I-C2, Vermillon vif :** bonus de durée des effets vermillon +8 %.
+- **II-C1, Mélange complémentaire :** appliquer deux pigments différents à une cible donne un petit bonus unique, sans réactions récursives.
+- **II-C2, Palette rapide :** temps de récupération de la Palette réduit de 3 %.
+- **III-C1, Résidu :** une réaction laisse une marque décorative qui n’inflige pas de dégâts supplémentaires.
+- **III-C2, Dosage :** probabilité de réaction plus stable et moins variable entre les activations.
+- **IV-C1, Réaction maîtrisée :** les réactions font +10 % de dégâts, mais leur fréquence est plafonnée.
+- **IV-C2, Signature instable :** chaque troisième réaction produit une zone spéciale simple ; elle ne peut ni se répliquer ni déclencher d’autre réaction.
+
+### 28.7 Le Sculpteur — Maillet de Marbre Noir
+
+**Identité :** impacts lourds, résistance et contrôle du terrain à petite échelle. Nœud central : **Œuvre monumentale** — les niveaux renforcent légèrement la résistance avec un compromis de mobilité.
+
+**Branche A — Impact monumental**
+- **I-A1, Tête de maillet :** dégâts du Maillet +5 %.
+- **I-A2, Onde courte :** rayon d’impact +5 %.
+- **II-A1, Fissure :** les impacts infligent un bonus contre les ennemis déjà blessés.
+- **II-A2, Fracas :** cadence d’attaque +3 %.
+- **III-A1, Onde de marbre :** certaines attaques lourdes produisent une petite onde au sol, télégraphiée et sans chaîne.
+- **III-A2, Brise-garde :** dégâts contre les ennemis résistants +6 %, sans ignorer les règles de mitigation.
+- **IV-A1, Coup monumental :** après plusieurs impacts, une attaque lourde renforcée se déclenche, avec indicateur.
+- **IV-A2, Fracture maîtrisée :** dégâts +10 %, mais temps de récupération de l’attaque lourde légèrement accru.
+
+**Branche B — Résistance**
+- **I-B1, Marbre épais :** points de vie maximum +8 %.
+- **I-B2, Peau de pierre :** réduction des dégâts reçus +3 %, sous le plafond global.
+- **II-B1, Assise solide :** résistance aux interruptions légèrement augmentée si cette mécanique existe.
+- **II-B2, Récupération lente :** après avoir éliminé un ennemi puissant, restaure une petite quantité de santé, avec temps de recharge.
+- **III-B1, Fondation :** le Sculpteur subit moins de recul, sans devenir insensible aux attaques qui déplacent le joueur.
+- **III-B2, Garde de marbre :** après une esquive, réduction de dégâts très courte.
+- **IV-B1, Statue vivante :** lorsque la santé passe sous 30 %, réduction de dégâts temporaire, une fois par intervalle long.
+- **IV-B2, Dernier pilier :** une fois par run, survivre à un coup fatal avec un point de vie ; réactivation uniquement après une condition de récupération clairement définie.
+
+**Branche C — Mobilité lourde**
+- **I-C1, Pas ferme :** pénalité éventuelle de déplacement pendant l’attaque réduite.
+- **I-C2, Saut de bloc :** impulsion de saut +5 %.
+- **II-C1, Esquive courte :** récupération de l’esquive réduite de 3 %.
+- **II-C2, Avancée lourde :** vitesse de déplacement +3 %, sans dépasser le plafond global.
+- **III-C1, Atterrissage puissant :** après un saut, la prochaine attaque gagne un petit rayon d’impact ; pas de dégâts gratuits à l’atterrissage.
+- **III-C2, Ancrage :** une esquive qui évite une attaque renforce brièvement la résistance.
+- **IV-C1, Masse maîtrisée :** le Maillet conserve une partie de son bonus de dégâts après un déplacement.
+- **IV-C2, Œuvre achevée :** les bonus de résistance du passif augmentent légèrement, mais la pénalité de mobilité du passif ne disparaît pas.
+
+### 28.8 La Restauratrice — Fil de Restauration
+
+**Identité :** récupération contrôlée, marques et survie sans annuler la pression des ennemis. Nœud central : **Retouche vitale** — éliminer certains ennemis marqués restaure un peu de santé, avec une limite de fréquence.
+
+**Branche A — Fil réparateur**
+- **I-A1, Fil tendu :** dégâts du Fil +5 %.
+- **I-A2, Point précis :** portée de ciblage +5 %.
+- **II-A1, Couture nette :** dégâts +6 % contre les ennemis marqués.
+- **II-A2, Fil rapide :** cadence d’attaque +4 %.
+- **III-A1, Point de rupture :** éliminer une cible marquée réduit légèrement le temps de recharge interne de Retouche vitale, dans un plafond.
+- **III-A2, Double couture :** une attaque peut toucher une cible proche supplémentaire avec dégâts réduits, si le système d’arme le permet.
+- **IV-A1, Couture maîtresse :** les cibles marquées reçoivent +10 % de dégâts du Fil.
+- **IV-A2, Dernier point :** éliminer une cible marquée avec le Fil donne un petit soin supplémentaire, soumis à la limite de soin par intervalle.
+
+**Branche B — Retouche vitale**
+- **I-B1, Retouche douce :** quantité de santé restaurée par Retouche vitale +8 %.
+- **I-B2, Marque durable :** durée des marques +15 %.
+- **II-B1, Réserve de vie :** points de vie maximum +8 %.
+- **II-B2, Main sûre :** réduction des dégâts reçus +3 %, sous le plafond global.
+- **III-B1, Récupération patiente :** si le soin est perdu car la santé est déjà pleine, une petite partie est convertie en bouclier temporaire plafonné ; à tester après le MVP.
+- **III-B2, Retouche fréquente :** délai interne de soin réduit légèrement, avec plafond de soins par minute.
+- **IV-B1, Restauration parfaite :** une élimination marquée restaure davantage de santé lorsque le joueur est sous 50 % de vie.
+- **IV-B2, Dernière réserve :** une fois par run, un soin renforcé se déclenche sous 20 % de vie ; délai et feedback explicites.
+
+**Branche C — Préservation et mobilité**
+- **I-C1, Pas prudent :** distance d’esquive +5 %.
+- **I-C2, Saut contrôlé :** contrôle aérien +5 %.
+- **II-C1, Recul restaurateur :** après une esquive réussie, la prochaine élimination marquée restaure un peu plus de santé.
+- **II-C2, Rayon de collecte :** rayon de ramassage +10 %.
+- **III-C1, Retrait protecteur :** après avoir reçu un coup, réduction de dégâts très courte ; temps de recharge long.
+- **III-C2, Fil conducteur :** les ennemis marqués sont plus faciles à repérer à l’écran.
+- **IV-C1, Dernière retouche :** si la santé tombe bas, Retouche vitale peut s’activer une fois plus tôt, mais jamais plusieurs fois sur un même événement.
+- **IV-C2, Conservatrice :** soin reçu augmenté de 10 %, mais dégâts directs du Fil réduits de 3 %.
+
+### 28.9 Interface et lisibilité de l’arbre
+
+- Afficher le nom du talent, son effet chiffré, son prérequis et son état : disponible, acquis, verrouillé ou incompatible avec les choix actuels.
+- Les liens doivent rester lisibles et les talents acquis distingués par forme et motif, pas uniquement par couleur.
+- Une comparaison avant/après indique la valeur actuelle et la valeur après sélection.
+- Le bouton de réinitialisation demande confirmation et indique ce qui sera remboursé. Pendant le prototype, aucun coût.
+- Le jeu reste en pause pendant la consultation de l’arbre.
+- Les talents non implémentés dans une version de développement ne doivent pas apparaître comme sélectionnables.
+
+### 28.10 Implémentation technique
+
+- Chaque arbre est décrit par des données dédiées (ScriptableObjects ou format de données équivalent) : identifiant stable, personnage propriétaire, palier, branche visuelle, prérequis, effets, limites et texte d’interface.
+- Un talent applique un ou plusieurs modificateurs ou appelle un effet spécialisé via une interface définie. Éviter les références de scène dans les assets de contenu.
+- Le système valide l’absence de cycle dans les prérequis, les identifiants uniques, l’existence des talents requis et les limites de cumul.
+- L’état de l’arbre appartient à la progression du personnage et ne doit pas être confondu avec l’état temporaire d’une run. La politique exacte de persistance (talents acquis entre les runs ou arbre redistribué à chaque run) doit être définie avant d’implémenter la sauvegarde.
+- **Décision de conception à confirmer avant production :** l’arbre est-il une progression permanente du personnage ou une spécialisation choisie au début de chaque run ? Dans l’attente, les arbres sont spécifiés comme arbres réinitialisables de spécialisation, sans coût de reset en prototype ; ne pas implémenter de bonus permanents sans validation explicite.
+- Les talents de combat réutilisent le circuit central de dégâts et ne peuvent pas appliquer de dégâts de manière récursive. Toute réduction de cooldown, tout soin ou toute réaction est plafonné et testé.
+
+### 28.11 Périmètre de production
+
+**Prototype initial :** un arbre réduit de L’Exilé, comprenant un nœud central, trois branches visuelles et six à neuf talents implémentés ; le reset doit fonctionner. Les autres talents sont documentés mais ne sont pas requis pour valider le combat.
+
+**MVP :** l’arbre de L’Exilé est fonctionnel avec un nombre limité de talents. Les cinq autres arbres restent définis dans le document, mais leur production complète est reportée après validation du jeu de base. Ne pas retarder le premier build Windows pour construire les six arbres intégralement.
+
+**Après MVP :** implémenter progressivement les autres arbres, tester les branches croisées, l’équilibrage et la persistance choisie. Les talents qui ajoutent de nouveaux projectiles, états, boucliers ou comportements de collision sont prioritaires seulement si leur coût technique est maîtrisé.
+
