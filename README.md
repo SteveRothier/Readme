@@ -1,6 +1,6 @@
 # BROKEN CANVAS — Cahier des charges
 
-- **Version :** 3.4 — cartes fondées sur une toile vivante et matérialisation progressive ; document unique, il remplace toutes les versions précédentes
+- **Version :** 4.0 — document unique, réorganisé du général au particulier ; il remplace toutes les versions précédentes
 - **Statut :** référence de conception proposée. Les valeurs chiffrées sont des valeurs de départ à confirmer par prototype et tests. Aucune fonctionnalité n'est réputée implémentée. La priorité est un jeu court, amusant et livrable par une personne débutante ; les systèmes non indispensables sont reportés.
 - **Moteur :** Unity 6, URP, C#
 - **Plateforme :** PC Windows
@@ -14,27 +14,27 @@
 - [3. Contrôles, déplacement et caméra](#3-contrôles-déplacement-et-caméra)
 - [4. Combat, dégâts et statuts](#4-combat-dégâts-et-statuts)
 - [5. Personnages](#5-personnages)
-- [6. Instruments](#6-instruments)
-- [7. Reliques](#7-reliques)
-- [8. Synergies](#8-synergies)
-- [9. Progression en partie](#9-progression-en-partie)
-- [10. Peinture au sol](#10-peinture-au-sol)
-- [11. Ennemis communs, mini-boss et boss](#11-ennemis-communs-mini-boss-et-boss)
-- [12. Vagues et difficulté](#12-vagues-et-difficulté)
-- [13. Cartes et navigation](#13-cartes-et-navigation)
-- [14. Objectifs, événements et récompenses](#14-objectifs-événements-et-récompenses)
-- [15. Progression permanente, archives et statistiques](#15-progression-permanente-archives-et-statistiques)
-- [16. Direction artistique, effets et audio](#16-direction-artistique-effets-et-audio)
-- [17. Interface et expérience du joueur](#17-interface-et-expérience-du-joueur)
-- [18. Menu Options](#18-menu-options)
-- [19. Architecture technique Unity 6 URP et sauvegarde](#19-architecture-technique-unity-6-urp-et-sauvegarde)
-- [20. Hordes, simulation et performance](#20-hordes-simulation-et-performance)
-- [21. Fiches de contenu normalisées](#21-fiches-de-contenu-normalisées)
-- [22. Tests et critères d'acceptation](#22-tests-et-critères-dacceptation)
-- [23. Équilibrage](#23-équilibrage)
-- [24. Plan de production](#24-plan-de-production)
-- [25. Règles de travail pour l'assistant IA](#25-règles-de-travail-pour-lassistant-ia)
-- [26. Simplification de production et décisions de cohérence](#26-simplification-de-production-et-décisions-de-cohérence)
+- [6. Arbres de talents des personnages](#6-arbres-de-talents-des-personnages)
+- [7. Instruments](#7-instruments)
+- [8. Reliques](#8-reliques)
+- [9. Synergies](#9-synergies)
+- [10. Progression en partie](#10-progression-en-partie)
+- [11. Peinture au sol](#11-peinture-au-sol)
+- [12. Ennemis communs, mini-boss et boss](#12-ennemis-communs-mini-boss-et-boss)
+- [13. Vagues et difficulté](#13-vagues-et-difficulté)
+- [14. Cartes et navigation](#14-cartes-et-navigation)
+- [15. Objectifs, événements et récompenses](#15-objectifs-événements-et-récompenses)
+- [16. Progression permanente, archives et statistiques](#16-progression-permanente-archives-et-statistiques)
+- [17. Direction artistique, effets et audio](#17-direction-artistique-effets-et-audio)
+- [18. Interface et expérience du joueur](#18-interface-et-expérience-du-joueur)
+- [19. Menu Options](#19-menu-options)
+- [20. Architecture technique Unity 6 URP et sauvegarde](#20-architecture-technique-unity-6-urp-et-sauvegarde)
+- [21. Hordes, simulation et performance](#21-hordes-simulation-et-performance)
+- [22. Fiches de contenu normalisées](#22-fiches-de-contenu-normalisées)
+- [23. Tests et critères d'acceptation](#23-tests-et-critères-dacceptation)
+- [24. Équilibrage](#24-équilibrage)
+- [25. Plan de production](#25-plan-de-production)
+- [26. Règles de travail pour l'assistant IA](#26-règles-de-travail-pour-lassistant-ia)
 - [27. Décisions et journal des changements](#27-décisions-et-journal-des-changements)
 
 ## Comment lire et mettre à jour ce document
@@ -43,18 +43,18 @@ Ce document est la **référence unique** du projet. Il n'y a ni addendum ni « 
 
 - **Une règle, un seul endroit.** Chaque règle est écrite dans le chapitre de son sujet. Les autres chapitres y renvoient (→ §x.y) sans la recopier.
 - **Pour changer une règle**, modifier la section concernée à sa place, puis noter le changement dans le journal (§27.3) : date, ancienne règle, nouvelle règle, raison.
-- **Pour trancher une décision ouverte** (§26.2), reporter la règle retenue dans le chapitre concerné, puis déplacer la ligne vers le registre des décisions (§27.1).
-- **Pour ajouter du contenu** (personnage, Instrument, Relique, ennemi, boss), remplir la fiche normalisée correspondante (chapitre 21) et l'ajouter à la liste du chapitre concerné.
+- **Pour trancher une décision ouverte** (§27.2), reporter la règle retenue dans le chapitre concerné, puis déplacer la ligne vers le registre des décisions (§27.1).
+- **Pour ajouter du contenu** (personnage, Instrument, Relique, ennemi, boss), remplir la fiche normalisée correspondante (chapitre 22) et l'ajouter à la liste du chapitre concerné.
 - **Valeurs chiffrées :** toute valeur est une valeur de départ à tester, sauf mention contraire. Aucune n'est validée avant un test jouable.
 
 **Organisation du document :**
 
-- **Chapitres 1 et 2 — Le projet :** vision, périmètre, boucle de jeu, modes, fin de run.
-- **Chapitres 3 à 8 — Le joueur et le combat :** contrôles, combat, personnages, Instruments, Reliques, synergies.
-- **Chapitres 9 à 15 — Progression, monde et récompenses :** progression en partie, peinture, ennemis et boss, vagues, cartes, objectifs et événements, progression permanente.
-- **Chapitres 16 à 18 — Présentation :** direction artistique, effets, audio, interface, options.
-- **Chapitres 19 et 20 — Technique :** architecture, sauvegarde, hordes et performance.
-- **Chapitres 21 à 26 — Production :** fiches de contenu, tests, équilibrage, plan de production, règles pour l'assistant IA, décisions et journal.
+- **Chapitres 1 et 2 — Le projet :** vision, périmètre et principes du MVP, boucle de jeu, modes, fin de run.
+- **Chapitres 3 à 9 — Le joueur et le combat :** contrôles, combat, personnages, arbres de talents, Instruments, Reliques, synergies.
+- **Chapitres 10 à 16 — Progression, monde et récompenses :** progression en partie, peinture, ennemis et boss, vagues, cartes, objectifs et événements, progression permanente.
+- **Chapitres 17 à 19 — Présentation :** direction artistique, effets, audio, interface, options.
+- **Chapitres 20 et 21 — Technique :** architecture, sauvegarde, hordes et performance.
+- **Chapitres 22 à 27 — Production :** fiches de contenu, tests, équilibrage, plan de production, règles pour l'assistant IA, décisions et journal.
 
 ## Résumé exécutif
 
@@ -96,7 +96,7 @@ Lecture des statuts :
 - **Futur :** à réaliser après validation de la boucle principale.
 - **Valeur de départ :** chiffre proposé, à tester avant d'être figé.
 
-Les règles de travail (inspection du code existant, préservation des références, vérification des tests, simplicité des systèmes) sont regroupées au chapitre 25.
+Les règles de travail (inspection du code existant, préservation des références, vérification des tests, simplicité des systèmes) sont regroupées au chapitre 26.
 
 ### 1.2 Vision et piliers
 
@@ -123,16 +123,16 @@ Piliers :
 | Actions manuelles | Déplacement, saut, esquive et caméra |
 | Esquive | Manuelle, avec courte invulnérabilité (§3.4) |
 | Durée cible | 20 à 30 minutes, boss compris ; mode prototype raccourci pour itérer |
-| Difficulté | Choix au lancement : Normal, Difficile ou Expert ; la difficulté augmente la variété du canvas et la complexité des rencontres sans changer l’identité des cartes (§12.4, §13.5) |
+| Difficulté | Choix au lancement : Normal, Difficile ou Expert ; la difficulté augmente la variété du canvas et la complexité des rencontres sans changer l’identité des cartes (§13.4, §14.5) |
 | Modes de jeu | Normal (V1) et Infini (Futur) (§2.3) |
 | Première carte | Musée des Ombres |
 | Emplacements maximum | 6 Instruments et 6 Reliques ; le MVP peut utiliser une limite plus basse |
 | Rang maximum d'un Instrument | 5 |
-| Évolutions | Deux branches par Instrument, mutuellement exclusives par run (§6.6) |
-| Raretés | Commun, Peu commun, Épique, Légendaire ; quantité statistique uniquement (§9.3) |
-| Pigments de terrain du MVP | Encre noire et Vermillon uniquement (chapitre 10) |
-| Boss | Les apparitions ordinaires cessent à son entrée (§12.6) |
-| Progression permanente | Déblocages et bonus de puissance modestes (chapitre 15) |
+| Évolutions | Deux branches par Instrument, mutuellement exclusives par run (§7.6) |
+| Raretés | Commun, Peu commun, Épique, Légendaire ; quantité statistique uniquement (§10.3) |
+| Pigments de terrain du MVP | Encre noire et Vermillon uniquement (chapitre 11) |
+| Boss | Les apparitions ordinaires cessent à son entrée (§13.6) |
+| Progression permanente | Déblocages et bonus de puissance modestes (chapitre 16) |
 | Téléportation | Interdite : aucun portail ni déplacement instantané |
 | Données | Contenus configurables via assets de données ; pas de valeurs de gameplay dispersées dans les scripts |
 | Contenu initial ciblé | Voir §1.5 |
@@ -143,18 +143,18 @@ Piliers :
 - **Relique :** équipement secondaire qui modifie les statistiques, les attaques ou les synergies.
 - **Pigment :** expérience collectée pendant une run.
 - **Rang :** niveau d'amélioration d'un Instrument (1 à 5) ou, si cette règle est retenue, d'une Relique.
-- **Palier :** niveau de joueur (10, 15 ou 20) auquel une évolution peut être proposée. Ne pas confondre avec un rang.
+- **Palier :** niveau de joueur (10, 15 ou 20, selon le nombre d'évolutions déjà choisies pendant la run) requis pour une évolution. Ne pas confondre avec un rang.
 - **Évolution :** transformation spéciale d'un Instrument, débloquée par un Sceau d'Évolution, un rang requis et un palier de joueur.
 - **Sceau d'Évolution :** récompense garantie par la victoire contre un mini-boss ou un événement prévu ; condition d'une évolution.
-- **Surface :** zone de peinture temporaire sur le sol, avec des effets de gameplay (chapitre 10).
-- **Fracture :** anomalie dans un tableau qui propose un contrat facultatif ; fonctionnalité future (§14.3).
+- **Surface :** zone de peinture temporaire sur le sol, avec des effets de gameplay (chapitre 11).
+- **Fracture :** anomalie dans un tableau qui propose un contrat facultatif ; fonctionnalité future (§15.3).
 - **Contrat :** défi facultatif proposé par une Fracture, avec une meilleure récompense.
 - **Acte :** tranche de 5 minutes du mode Infini après la 20e minute (§2.3).
-- **Retouche :** petite amélioration permanente achetée avec des Fragments de Toile (§15.2).
+- **Retouche :** petite amélioration permanente achetée avec des Fragments de Toile (§16.2).
 - **Run :** partie complète jusqu'à la victoire ou la défaite.
-- **Directeur de vague :** système qui choisit les apparitions d'ennemis selon le temps et un budget de menace (chapitre 12).
-- **Fragments de Toile :** nom provisoire de la ressource permanente (chapitre 15).
-- **Archives / catalogue :** collection permanente des découvertes et déblocages, consultable depuis le menu (§17.3).
+- **Directeur de vague :** système qui choisit les apparitions d'ennemis selon le temps et un budget de menace (chapitre 13).
+- **Fragments de Toile :** nom provisoire de la ressource permanente (chapitre 16).
+- **Archives / catalogue :** collection permanente des découvertes et déblocages, consultable depuis le menu (§18.3).
 
 Les noms d'interface peuvent être artistiques ; les noms de classes, méthodes et variables C# doivent rester explicites et maintenables.
 
@@ -195,7 +195,96 @@ Les noms d'interface peuvent être artistiques ; les noms de classes, méthodes 
 - options graphiques avancées, remappage des commandes, shaders complexes et effets d'interface élaborés ;
 - architecture de foule spécialisée, simulation centralisée avancée, animation LOD et optimisation pour 1 000 ennemis.
 
-Les critères de sortie du MVP sont au §22.2.
+Les critères de sortie du MVP sont au §23.2.
+
+### 1.6 Principe directeur : livrer un jeu amusant avant un jeu vaste
+
+Le projet est développé par une personne débutante en game development. La spécification doit donc réduire le nombre de systèmes qui doivent fonctionner simultanément. Le critère de priorité est : **est-ce que cette fonctionnalité rend la boucle de combat immédiatement plus amusante ou plus compréhensible ?** Si la réponse n'est pas clairement oui, elle est reportée.
+
+**Ordre de priorité :**
+
+1. Le déplacement, la caméra, le saut et l'esquive sont agréables.
+2. Un ennemi est satisfaisant à combattre.
+3. Une attaque automatique est claire et plaisante.
+4. Le joueur devient progressivement plus puissant grâce aux choix.
+5. Le mini-boss et le boss sont lisibles et amusants.
+6. Une run peut être terminée, perdue, redémarrée et jouée à nouveau sans bug.
+7. Seulement ensuite : contenu, exploration, progression permanente et effets avancés.
+
+### 1.7 Cohérence des systèmes au MVP
+
+| Système | Règle de cohérence |
+|---|---|
+| Instruments | Une attaque possède une cadence, une portée, une règle de ciblage et une seule voie d'application des dégâts. |
+| Reliques | Les bonus s'appliquent une seule fois et sont affichés avec leur effet réel. Les rangs de Reliques sont reportés tant qu'ils ne sont pas nécessaires. |
+| Rareté | Modifie uniquement les valeurs statistiques ; elle ne crée pas de nouvelle mécanique. Peut être reportée du tout premier prototype. |
+| Progression | Le Pigment est la seule ressource nécessaire au premier système de niveau. Pas de monnaie permanente dans le MVP initial. |
+| Évolution | Une évolution démonstrative suffit pour prouver le principe. Le système complet Sceau + rang 5 + paliers 10/15/20 attend la validation du combat. |
+| Statuts | Au plus un statut simple dans le MVP ; durée, intervalle et cumul définis avant intégration. |
+| Surfaces de peinture | Désactivées dans le premier prototype si elles ne sont pas indispensables. Si activées, elles sont plafonnées en nombre et durée, et ne peuvent pas infliger des dégâts chaque image sans intervalle. |
+| Événements et contrats | Reportés. Aucun flux de récompense concurrent du choix de niveau dans le MVP initial. |
+| Coffres | Reportés ; la récompense du mini-boss peut utiliser l'écran de choix existant plutôt qu'un nouveau système. |
+| Mini-carte | Reportée. L'arène initiale est assez petite pour être lisible sans navigation avancée. |
+| Mode Infini | Reporté jusqu'à ce qu'une run Normal soit complète et amusante. |
+| Progression permanente | Reportée jusqu'à ce que le joueur ait une raison claire de relancer une deuxième run. |
+| Options | Ne présenter que les options réellement fonctionnelles. Remappage, paramètres graphiques avancés et effets complexes sont reportés. |
+| Performance | Profiler avant optimisation ; limiter la foule avant d'introduire une architecture avancée. |
+
+### 1.8 Décisions techniques à appliquer au MVP
+
+Résumé des décisions techniques du MVP. Le détail se trouve dans les chapitres concernés : états (§2.4), mouvement (§3.6), dégâts (§4.7), ciblage (§7.5), apparitions (§13.3), boss (§12.6 et §13.6), données et sauvegarde (§20.4 et §20.6).
+
+**États et pause**
+
+- Le `RunController` est l'unique propriétaire de l'état de la run.
+- L'état de jeu et l'affichage des menus sont séparés : la pause est une surcouche et mémorise l'état précédent.
+- Une seule récompense à choix est ouverte à la fois ; les autres attendent.
+- Tous les systèmes de gameplay vérifient l'autorisation de simuler avant d'avancer.
+- Victoire, défaite, mort, récompenses et redémarrage ne peuvent être exécutés qu'une fois par événement.
+
+**Dégâts**
+
+- Tous les dégâts passent par un seul résolveur.
+- Le résolveur vérifie cible valide, invulnérabilité, réduction, dégâts, réactions puis mort, dans cet ordre.
+- Le MVP utilise surtout les dégâts directs. Les statuts et réactions complexes sont reportés.
+- Les attaques multi-impacts doivent annoncer leur nombre d'impacts ; aucune répétition implicite à chaque image n'est autorisée.
+
+**Mouvement**
+
+- `CharacterController`, déplacement relatif à la caméra et une vitesse de base par personnage.
+- Pas de sprint, double saut, escalade, téléportation ou déplacement instantané.
+- Saut et esquive possèdent des durées et limites configurées à un seul endroit.
+- L'esquive a une récupération et une fenêtre d'invulnérabilité explicites.
+- Les valeurs exactes sont fixées par test, puis centralisées dans une configuration de mouvement ; elles ne sont pas dispersées dans les scripts.
+
+**Ciblage automatique**
+
+- Portée et cadence par Instrument.
+- Recherche de cible périodique, pas à chaque image.
+- Cible la plus proche par défaut ; en cas d'égalité, garder la cible actuelle si elle reste valide.
+- Aucun tir à travers les murs par défaut.
+- Pas de visée manuelle ni de système de verrouillage pour le MVP.
+
+**Apparitions et foule**
+
+- Commencer avec un maximum de 20 à 30 ennemis actifs, puis augmenter uniquement si le jeu est lisible et performant.
+- Les apparitions ne se font pas à portée de contact immédiate du joueur.
+- Les ennemis utilisent une navigation simple validée dans l'arène de test. Pas de champ de direction personnalisé, d'évitement de foule complexe ou de système d'animation adaptatif avant d'avoir mesuré un problème.
+- Le test de 1 000 ennemis est futur et ne constitue pas un critère de livraison du premier jeu.
+
+**Boss**
+
+- Le boss n'est activé qu'après le nettoyage de l'arène et une annonce courte.
+- La transition est déclenchée une seule fois par le contrôleur de run.
+- Le combat du boss est indépendant des apparitions ordinaires ; aucune nouvelle vague ordinaire n'est créée pendant ce combat.
+- Chaque attaque doit avoir un signal, un délai, une zone, une réponse possible et une récupération. Les attaques impossibles à éviter avec les statistiques de base sont rejetées ou redessinées.
+
+**Données et sauvegarde**
+
+- Les `ScriptableObject` décrivent le contenu statique ; ils ne stockent pas les valeurs temporaires modifiées pendant la run.
+- L'état de run est conservé dans des données runtime.
+- La progression permanente est reportée ; tant qu'elle n'est pas requise, ne pas construire de système de sauvegarde complexe.
+- Une fois la sauvegarde ajoutée, elle est versionnée et ne restaure jamais l'équipement temporaire d'une ancienne run.
 
 ---
 
@@ -205,13 +294,13 @@ Les critères de sortie du MVP sont au §22.2.
 
 1. Choisir un personnage disponible.
 2. Lancer une run : le joueur entre dans la carte avec son équipement de départ.
-3. Explorer et combattre. Les Instruments attaquent automatiquement ; les ennemis apparaissent selon le directeur de vague (chapitre 12).
+3. Explorer et combattre. Les Instruments attaquent automatiquement ; les ennemis apparaissent selon le directeur de vague (chapitre 13).
 4. Se déplacer, sauter et esquiver manuellement.
 5. Ramasser le Pigment laissé par les ennemis.
 6. Monter de niveau et choisir une amélioration parmi trois options. Le jeu est en **pause complète** pendant le choix.
 7. Équiper et améliorer des Instruments et des Reliques dans la limite des emplacements.
-8. Survivre à une difficulté croissante. Un mini-boss ou un événement explicitement défini peut fournir un Sceau d'Évolution (§6.6).
-9. Arrêter les apparitions ordinaires lorsque le boss commence (§12.6).
+8. Survivre à une difficulté croissante. Un mini-boss ou un événement explicitement défini peut fournir un Sceau d'Évolution (§7.6).
+9. Arrêter les apparitions ordinaires lorsque le boss commence (§13.6).
 10. Vaincre le boss ou perdre tous ses points de vie.
 11. Afficher le bilan, attribuer les récompenses permanentes, puis permettre de recommencer ou de revenir au menu.
 
@@ -228,11 +317,11 @@ En combat ordinaire, la boucle doit rester dynamique : la pause n'intervient que
 7. Les ennemis vaincus peuvent laisser du Pigment, des objets ou une récompense spécifique.
 8. Le joueur arbitre entre continuer à attaquer, récupérer du Pigment et se repositionner.
 
-Le rythme par minute (phases A à F) est défini au §12.1.
+Le rythme par minute (phases A à F) est défini au §13.1.
 
 ### 2.3 Modes de jeu
 
-Le jeu propose deux modes. Il n'y a pas de choix de difficulté : chaque mode suit sa propre progression (§12.4). Aucun mode journalier ni run à graine n'est prévu.
+Le jeu propose deux modes. La difficulté se choisit au lancement de la run (§13.4), quel que soit le mode ; chaque mode suit sa propre progression de menace. Aucun mode journalier ni run à graine n'est prévu.
 
 **Mode Normal (V1).** C'est la run décrite au §2.1 : 20 à 30 minutes, phases A à F, boss final. La run se termine par la victoire contre le boss ou par la défaite.
 
@@ -240,13 +329,13 @@ Le jeu propose deux modes. Il n'y a pas de choix de difficulté : chaque mode su
 
 - **Déblocage :** après une première victoire en mode Normal.
 - Mêmes personnage, carte, équipement de départ, commandes et systèmes que le mode Normal.
-- Les 20 premières minutes suivent les phases A à E (§12.1) ; la phase E annonce l'escalade au lieu d'un boss.
-- À partir de 20:00, il n'y a **ni boss final programmé ni victoire** : la run entre dans des **actes de 5 minutes** (valeur de départ). Chaque acte est annoncé (§12.5), change la composition des ennemis, augmente le budget de menace, introduit une rencontre de menace renforcée composée d’ennemis communs et, si le rythme le permet, d’un mini-boss ; une fois terminé, l’acte donne un coffre d’acte garanti (§14.4).
-- La difficulté monte par la composition, la cadence des vagues et la fréquence des rencontres majeures (§12.4), pas par les points de vie seuls. Les plafonds d'ennemis actifs, de projectiles et de surfaces restent ceux du mode Normal (§12.3) : la run ne doit pas se dégrader techniquement avec le temps.
-- Quand tous les Instruments équipés sont au rang maximum et que les options uniques sont épuisées, les montées de niveau proposent des bonus génériques plafonnés (§9.5).
-- La run ne se termine que par la mort ou l'abandon (§2.5). Le score comprend le temps de survie, le nombre d'actes terminés et le nombre d'ennemis éliminés, enregistrés comme records (§15.5).
+- Les 20 premières minutes suivent les phases A à E (§13.1) ; la phase E annonce l'escalade au lieu d'un boss.
+- À partir de 20:00, il n'y a **ni boss final programmé ni victoire** : la run entre dans des **actes de 5 minutes** (valeur de départ). Chaque acte est annoncé (§13.5), change la composition des ennemis, augmente le budget de menace, introduit une rencontre de menace renforcée composée d’ennemis communs et, si le rythme le permet, d’un mini-boss ; une fois terminé, l’acte donne un coffre d’acte garanti (§15.4).
+- La difficulté monte par la composition, la cadence des vagues et la fréquence des rencontres majeures (§13.4), pas par les points de vie seuls. Les plafonds d'ennemis actifs, de projectiles et de surfaces restent ceux du mode Normal (§13.3) : la run ne doit pas se dégrader techniquement avec le temps.
+- Quand tous les Instruments équipés sont au rang maximum et que les options uniques sont épuisées, les montées de niveau proposent des bonus génériques plafonnés (§10.5).
+- La run ne se termine que par la mort ou l'abandon (§2.5). Le score comprend le temps de survie, le nombre d'actes terminés et le nombre d'ennemis éliminés, enregistrés comme records (§16.5).
 - **Fragments de Toile :** comme une défaite, mais les gains sont réduits de moitié après 30 minutes de run (valeur de départ), pour éviter de farmer sans fin.
-- La présence éventuelle d'un boss en mode Infini est une décision ouverte (§26.2).
+- La présence éventuelle d'un boss en mode Infini est une décision ouverte (§27.2).
 
 ### 2.4 Machine à états
 
@@ -274,7 +363,7 @@ Chaque transition est définie et testable. Exemples :
 - interrompre immédiatement les nouvelles attaques du joueur ;
 - arrêter les apparitions et désactiver les entrées de combat ;
 - laisser les effets visuels se terminer brièvement, sans infliger de nouveaux dégâts au joueur ;
-- afficher le bilan de run (§17.7) ;
+- afficher le bilan de run (§18.7) ;
 - calculer les Fragments de Toile **une seule fois** ;
 - enregistrer les déblocages et les statistiques de run ;
 - permettre `Recommencer` ou `Menu principal`.
@@ -286,7 +375,7 @@ Règles communes à la victoire et à la défaite :
 - le redémarrage crée un **nouvel état de run** : il ne réutilise ni anciens ennemis, ni projectiles, ni effets, ni minuteries, ni buffs temporaires, ni objets de Pigment, et il réinitialise santé, statistiques temporaires et temps de jeu ;
 - le retour au menu permet de choisir un autre personnage.
 
-**Récompenses de fin de run.** Les Fragments de Toile (§15.2) sont calculés une seule fois à partir du total gagné pendant la run, selon l'issue :
+**Récompenses de fin de run.** Les Fragments de Toile (§16.2) sont calculés une seule fois à partir du total gagné pendant la run, selon l'issue :
 
 | Issue | Fragments | Progression |
 |---|---|---|
@@ -294,24 +383,11 @@ Règles communes à la victoire et à la défaite :
 | Défaite | Total de la run × 1 | Déblocages, découvertes, défis et statistiques enregistrés |
 | Abandon | Total de la run × 1 | Identique à la défaite ; la run est marquée « abandonnée » et ne compte pas comme victoire |
 
-L'abandon n'est pas puni : la récompense dépend de ce qui a été accompli, donc quitter tôt rapporte peu. Il se fait depuis le menu pause, avec confirmation (§17.7), et mène au même bilan que la défaite. En mode Infini, il n'y a ni victoire ni multiplicateur (§2.3).
+L'abandon n'est pas puni : la récompense dépend de ce qui a été accompli, donc quitter tôt rapporte peu. Il se fait depuis le menu pause, avec confirmation (§18.7), et mène au même bilan que la défaite. En mode Infini, il n'y a ni victoire ni multiplicateur (§2.3).
 
 ---
 
 ## 3. Contrôles, déplacement et caméra
-
-### Contrat de contrôle du MVP
-
-Le premier objectif est un personnage qui répond de façon prévisible, pas un système de mouvement réaliste. Les valeurs numériques des autres sections restent provisoires, mais le prototype doit choisir une seule configuration de référence et l'enregistrer dans `PlayerMovementConfig`.
-
-- Le déplacement est relatif à la caméra, sur le plan horizontal ; la vitesse est constante hors accélération/freinage courts.
-- Le saut est déclenché au sol, applique une impulsion verticale et utilise une gravité explicite. Le MVP n'inclut pas le double saut, l'escalade ni les attaques aériennes spéciales.
-- L'esquive a une durée, une distance, un délai de récupération et une fenêtre d'invulnérabilité distincts. Une esquive ne peut pas être relancée tant que sa récupération n'est pas terminée.
-- Une esquive sans direction va vers l'arrière par rapport à l'orientation du personnage, conformément à la décision retenue.
-- Le joueur ne peut pas être déplacé par un menu ou un curseur de souris capturé ; les menus libèrent le curseur et bloquent les entrées de combat.
-- Les attaques automatiques fonctionnent pendant le saut uniquement si le choix ouvert correspondant est tranché ; pour le premier prototype, les attaques restent autorisées en l'air afin de limiter les exceptions.
-- Les collisions du joueur et la caméra sont testées dans une arène simple avant de construire la carte finale.
-
 
 ### 3.1 Commandes
 
@@ -328,8 +404,8 @@ Le premier objectif est un personnage qui répond de façon prévisible, pas un 
 Règles :
 
 - Toutes les actions sont centralisées dans le **New Input System**. Aucune touche n'est codée en dur dans les scripts de gameplay.
-- La remappabilité des commandes est prévue dans une version ultérieure ; la centralisation des actions la rend possible. Les options de commandes sont décrites au §18.
-- Le bouton secondaire de la souris peut être envisagé pour l'esquive ; la touche finale reste à confirmer (§26.2).
+- La remappabilité des commandes est prévue dans une version ultérieure ; la centralisation des actions la rend possible. Les options de commandes sont décrites au §19.
+- Le bouton secondaire de la souris peut être envisagé pour l'esquive ; la touche finale reste à confirmer (§27.2).
 
 ### 3.2 Déplacement
 
@@ -367,9 +443,9 @@ Règles :
 - Gravité cohérente et retour au sol fiable. Une pente, un rebord ou un petit obstacle ne provoque ni saut fantôme ni perte injustifiée du contrôle.
 - Le joueur influence sa direction en l'air, dans la limite de la statistique de contrôle aérien du personnage.
 - **Le saut ne donne pas d'invulnérabilité** et ne remplace pas l'esquive. Il sert surtout à la mobilité et au franchissement léger.
-- Le saut ne permet pas de franchir les limites de la carte ni d'éviter toutes les mécaniques d'un boss. La possibilité de sauter par-dessus une attaque de boss est décidée attaque par attaque (§11.6).
+- Le saut ne permet pas de franchir les limites de la carte ni d'éviter toutes les mécaniques d'un boss. La possibilité de sauter par-dessus une attaque de boss est décidée attaque par attaque (§12.6).
 - Les attaques pouvant toucher le joueur en l'air sont clairement lisibles ; les attaques au sol peuvent avoir des règles distinctes si leur télégraphe l'indique.
-- Les attaques automatiques pendant le saut suivent une règle explicite et testée (décision ouverte, §26.2).
+- Les attaques automatiques pendant le saut suivent une règle explicite et testée (décision ouverte, §27.2).
 - Le joueur n'est jamais forcé à réussir des sauts de précision de type plateforme pour terminer une partie standard.
 - Animations provisoires acceptées pendant le prototype.
 
@@ -394,7 +470,7 @@ Règles :
 - Aucun dégât antérieur au déclenchement n'est annulé.
 - Les murs et les limites de la carte restent bloquants. Pendant la phase d'esquive, les ennemis ordinaires ne bloquent pas le joueur (règle de départ, à tester).
 - Délai de récupération : pas d'esquive continue.
-- Feedback visuel ou sonore à chaque esquive ; l'état de recharge est immédiatement compréhensible (§17.4).
+- Feedback visuel ou sonore à chaque esquive ; l'état de recharge est immédiatement compréhensible (§18.4).
 - Une esquive ne réinitialise pas les temps de recharge des Instruments.
 - **Esquive en l'air :** autorisée, avec le même délai de recharge, pour qu'elle reste utile sans permettre un vol permanent. Saut et esquive ne peuvent pas être enchaînés indéfiniment pour supprimer tout risque.
 
@@ -427,7 +503,7 @@ Comportement :
 - limites verticales raisonnables ;
 - curseur **capturé pendant le jeu** et **libéré** dans les menus, la pause, les écrans de choix et de fin ; la caméra ne recapture pas la souris tant que le jeu est en pause ou terminé.
 
-Réglages exposés dans une configuration caméra : sensibilité horizontale et verticale, distance de suivi, hauteur et angle, limites verticales, amortissement du suivi, comportement en collision avec le décor, inversion facultative des axes vertical et horizontal, champ de vision, intensité des secousses (réglable et désactivable). Les réglages accessibles au joueur sont au §18.
+Réglages exposés dans une configuration caméra : sensibilité horizontale et verticale, distance de suivi, hauteur et angle, limites verticales, amortissement du suivi, comportement en collision avec le décor, inversion facultative des axes vertical et horizontal, champ de vision, intensité des secousses (réglable et désactivable). Les réglages accessibles au joueur sont au §19.
 
 Point de départ à tester : caméra légèrement surélevée, angle plongeant modéré, distance suffisante pour lire les menaces proches. Les chiffres exacts dépendent de la taille des personnages, de la carte et du champ de vision ; ils ne sont pas figés avant un test dans le Musée des Ombres.
 
@@ -435,30 +511,21 @@ Point de départ à tester : caméra légèrement surélevée, angle plongeant m
 
 Ne pas faire trembler la caméra à chaque impact mineur (§4.4).
 
+### 3.6 Contrat de contrôle du MVP
+
+Le premier objectif est un personnage qui répond de façon prévisible, pas un système de mouvement réaliste. Les valeurs numériques des autres sections restent provisoires, mais le prototype doit choisir une seule configuration de référence et l'enregistrer dans `PlayerMovementConfig`.
+
+- Le déplacement est relatif à la caméra, sur le plan horizontal ; la vitesse est constante hors accélération/freinage courts.
+- Le saut est déclenché au sol, applique une impulsion verticale et utilise une gravité explicite. Le MVP n'inclut pas le double saut, l'escalade ni les attaques aériennes spéciales.
+- L'esquive a une durée, une distance, un délai de récupération et une fenêtre d'invulnérabilité distincts. Une esquive ne peut pas être relancée tant que sa récupération n'est pas terminée.
+- Une esquive sans direction va vers l'arrière par rapport à l'orientation du personnage, conformément à la décision retenue.
+- Le joueur ne peut pas être déplacé par un menu ou un curseur de souris capturé ; les menus libèrent le curseur et bloquent les entrées de combat.
+- Les attaques automatiques fonctionnent pendant le saut uniquement si le choix ouvert correspondant est tranché ; pour le premier prototype, les attaques restent autorisées en l'air afin de limiter les exceptions.
+- Les collisions du joueur et la caméra sont testées dans une arène simple avant de construire la carte finale.
+
 ---
 
 ## 4. Combat, dégâts et statuts
-
-### Règles techniques simplifiées obligatoires pour le MVP
-
-Tous les dégâts passent par un seul point d'entrée logique (`DamageResolver` ou une méthode équivalente clairement identifiée). Un impact contient au minimum : source, cible, valeur de dégâts et type. Le système applique les règles dans cet ordre :
-
-1. vérifier que la source et la cible sont valides et vivantes ;
-2. vérifier l'invulnérabilité de la cible ;
-3. appliquer la réduction de dégâts éventuelle ;
-4. appliquer les dégâts une seule fois ;
-5. déclencher une seule fois les réactions liées à l'impact ;
-6. déclencher la mort si la santé atteint zéro.
-
-**Règles MVP :**
-
-- Les attaques ordinaires ne touchent une même cible qu'une fois par impact, sauf si leur fiche décrit explicitement plusieurs impacts.
-- L'esquive accorde une seule fenêtre d'invulnérabilité définie par le contrôleur du joueur ; elle ne rend pas le joueur invulnérable pendant toute l'animation par défaut.
-- Les statuts complexes, les critiques combinés, les résistances multiples et les réactions en chaîne sont reportés. Le MVP commence avec des dégâts directs et, au maximum, un effet simple de ralentissement ou de zone.
-- Un effet de dégâts sur la durée doit posséder une durée, un intervalle et une règle de cumul explicites. À défaut, il ne peut pas être ajouté au jeu.
-- Les dégâts de mort, de zone, de projectile et de surface doivent tous respecter le même contrôle d'invulnérabilité.
-- Aucun système de dégâts ne modifie directement les points de vie en contournant ce circuit.
-
 
 ### 4.1 Architecture du combat
 
@@ -564,7 +631,27 @@ Chaque statut définit :
 | Vulnérabilité | Augmente les dégâts reçus | Valeur plafonnée, pas de cumul sans limite |
 | Étourdissement | Interrompt une action non protégée | Durée réduite ou immunité temporaire sur mini-boss et boss |
 
-Le MVP n'implémente que les statuts requis par ses personnages, Instruments et ennemis. Les règles de cumul précises de chaque statut sont à confirmer par les tests (§26.2).
+Le MVP n'implémente que les statuts requis par ses personnages, Instruments et ennemis. Les règles de cumul précises de chaque statut sont à confirmer par les tests (§27.2).
+
+### 4.7 Règles techniques du MVP
+
+Tous les dégâts passent par un seul point d'entrée logique (`DamageResolver` ou une méthode équivalente clairement identifiée). Un impact contient au minimum : source, cible, valeur de dégâts et type. Le système applique les règles dans cet ordre :
+
+1. vérifier que la source et la cible sont valides et vivantes ;
+2. vérifier l'invulnérabilité de la cible ;
+3. appliquer la réduction de dégâts éventuelle ;
+4. appliquer les dégâts une seule fois ;
+5. déclencher une seule fois les réactions liées à l'impact ;
+6. déclencher la mort si la santé atteint zéro.
+
+**Règles MVP :**
+
+- Les attaques ordinaires ne touchent une même cible qu'une fois par impact, sauf si leur fiche décrit explicitement plusieurs impacts.
+- L'esquive accorde une seule fenêtre d'invulnérabilité définie par le contrôleur du joueur ; elle ne rend pas le joueur invulnérable pendant toute l'animation par défaut.
+- Les statuts complexes, les critiques combinés, les résistances multiples et les réactions en chaîne sont reportés. Le MVP commence avec des dégâts directs et, au maximum, un effet simple de ralentissement ou de zone.
+- Un effet de dégâts sur la durée doit posséder une durée, un intervalle et une règle de cumul explicites. À défaut, il ne peut pas être ajouté au jeu.
+- Les dégâts de mort, de zone, de projectile et de surface doivent tous respecter le même contrôle d'invulnérabilité.
+- Aucun système de dégâts ne modifie directement les points de vie en contournant ce circuit.
 
 ---
 
@@ -609,7 +696,7 @@ La vision finale prévoit six personnages. Pour la V1, seul l'Exilé est nécess
    - **Passif — Retouche vitale :** éliminer des ennemis marqués peut rendre un peu de santé, avec une limite de fréquence.
    - **Style :** survie et récupération.
 
-Chaque personnage démarre avec l'Instrument qui porte son identité (liste complète au §6.1). Les fiches détaillées suivent le modèle du §21.1.
+Chaque personnage démarre avec l'Instrument qui porte son identité (liste complète au §7.1). Les fiches détaillées suivent le modèle du §22.1.
 
 ### 5.3 Statistiques de base et profils
 
@@ -652,7 +739,7 @@ Profils de conception (qualitatifs, à convertir en nombres après un premier pr
 
 Les effets temporaires, les améliorations de run et les bonus permanents sont appliqués par un **système de modificateurs** défini, et non en remplaçant les valeurs de base. Le calcul final est inspectable et testable.
 
-Chaque personnage possède un arbre de talents dédié décrit au §28. Les arbres partagent une structure et des règles techniques, mais leurs talents identitaires sont propres à leur Instrument et à leur passif. Les arbres complets sont du contenu post-prototype ; pour le MVP, seule une tranche réduite de l’arbre de L’Exilé est implémentée.
+Chaque personnage possède un arbre de talents dédié décrit au §6. Les arbres partagent une structure et des règles techniques, mais leurs talents identitaires sont propres à leur Instrument et à leur passif. Les arbres complets sont du contenu post-prototype ; pour le MVP, seule une tranche réduite de l’arbre de L’Exilé est implémentée.
 
 ### 5.4 Personnages futurs à prototyper après la V1
 
@@ -662,15 +749,274 @@ Ces trois personnages sont des pistes d'extension, pas des prérequis. Le Patine
 - **L'Encré :** peut se transformer brièvement en flux d'encre au ras du sol. La transformation consomme une jauge ; traverser ses propres flaques peut contribuer à la restaurer ; reprendre forme près d'une flaque peut provoquer une explosion. La transformation reste un déplacement continu : ni téléportation ni déplacement instantané.
 - **Le Marionnettiste :** relie plusieurs ennemis avec des fils d'encre ; une fraction des dégâts infligés à un ennemi lié peut être propagée aux autres. Une compétence peut rapprocher les ennemis liés. Plus faible contre une cible isolée.
 
-L'effectif final de personnages (six, ou davantage avec ces pistes) reste à décider (§26.2). Les interactions de ces personnages avec les surfaces sont au §10.5.
+L'effectif final de personnages (six, ou davantage avec ces pistes) reste à décider (§27.2). Les interactions de ces personnages avec les surfaces sont au §11.5.
 
 ---
 
-## 6. Instruments
+## 6. Arbres de talents des personnages
 
-### 6.1 Liste de référence et évolutions
+### 6.1 Objectif et principes
 
-Dix Instruments sont prévus. Chacun a deux évolutions (A et B) mutuellement exclusives par run (§6.6). Les synergies citées sont des propositions à tester.
+Chaque personnage possède **son propre arbre vertical**, conçu autour de son Instrument de départ et de son passif. L’arbre combine les améliorations statistiques simples de l’option A avec des talents identitaires qui changent ou renforcent le style de jeu. Il ne remplace ni les rangs d’Instrument (1 à 5), ni les évolutions d’Instrument, ni les bonus choisis pendant une run.
+
+Principes obligatoires :
+- Chaque palier présente **2 ou 3 choix**. Le joueur choisit un talent à ce palier.
+- L’arbre est visuellement vertical, mais les branches peuvent se rejoindre : un talent choisi peut ouvrir plusieurs chemins et les chemins ne sont pas des classes fermées.
+- Les liens affichés dans l’interface représentent les prérequis. Un talent ne peut être choisi que si au moins un de ses prérequis est acquis.
+- L’arbre peut être **réinitialisé**. La réinitialisation rembourse les points investis dans l’arbre et remet les choix à zéro ; elle ne retire pas les niveaux de personnage, les Instruments, les Reliques ou les déblocages. Le coût éventuel de réinitialisation est une décision de méta-progression ultérieure ; pendant le prototypage, reset gratuit.
+- Les statistiques sont des modificateurs, jamais des remplacements directs des valeurs de base. Le calcul final passe par le système central de modificateurs (§5.3, §20).
+- Les talents qui changent un comportement doivent expliquer leur effet, leur condition, leur durée et leurs limites. Pas de chance aléatoire cachée ni d’effet sans retour visuel.
+- Les talents statistiques ne doivent pas dépasser les plafonds globaux du jeu ni rendre le personnage invulnérable ou supprimer les décisions de déplacement.
+
+### 6.2 Structure commune et règles de progression
+
+Chaque arbre comprend un nœud d’identité initial, trois branches thématiques et quatre paliers de spécialisation. Chaque branche présente deux talents candidats par palier dans cette proposition ; l’interface pourra montrer trois choix lorsque des nœuds de liaison ou talents transversaux deviennent disponibles. Les talents listés ci-dessous forment la **version de conception complète proposée**, pas un contenu à produire intégralement dans le MVP.
+
+- **Palier I — Fondation :** statistiques modestes ou amélioration de base du passif.
+- **Palier II — Spécialisation :** amélioration plus marquée de l’arme, de la mobilité ou du passif.
+- **Palier III — Connexion :** nœuds pouvant ouvrir une branche voisine ; choix plus distinctifs, sans évolution complète d’Instrument.
+- **Palier IV — Signature :** talent fort qui approfondit un style de jeu, avec contrepartie ou limite lorsque nécessaire.
+- Les talents d’un même palier ne sont pas tous obligatoires. Les prérequis peuvent être reliés à un talent de la branche ou à un nœud transversal commun. Le joueur peut traverser d’une branche à l’autre dès qu’il possède un nœud de liaison compatible.
+- Pour garder l’arbre lisible, viser environ **18 à 24 talents proposés par personnage** à terme, mais n’implémenter qu’un petit sous-ensemble pour les tests initiaux.
+- Les chiffres ci-dessous sont des valeurs de départ à tester. Les talents identitaires sont décrits comme comportements attendus ; leur implémentation ne doit pas contourner le circuit central de dégâts (§4).
+
+### 6.3 L'Exilé — Pinceau du Dernier Trait
+
+**Identité :** polyvalence, éliminations qui entretiennent le Trait fondateur, coups de pinceau fiables. Nœud central : **Trait fondateur** — les éliminations renforcent temporairement les dégâts du Pinceau du Dernier Trait ; le bonus retombe après une période sans élimination.
+
+**Branche A — Puissance du trait**
+- **I-A1, Pigment dense :** dégâts du Pinceau +5 %.
+- **I-A2, Trait net :** le premier coup porté à une cible en pleine santé inflige +8 % de dégâts ; une même cible ne peut subir ce bonus qu’une fois toutes les quelques secondes.
+- **II-A1, Élan du peintre :** une élimination prolonge le bonus du Trait fondateur de 0,5 s.
+- **II-A2, Pointe incisive :** +3 points de pourcentage de chance de critique si cette statistique est active ; sinon, +4 % de dégâts.
+- **III-A1, Large balayage :** largeur du trait augmentée de 10 %, avec une légère hausse du temps de récupération si nécessaire pour l’équilibrage.
+- **III-A2, Encre persistante :** les cibles touchées restent marquées visuellement brièvement, facilitant le suivi ; pas de dégâts supplémentaires automatiques.
+- **IV-A1, Dernier mot :** à pleine puissance du Trait fondateur, le Pinceau inflige +10 % de dégâts supplémentaires.
+- **IV-A2, Signature profonde :** après plusieurs éliminations rapides, la prochaine attaque du Pinceau est renforcée ; déclenchement limité et clairement indiqué.
+
+**Branche B — Mobilité de l’exilé**
+- **I-B1, Pas de côté :** distance d’esquive +5 %.
+- **I-B2, Souffle retrouvé :** récupération de l’esquive réduite de 3 %, sans passer sous le minimum autorisé.
+- **II-B1, Saut dessiné :** impulsion de saut +5 %.
+- **II-B2, Retrait maîtrisé :** courte réduction de dégâts après la fin d’une esquive, sans prolonger l’invulnérabilité de l’esquive elle-même.
+- **III-B1, Trait en mouvement :** dégâts du Pinceau +5 % pendant un court instant après un saut, sans exiger de rester en l’air.
+- **III-B2, Reprise :** une élimination réduit légèrement le temps de récupération restant de l’esquive ; plafond de réduction par seconde.
+- **IV-B1, Fuite créatrice :** après une esquive réussie qui évite un coup, la prochaine attaque du Pinceau est renforcée.
+- **IV-B2, Corps léger :** vitesse de déplacement +3 %, plafonnée par la limite globale de mobilité.
+
+**Branche C — Maîtrise du Trait fondateur**
+- **I-C1, Enchaînement :** durée du bonus de Trait fondateur +10 %.
+- **I-C2, Première marque :** la première élimination de chaque vague donne une petite prolongation du bonus.
+- **II-C1, Cadence du pinceau :** cadence d’attaque +4 %.
+- **II-C2, Trace vive :** le bonus du passif se cumule plus vite, mais son plafond ne change pas.
+- **III-C1, Rémanence :** lors d’une élimination sous bonus actif, une marque visuelle frappe une cible proche ; dégâts modestes, sans chaîne récursive.
+- **III-C2, Discipline :** après une courte période sans subir de dégâts, +5 % de dégâts jusqu’au prochain coup reçu.
+- **IV-C1, Trait fondateur accompli :** le bonus du passif expire plus lentement et son indicateur devient plus précis.
+- **IV-C2, Dernière touche :** si le bonus du passif est sur le point d’expirer, la prochaine élimination le rafraîchit entièrement ; une seule fois par activation.
+
+### 6.4 La Virtuose — Rapière Vermillon
+
+**Identité :** attaques rapides et critiques, marquage de cibles, repositionnement. Nœud central : **Coup de maître** — un coup critique marque une cible ; le prochain critique contre cette cible reçoit un bonus défini par les données du personnage.
+
+**Branche A — Duel et précision**
+- **I-A1, Pointe précise :** dégâts de la Rapière +5 %.
+- **I-A2, Main sûre :** chance de critique +3 points ; si le système critique est désactivé, dégâts +4 %.
+- **II-A1, Ouverture :** dégâts +8 % contre une cible marquée par Coup de maître.
+- **II-A2, Fente courte :** portée de la Rapière +8 %, sans toucher à la portée de ciblage globale.
+- **III-A1, Duel prolongé :** frapper plusieurs fois la même cible augmente brièvement les dégâts contre elle, avec un plafond et une remise à zéro après changement de cible.
+- **III-A2, Contre-pointe :** après une esquive qui évite une attaque, le prochain coup critique inflige un bonus modéré.
+- **IV-A1, Coup parfait :** consommer la marque de Coup de maître inflige un bonus supplémentaire une fois par marque.
+- **IV-A2, Exécution vermillon :** bonus de dégâts contre les ennemis sous 25 % de santé, limité pour éviter les éliminations instantanées de boss.
+
+**Branche B — Danse vermillon**
+- **I-B1, Pas de danse :** distance d’esquive +5 %.
+- **I-B2, Récupération élégante :** récupération de l’esquive réduite de 3 %.
+- **II-B1, Fente mobile :** après un déplacement ou un saut, la prochaine attaque reçoit +5 % de portée ou de dégâts (un seul effet sera retenu au prototypage).
+- **II-B2, Talon vif :** vitesse de déplacement +3 %.
+- **III-B1, Passage sûr :** après une esquive réussie, réduction de dégâts très courte, distincte de l’invulnérabilité native.
+- **III-B2, Pirouette :** une élimination réduit légèrement la récupération d’esquive, avec un plafond par seconde.
+- **IV-B1, Danse sans faute :** une esquive parfaitement synchronisée renforce la prochaine attaque ; fenêtre généreuse et feedback visuel clair.
+- **IV-B2, Duel mobile :** les attaques n’imposent pas de ralentissement de déplacement supplémentaire, si un tel ralentissement existe.
+
+**Branche C — Maîtrise des marques**
+- **I-C1, Marque vive :** la marque de Coup de maître dure +15 %.
+- **I-C2, Sang-froid :** +5 % de dégâts contre les cibles non marquées.
+- **II-C1, Marque partagée :** lorsque la cible marquée meurt, une cible proche reçoit une marque faible ; pas de propagation en chaîne.
+- **II-C2, Rythme parfait :** cadence d’attaque +4 %.
+- **III-C1, Focalisation :** les attaques critiques contre une cible marquée augmentent légèrement la prochaine chance de critique, avec plafond.
+- **III-C2, Riposte ciblée :** la première attaque contre une cible marquée après une esquive est renforcée.
+- **IV-C1, Signature du maître :** consommer une marque restaure une petite fraction de la ressource de talent éventuelle ; si aucune ressource n’existe, bonus de dégâts fixe.
+- **IV-C2, Marque décisive :** le bonus du prochain critique contre une cible marquée augmente, mais la marque ne peut pas se cumuler sur une même cible.
+
+### 6.5 Le Graveur — Arbalète à Encre
+
+**Identité :** précision à distance et montée en puissance du passif Perspective. Nœud central : **Perspective** — les attaques à distance gagnent en puissance jusqu’à une limite clairement affichée.
+
+**Branche A — Précision**
+- **I-A1, Pointe gravée :** dégâts des projectiles +5 %.
+- **I-A2, Œil du graveur :** portée de ciblage +8 %, dans les limites de lisibilité.
+- **II-A1, Trait rectiligne :** vitesse des projectiles +10 %.
+- **II-A2, Point faible :** +3 points de critique ou +4 % de dégâts si les critiques ne sont pas retenus.
+- **III-A1, Tir tendu :** dégâts augmentés contre les cibles éloignées, plafonnés et sans bonus à travers les murs.
+- **III-A2, Pointe perforante :** le projectile peut traverser une cible supplémentaire avec dégâts réduits ; à valider techniquement et en lisibilité.
+- **IV-A1, Gravure parfaite :** à charge maximale de Perspective, le prochain tir inflige un bonus, puis la charge reste soumise aux règles normales.
+- **IV-A2, Point de fuite :** les tirs contre une cible isolée gagnent un bonus modéré ; aucune condition basée sur une distance impossible à lire.
+
+**Branche B — Positionnement**
+- **I-B1, Recul contrôlé :** distance d’esquive +5 %.
+- **I-B2, Appui stable :** après un court instant sans déplacement, dégâts à distance +4 %.
+- **II-B1, Saut du graveur :** contrôle aérien +5 % ou impulsion de saut +5 % (choisir une seule statistique dans l’implémentation).
+- **II-B2, Repli préparé :** après l’esquive, vitesse de déplacement +5 % pendant un bref instant.
+- **III-B1, Ligne de tir :** la sélection de cible privilégie une cible visible et éloignée si elle est presque aussi proche que la cible actuelle.
+- **III-B2, Déplacement tactique :** cadence d’attaque +4 % après un changement de position.
+- **IV-B1, Tireur insaisissable :** éviter une attaque par esquive améliore le prochain tir.
+- **IV-B2, Hauteur utile :** après un saut, le premier tir gagne un bonus modéré ; ne nécessite pas de saut de précision.
+
+**Branche C — Perspective**
+- **I-C1, Profondeur :** le bonus de Perspective atteint son plafond un peu plus vite.
+- **I-C2, Distance constante :** le bonus de Perspective se dissipe plus lentement.
+- **II-C1, Angle gravé :** les tirs à charge élevée infligent +5 % de dégâts.
+- **II-C2, Encre dense :** les projectiles appliquent une marque visuelle brève facilitant le suivi.
+- **III-C1, Écho lointain :** toucher une cible à distance maximale prolonge légèrement Perspective.
+- **III-C2, Gravure patiente :** après un court instant sans tir, le prochain projectile est renforcé.
+- **IV-C1, Perspective absolue :** une fois le plafond atteint, la première attaque contre une nouvelle cible reçoit un bonus ; déclenchement limité.
+- **IV-C2, Ligne maîtresse :** le bonus maximal de Perspective augmente légèrement, mais sa montée demande davantage de tirs réussis.
+
+### 6.6 L'Alchimiste — Palette Catalytique
+
+**Identité :** pigments, zones et réactions contrôlées. Nœud central : **Mélange instable** — certains effets de pigments peuvent provoquer une réaction de zone, à probabilité limitée et avec un signal visuel net.
+
+**Branche A — Catalyse**
+- **I-A1, Pigment concentré :** dégâts des réactions +5 %.
+- **I-A2, Mélange stable :** fréquence de déclenchement des réactions améliorée légèrement, dans un plafond défini.
+- **II-A1, Vermillon brûlant :** les effets vermillon infligent un petit bonus de dégâts.
+- **II-A2, Encre adhérente :** les effets d’encre persistent légèrement plus longtemps, sans augmenter la taille de leurs zones.
+- **III-A1, Réaction secondaire :** une réaction réussie laisse une petite marque de pigment sans dégâts en chaîne.
+- **III-A2, Catalyse rapide :** cadence d’attaque +4 %.
+- **IV-A1, Mélange critique :** une réaction renforcée survient après plusieurs applications réussies, avec indicateur et temps de recharge.
+- **IV-A2, Formule concentrée :** dégâts de réaction +10 %, mais durée des zones légèrement réduite si nécessaire à l’équilibrage.
+
+**Branche B — Contrôle de zone**
+- **I-B1, Goutte large :** rayon des zones +5 %.
+- **I-B2, Sol préparé :** durée des zones +8 %.
+- **II-B1, Bordure sûre :** le contour des zones dangereuses devient plus visible et se dessine plus tôt.
+- **II-B2, Pas de côté :** distance d’esquive +5 %.
+- **III-B1, Tache persistante :** les zones ralentissent légèrement les ennemis ordinaires ; effet réduit ou désactivé sur boss.
+- **III-B2, Répartition :** une zone touche les ennemis présents au moment de son activation, sans appliquer plusieurs fois le même tick.
+- **IV-B1, Bassin catalytique :** après plusieurs réactions, la prochaine zone gagne un rayon modéré ; déclenchement plafonné.
+- **IV-B2, Champ maîtrisé :** dégâts reçus réduits de 3 % tant que le joueur reste hors de ses propres zones dangereuses ; ne crée pas d’immunité.
+
+**Branche C — Maîtrise des pigments**
+- **I-C1, Encre noire :** bonus de dégâts contre les ennemis marqués par l’encre +4 %.
+- **I-C2, Vermillon vif :** bonus de durée des effets vermillon +8 %.
+- **II-C1, Mélange complémentaire :** appliquer deux pigments différents à une cible donne un petit bonus unique, sans réactions récursives.
+- **II-C2, Palette rapide :** temps de récupération de la Palette réduit de 3 %.
+- **III-C1, Résidu :** une réaction laisse une marque décorative qui n’inflige pas de dégâts supplémentaires.
+- **III-C2, Dosage :** probabilité de réaction plus stable et moins variable entre les activations.
+- **IV-C1, Réaction maîtrisée :** les réactions font +10 % de dégâts, mais leur fréquence est plafonnée.
+- **IV-C2, Signature instable :** chaque troisième réaction produit une zone spéciale simple ; elle ne peut ni se répliquer ni déclencher d’autre réaction.
+
+### 6.7 Le Sculpteur — Maillet de Marbre Noir
+
+**Identité :** impacts lourds, résistance et contrôle du terrain à petite échelle. Nœud central : **Œuvre monumentale** — les niveaux renforcent légèrement la résistance avec un compromis de mobilité.
+
+**Branche A — Impact monumental**
+- **I-A1, Tête de maillet :** dégâts du Maillet +5 %.
+- **I-A2, Onde courte :** rayon d’impact +5 %.
+- **II-A1, Fissure :** les impacts infligent un bonus contre les ennemis déjà blessés.
+- **II-A2, Fracas :** cadence d’attaque +3 %.
+- **III-A1, Onde de marbre :** certaines attaques lourdes produisent une petite onde au sol, télégraphiée et sans chaîne.
+- **III-A2, Brise-garde :** dégâts contre les ennemis résistants +6 %, sans ignorer les règles de mitigation.
+- **IV-A1, Coup monumental :** après plusieurs impacts, une attaque lourde renforcée se déclenche, avec indicateur.
+- **IV-A2, Fracture maîtrisée :** dégâts +10 %, mais temps de récupération de l’attaque lourde légèrement accru.
+
+**Branche B — Résistance**
+- **I-B1, Marbre épais :** points de vie maximum +8 %.
+- **I-B2, Peau de pierre :** réduction des dégâts reçus +3 %, sous le plafond global.
+- **II-B1, Assise solide :** résistance aux interruptions légèrement augmentée si cette mécanique existe.
+- **II-B2, Récupération lente :** après avoir éliminé un ennemi puissant, restaure une petite quantité de santé, avec temps de recharge.
+- **III-B1, Fondation :** le Sculpteur subit moins de recul, sans devenir insensible aux attaques qui déplacent le joueur.
+- **III-B2, Garde de marbre :** après une esquive, réduction de dégâts très courte.
+- **IV-B1, Statue vivante :** lorsque la santé passe sous 30 %, réduction de dégâts temporaire, une fois par intervalle long.
+- **IV-B2, Dernier pilier :** une fois par run, survivre à un coup fatal avec un point de vie ; réactivation uniquement après une condition de récupération clairement définie.
+
+**Branche C — Mobilité lourde**
+- **I-C1, Pas ferme :** pénalité éventuelle de déplacement pendant l’attaque réduite.
+- **I-C2, Saut de bloc :** impulsion de saut +5 %.
+- **II-C1, Esquive courte :** récupération de l’esquive réduite de 3 %.
+- **II-C2, Avancée lourde :** vitesse de déplacement +3 %, sans dépasser le plafond global.
+- **III-C1, Atterrissage puissant :** après un saut, la prochaine attaque gagne un petit rayon d’impact ; pas de dégâts gratuits à l’atterrissage.
+- **III-C2, Ancrage :** une esquive qui évite une attaque renforce brièvement la résistance.
+- **IV-C1, Masse maîtrisée :** le Maillet conserve une partie de son bonus de dégâts après un déplacement.
+- **IV-C2, Œuvre achevée :** les bonus de résistance du passif augmentent légèrement, mais la pénalité de mobilité du passif ne disparaît pas.
+
+### 6.8 La Restauratrice — Fil de Restauration
+
+**Identité :** récupération contrôlée, marques et survie sans annuler la pression des ennemis. Nœud central : **Retouche vitale** — éliminer certains ennemis marqués restaure un peu de santé, avec une limite de fréquence.
+
+**Branche A — Fil réparateur**
+- **I-A1, Fil tendu :** dégâts du Fil +5 %.
+- **I-A2, Point précis :** portée de ciblage +5 %.
+- **II-A1, Couture nette :** dégâts +6 % contre les ennemis marqués.
+- **II-A2, Fil rapide :** cadence d’attaque +4 %.
+- **III-A1, Point de rupture :** éliminer une cible marquée réduit légèrement le temps de recharge interne de Retouche vitale, dans un plafond.
+- **III-A2, Double couture :** une attaque peut toucher une cible proche supplémentaire avec dégâts réduits, si le système d’arme le permet.
+- **IV-A1, Couture maîtresse :** les cibles marquées reçoivent +10 % de dégâts du Fil.
+- **IV-A2, Dernier point :** éliminer une cible marquée avec le Fil donne un petit soin supplémentaire, soumis à la limite de soin par intervalle.
+
+**Branche B — Retouche vitale**
+- **I-B1, Retouche douce :** quantité de santé restaurée par Retouche vitale +8 %.
+- **I-B2, Marque durable :** durée des marques +15 %.
+- **II-B1, Réserve de vie :** points de vie maximum +8 %.
+- **II-B2, Main sûre :** réduction des dégâts reçus +3 %, sous le plafond global.
+- **III-B1, Récupération patiente :** si le soin est perdu car la santé est déjà pleine, une petite partie est convertie en bouclier temporaire plafonné ; à tester après le MVP.
+- **III-B2, Retouche fréquente :** délai interne de soin réduit légèrement, avec plafond de soins par minute.
+- **IV-B1, Restauration parfaite :** une élimination marquée restaure davantage de santé lorsque le joueur est sous 50 % de vie.
+- **IV-B2, Dernière réserve :** une fois par run, un soin renforcé se déclenche sous 20 % de vie ; délai et feedback explicites.
+
+**Branche C — Préservation et mobilité**
+- **I-C1, Pas prudent :** distance d’esquive +5 %.
+- **I-C2, Saut contrôlé :** contrôle aérien +5 %.
+- **II-C1, Recul restaurateur :** après une esquive réussie, la prochaine élimination marquée restaure un peu plus de santé.
+- **II-C2, Rayon de collecte :** rayon de ramassage +10 %.
+- **III-C1, Retrait protecteur :** après avoir reçu un coup, réduction de dégâts très courte ; temps de recharge long.
+- **III-C2, Fil conducteur :** les ennemis marqués sont plus faciles à repérer à l’écran.
+- **IV-C1, Dernière retouche :** si la santé tombe bas, Retouche vitale peut s’activer une fois plus tôt, mais jamais plusieurs fois sur un même événement.
+- **IV-C2, Conservatrice :** soin reçu augmenté de 10 %, mais dégâts directs du Fil réduits de 3 %.
+
+### 6.9 Interface et lisibilité de l'arbre
+
+- Afficher le nom du talent, son effet chiffré, son prérequis et son état : disponible, acquis, verrouillé ou incompatible avec les choix actuels.
+- Les liens doivent rester lisibles et les talents acquis distingués par forme et motif, pas uniquement par couleur.
+- Une comparaison avant/après indique la valeur actuelle et la valeur après sélection.
+- Le bouton de réinitialisation demande confirmation et indique ce qui sera remboursé. Pendant le prototype, aucun coût.
+- Le jeu reste en pause pendant la consultation de l’arbre.
+- Les talents non implémentés dans une version de développement ne doivent pas apparaître comme sélectionnables.
+
+### 6.10 Implémentation technique
+
+- Chaque arbre est décrit par des données dédiées (ScriptableObjects ou format de données équivalent) : identifiant stable, personnage propriétaire, palier, branche visuelle, prérequis, effets, limites et texte d’interface.
+- Un talent applique un ou plusieurs modificateurs ou appelle un effet spécialisé via une interface définie. Éviter les références de scène dans les assets de contenu.
+- Le système valide l’absence de cycle dans les prérequis, les identifiants uniques, l’existence des talents requis et les limites de cumul.
+- L’état de l’arbre appartient à la progression du personnage et ne doit pas être confondu avec l’état temporaire d’une run. La politique exacte de persistance (talents acquis entre les runs ou arbre redistribué à chaque run) doit être définie avant d’implémenter la sauvegarde.
+- **Décision de conception à confirmer avant production :** l’arbre est-il une progression permanente du personnage ou une spécialisation choisie au début de chaque run ? Dans l’attente, les arbres sont spécifiés comme arbres réinitialisables de spécialisation, sans coût de reset en prototype ; ne pas implémenter de bonus permanents sans validation explicite.
+- Les talents de combat réutilisent le circuit central de dégâts et ne peuvent pas appliquer de dégâts de manière récursive. Toute réduction de cooldown, tout soin ou toute réaction est plafonné et testé.
+
+### 6.11 Périmètre de production
+
+**Prototype initial :** un arbre réduit de L’Exilé, comprenant un nœud central, trois branches visuelles et six à neuf talents implémentés ; le reset doit fonctionner. Les autres talents sont documentés mais ne sont pas requis pour valider le combat.
+
+**MVP :** l’arbre de L’Exilé est fonctionnel avec un nombre limité de talents. Les cinq autres arbres restent définis dans le document, mais leur production complète est reportée après validation du jeu de base. Ne pas retarder le premier build Windows pour construire les six arbres intégralement.
+
+**Après MVP :** implémenter progressivement les autres arbres, tester les branches croisées, l'équilibrage et la persistance choisie. Les talents qui ajoutent de nouveaux projectiles, états, boucliers ou comportements de collision sont prioritaires seulement si leur coût technique est maîtrisé.
+
+---
+
+## 7. Instruments
+
+### 7.1 Liste de référence et évolutions
+
+Dix Instruments sont prévus. Chacun a deux évolutions (A et B) mutuellement exclusives par run (§7.6). Les synergies citées sont des propositions à tester.
 
 1. **Pinceau du Dernier Trait — zone rapprochée :** dessine un arc d'encre devant le personnage.
    - **Évolution A — Grande Marée :** l'arc devient une vague qui avance et traverse les ennemis. Synergie : les ennemis ralentis par la Palette Catalytique restent plus longtemps dans la vague.
@@ -703,16 +1049,16 @@ Dix Instruments sont prévus. Chacun a deux évolutions (A et B) mutuellement ex
     - **Évolution A — Galerie Jumelle :** un second cadre apparaît à une distance limitée et les deux cadres peuvent viser une même cible. Synergie : la Miniature Fracturée augmente la fréquence de tir des cadres.
     - **Évolution B — Toile Réfléchissante :** le cadre dévie physiquement les projectiles qui le traversent vers une cible marquée. La trajectoire de déviation reste visible et se termine par une petite explosion. Aucun portail, aucune brèche et aucune téléportation. Synergie : l’Arbalète à Encre marque les cibles prioritaires et la Palette Catalytique ajoute un statut à l’explosion.
 
-### 6.2 Règles des Instruments
+### 7.2 Règles des Instruments
 
 - Maximum de six Instruments équipés, Instrument de départ inclus.
 - Améliorer un Instrument équipé ne consomme pas un nouvel emplacement.
-- **Emplacements pleins :** une montée de niveau ne propose jamais de nouvel Instrument (§9.5). Quand une récompense d'objet précise (coffre d’acte, récompense de coffre explicitement prévue, mini-boss ou contrat) en offre un, le joueur peut **remplacer** un Instrument équipé, avec confirmation (l'Instrument remplacé perd ses rangs et son évolution), ou **refuser** et recevoir une petite compensation (valeur de départ : soin de 10 % des points de vie maximum).
+- **Emplacements pleins :** une montée de niveau ne propose jamais de nouvel Instrument (§10.5). Quand une récompense d'objet précise (coffre d’acte, récompense de coffre explicitement prévue, mini-boss ou contrat) en offre un, le joueur peut **remplacer** un Instrument équipé, avec confirmation (l'Instrument remplacé perd ses rangs et son évolution), ou **refuser** et recevoir une petite compensation (valeur de départ : soin de 10 % des points de vie maximum).
 - Les attaques automatiques sélectionnent des cibles valides et respectent la cadence, la portée et, si applicable, la ligne de vue.
 - Projectiles, zones et effets persistants ont des règles de collision et de durée explicites.
 - Un Instrument déjà possédé n'est pas proposé en doublon, sauf règle explicite.
 
-### 6.3 Rangs
+### 7.3 Rangs
 
 - **Rang 1 :** version de base.
 - **Rangs 2 à 4 :** amélioration progressive de paramètres ou d'effets.
@@ -721,7 +1067,7 @@ Dix Instruments sont prévus. Chacun a deux évolutions (A et B) mutuellement ex
 - Les valeurs sont assez perceptibles pour que chaque rang soit utile.
 - Un Instrument au rang maximum ne reçoit plus de rang statistique ordinaire mais reste éligible aux évolutions si les prérequis sont remplis.
 
-### 6.4 Statistiques compatibles par type d'Instrument
+### 7.4 Statistiques compatibles par type d'Instrument
 
 Chaque Instrument déclare explicitement les statistiques compatibles. Baseline recommandée :
 
@@ -734,18 +1080,9 @@ Chaque Instrument déclare explicitement les statistiques compatibles. Baseline 
 | Fil / lien | Oui | Selon activation | Oui | Selon nombre de cibles ou rayon | Non | Oui si lien temporaire | Selon design |
 | Objet invoqué | Oui | Cadence d'attaque | Rayon de détection | Oui | Selon projectile | Durée d'invocation | Selon design |
 
-La matrice est un guide, pas une permission automatique : la fiche de l'Instrument (§21.2) est la source de vérité.
+La matrice est un guide, pas une permission automatique : la fiche de l'Instrument (§22.2) est la source de vérité.
 
-### Règles de ciblage du MVP
-
-- Chaque Instrument possède une portée, une cadence et une règle de ciblage simples.
-- Le prototype n'effectue pas une recherche de cible complète à chaque image : il actualise la cible à intervalle régulier, par exemple 0,2 à 0,3 seconde, puis conserve la cible valide.
-- Départage stable : priorité à la cible la plus proche ; en cas d'égalité pratique, conserver la cible précédente.
-- Une cible morte, désactivée ou hors portée est abandonnée au prochain contrôle de ciblage.
-- Les tirs à travers les murs sont interdits par défaut. Les exceptions futures doivent être déclarées dans les données de l'Instrument et testées.
-- Le MVP n'inclut pas de visée manuelle, de verrouillage de cible ni de système de précision complexe.
-
-### 6.5 Ciblage et cadence
+### 7.5 Ciblage et cadence
 
 **Ciblage.** Chaque Instrument définit sa règle de ciblage dans ses données :
 
@@ -768,14 +1105,23 @@ Tous les Instruments ne sont pas des projectiles : mêlée, zones, lignes et eff
 - Les attaques de boss et les événements critiques conservent leur priorité de simulation.
 - Les optimisations ne font pas disparaître une cible à l'écran et ne rendent pas une attaque injuste.
 
-### 6.6 Évolutions : conditions et déroulement
+**Règles de ciblage du MVP :**
+
+- Chaque Instrument possède une portée, une cadence et une règle de ciblage simples.
+- Le prototype n'effectue pas une recherche de cible complète à chaque image : il actualise la cible à intervalle régulier, par exemple 0,2 à 0,3 seconde, puis conserve la cible valide.
+- Départage stable : priorité à la cible la plus proche ; en cas d'égalité pratique, conserver la cible précédente.
+- Une cible morte, désactivée ou hors portée est abandonnée au prochain contrôle de ciblage.
+- Les tirs à travers les murs sont interdits par défaut. Les exceptions futures doivent être déclarées dans les données de l'Instrument et testées.
+- Le MVP n'inclut pas de visée manuelle, de verrouillage de cible ni de système de précision complexe.
+
+### 7.6 Évolutions : conditions et déroulement
 
 Une évolution transforme le comportement d'un Instrument ; elle n'est ni un rang ni une rareté.
 
 **Conditions requises (toutes) :**
 
 1. L'Instrument est équipé et a atteint le **rang minimum** défini dans sa fiche (proposé : rang 5).
-2. Le joueur possède un **Sceau d'Évolution**, obtenu en vainquant un mini-boss ou lors d'un événement prévu (§11.5).
+2. Le joueur possède un **Sceau d'Évolution**, obtenu en vainquant un mini-boss ou lors d'un événement prévu (§12.5).
 3. Le joueur atteint le prochain **palier d’évolution** : niveau 10 pour la première évolution de la run, niveau 15 pour la deuxième et niveau 20 pour la troisième. Le palier dépend du nombre d’évolutions déjà choisies pendant la run, pas de la branche choisie.
 4. Aucune évolution n'a déjà été choisie pour cet Instrument.
 
@@ -795,13 +1141,13 @@ Une évolution transforme le comportement d'un Instrument ; elle n'est ni un ran
 - Si aucun Instrument n'est éligible, le Sceau est conservé pour plus tard, et le mini-boss accorde tout de même sa récompense secondaire.
 - Si le joueur atteint un palier sans évolution éligible, il reçoit une récompense alternative ; le palier ne bloque jamais la progression.
 
-L'interface d'évolution est décrite au §17.6.
+L'interface d'évolution est décrite au §18.6.
 
 ---
 
-## 7. Reliques
+## 8. Reliques
 
-### 7.1 Liste proposée
+### 8.1 Liste proposée
 
 1. **Masque de l'Inspiration :** augmente les dégâts au prix d'une légère réduction de résistance.
 2. **Fiole d'Encre Vive :** réduit le délai entre les attaques.
@@ -814,23 +1160,23 @@ L'interface d'évolution est décrite au §17.6.
 9. **Broche du Critique :** augmente les chances de coup critique.
 10. **Miniature Fracturée :** améliore les Instruments liés aux cadres.
 
-### 7.2 Règles
+### 8.2 Règles
 
-- Maximum de six Reliques équipées. Le contenu du MVP n'en a besoin que de quatre pour tester les interactions.
+- Maximum de six Reliques équipées. Le MVP en utilise deux au départ et quatre au plus pour tester les interactions (§1.5).
 - Les Reliques modifient les statistiques ou ajoutent des effets passifs.
-- **Emplacements pleins :** même règle que pour les Instruments (§6.2). Une Relique offerte par une récompense précise peut remplacer une Relique équipée, avec confirmation (l'ancienne est perdue), ou être refusée contre la même compensation.
-- Les règles de cumul des effets similaires sont explicites (§9.4).
+- **Emplacements pleins :** même règle que pour les Instruments (§7.2). Une Relique offerte par une récompense précise peut remplacer une Relique équipée, avec confirmation (l'ancienne est perdue), ou être refusée contre la même compensation.
+- Les règles de cumul des effets similaires sont explicites (§10.4).
 - Les effets affichent leur valeur et, si pertinent, leur durée.
 - Les modificateurs de vitesse d'une Relique respectent la règle de vitesse unique (§3.2) : ils modifient la vitesse de base uniquement si leur effet le précise.
-- Le système de rangs des Reliques reste à décider (§26.2). S'il est activé, les Reliques suivent les mêmes règles d'éligibilité que les Instruments (§9.5).
+- Le système de rangs des Reliques reste à décider (§27.2). S'il est activé, les Reliques suivent les mêmes règles d'éligibilité que les Instruments (§10.5).
 
 ---
 
-## 8. Synergies
+## 9. Synergies
 
 Les synergies décrivent comment les Instruments, les Reliques, les personnages, le terrain et les bonus se combinent. Elles reposent sur des tags et des paires nommées, avec des garde-fous contre les boucles infinies.
 
-### 8.1 Catégories
+### 9.1 Catégories
 
 1. **Instrument + Instrument :** les attaques se complètent ou déclenchent un effet secondaire limité.
 2. **Instrument + Relique :** la Relique amplifie une statistique ou une condition de l'Instrument.
@@ -839,19 +1185,19 @@ Les synergies décrivent comment les Instruments, les Reliques, les personnages,
 5. **Statut + statut :** réaction explicite entre deux statuts différents, si elle est autorisée.
 6. **Personnage + terrain :** le terrain modifie déplacement ou ressource selon une règle propre au personnage.
 
-### 8.2 Tags partagés et paires nommées
+### 9.2 Tags partagés et paires nommées
 
- Chaque Instrument, Relique, bonus et statut porte des tags (par exemple Encre, Vermillon, Zone, Projectile, Critique, Statut, Lien, Cadre, Impact). Un effet peut cibler un tag plutôt qu'un contenu précis, ce qui rend les synergies larges et plus faciles à équilibrer. Les paires nommées (deux contenus précis) restent possibles, notamment pour les synergies d'évolution (§6.1). Une synergie découverte est inscrite dans les Archives (§15.4).
+Chaque Instrument, Relique, bonus et statut porte des tags (par exemple Encre, Vermillon, Zone, Projectile, Critique, Statut, Lien, Cadre, Impact). Un effet peut cibler un tag plutôt qu'un contenu précis, ce qui rend les synergies larges et plus faciles à équilibrer. Les paires nommées (deux contenus précis) restent possibles, notamment pour les synergies d'évolution (§7.1). Une synergie découverte est inscrite dans les Archives (§16.4).
 
-**Mélange de pigments (Futur).** Une construction qui rassemble plusieurs contenus du même tag pourrait activer un petit bonus de palette ; les seuils et les valeurs restent à définir (§26.2).
+**Mélange de pigments (Futur).** Une construction qui rassemble plusieurs contenus du même tag pourrait activer un petit bonus de palette ; les seuils et les valeurs restent à définir (§27.2).
 
-### 8.3 Lisibilité
+### 9.3 Lisibilité
 
- À l'écran de choix (§17.5), les icônes des contenus déjà possédés qui forment une synergie avec la carte proposée s'illuminent.
+À l'écran de choix (§18.5), les icônes des contenus déjà possédés qui forment une synergie avec la carte proposée s'illuminent.
 
-### 8.4 Contrat d'une synergie
+### 9.4 Contrat d'une synergie
 
- Chaque synergie définit :
+Chaque synergie définit :
 
 - les identifiants des contenus requis ;
 - les conditions d'activation ;
@@ -862,7 +1208,7 @@ Les synergies décrivent comment les Instruments, les Reliques, les personnages,
 - les règles de cumul avec les autres bonus ;
 - le comportement quand un prérequis est retiré ou remplacé.
 
-### 8.5 Règles anti-boucle
+### 9.5 Règles anti-boucle
 
 - Une réaction déclenchée par une autre réaction ne se réactive pas indéfiniment.
 - Les dégâts propagés ne déclenchent pas une propagation identique en cascade, sauf règle explicite avec profondeur maximale.
@@ -871,7 +1217,7 @@ Les synergies décrivent comment les Instruments, les Reliques, les personnages,
 - La propagation d'un statut est plafonnée par cible et par seconde.
 - Les effets d'une même source conservent un identifiant d'origine pour éviter les doubles déclenchements.
 
-### 8.6 Exemples à tester
+### 9.6 Exemples à tester
 
 Propositions, non équilibrées :
 
@@ -886,19 +1232,19 @@ Propositions, non équilibrées :
 
 ---
 
-## 9. Progression en partie
+## 10. Progression en partie
 
-### 9.1 Pigment et niveaux
+### 10.1 Pigment et niveaux
 
 - Les ennemis vaincus peuvent laisser du Pigment ; les quantités sont configurables par type d'ennemi, et la récompense n'est attribuée qu'une seule fois.
 - Le joueur le récupère au contact ou dans un rayon de ramassage configurable.
 - Le seuil d'expérience suit une **formule centrale et configurable**, calibrée sur une partie complète de 20 à 30 minutes, le nombre moyen d'éliminations et la distribution des récompenses, et non choisie parce qu'elle est populaire ailleurs.
 - Une montée de niveau ne perd pas l'expérience excédentaire.
 - Si plusieurs niveaux sont gagnés d'un coup, chaque niveau est résolu correctement, sans dupliquer les récompenses ni écraser un choix.
-- L'interface affiche le Pigment courant, le seuil suivant et le niveau (§17.4).
+- L'interface affiche le Pigment courant, le seuil suivant et le niveau (§18.4).
 - Les objets de Pigment sont nettoyés correctement après collecte.
 
-### 9.2 Offres d'amélioration
+### 10.2 Offres d'amélioration
 
 À chaque niveau, le jeu se met en pause et présente **trois choix** valides. Une offre respecte :
 
@@ -916,7 +1262,7 @@ Propositions, non équilibrées :
 3. amélioration d'une Relique possédée, si les rangs de Relique sont activés ;
 4. nouvelle Relique, si un emplacement est libre ;
 5. bonus statistique générique prévu par la table de récompenses ;
-6. évolution d'Instrument, uniquement dans l'interface spéciale et si les conditions sont remplies (§6.6).
+6. évolution d'Instrument, uniquement dans l'interface spéciale et si les conditions sont remplies (§7.6).
 
 Les évolutions n'occupent jamais silencieusement une carte ordinaire : elles ont une présentation spéciale et des prérequis explicites.
 
@@ -925,9 +1271,9 @@ Les évolutions n'occupent jamais silencieusement une carte ordinaire : elles on
 1. Construire la liste des récompenses éligibles selon l'inventaire, les emplacements et les prérequis.
 2. Éliminer les options déjà maximisées, incompatibles ou bloquées.
 3. Tirer les catégories selon des poids configurables.
-4. Pour chaque amélioration statistique d'Instrument, tirer la rareté (§9.3).
+4. Pour chaque amélioration statistique d'Instrument, tirer la rareté (§10.3).
 5. Choisir une statistique autorisée pour cet Instrument.
-6. Calculer le montant du bonus selon la rareté et la statistique (§9.4).
+6. Calculer le montant du bonus selon la rareté et la statistique (§10.4).
 7. Éliminer les doublons visuels ou mécaniques parmi les trois cartes.
 8. S'il reste moins de trois options valides, compléter avec des bonus génériques autorisés.
 9. Si aucune option n'est disponible, utiliser une option de secours définie (par exemple un petit bonus de santé ou une ressource de run), sans bloquer le joueur.
@@ -938,9 +1284,9 @@ Règles complémentaires :
 - Le générateur utilise une graine aléatoire de run pour reproduire les bugs.
 - Le choix appliqué est validé une seule fois, puis l'écran se ferme.
 - Les poids des catégories (fréquence des Instruments, Reliques et bonus) sont des données configurables, à équilibrer par les tests.
-- Les relances et bannissements débloqués par la progression permanente (§15.2) s'appliquent à ce générateur : une relance remplace les trois options par un nouveau tirage, un bannissement retire une option du pool pour le reste de la run. Leur nombre par run est limité.
+- Les relances et bannissements débloqués par la progression permanente (§16.2) s'appliquent à ce générateur : une relance remplace les trois options par un nouveau tirage, un bannissement retire une option du pool pour le reste de la run. Leur nombre par run est limité.
 
-### 9.3 Raretés des améliorations ordinaires
+### 10.3 Raretés des améliorations ordinaires
 
 La rareté détermine **uniquement l'ampleur du bonus statistique** d'une amélioration ordinaire. Elle ne change pas le comportement de l'Instrument et ne crée aucune mécanique. Les transformations de gameplay sont réservées aux évolutions, aux passifs de personnage et aux systèmes explicitement conçus pour cela.
 
@@ -959,9 +1305,9 @@ Règles :
 - Une amélioration légendaire n'est pas une évolution et ne doit jamais suggérer une nouvelle attaque.
 - Les légendaires restent rares et plaisantes, sans être nécessaires pour gagner. Une construction reste viable sans obtenir une rareté spécifique.
 - **Prototype :** probabilités fixes. Une statistique de Chance (personnage ou Relique) pourra les modifier plus tard, avec une limite explicite et des tests. Ne pas augmenter automatiquement la rareté au fil de la run tant que ce comportement n'est pas testé. Une protection contre la malchance (chances progressivement accrues après une longue série sans rareté supérieure, puis réinitialisées) est une option à tester ultérieurement.
-- La couleur n'est jamais le seul indicateur : afficher aussi le nom de la rareté et une icône (§17.11).
+- La couleur n'est jamais le seul indicateur : afficher aussi le nom de la rareté et une icône (§18.11).
 
-### 9.4 Montants et cumul des bonus
+### 10.4 Montants et cumul des bonus
 
 Valeurs de départ pour les statistiques **de base de l'Instrument**, avant multiplicateurs de personnage ou de Relique :
 
@@ -995,22 +1341,22 @@ Règles sur les montants :
 
 L'interface explique les valeurs finales sans exposer de formules internes complexes.
 
-### 9.5 Éligibilité
+### 10.5 Éligibilité
 
 - Un nouvel Instrument n'est proposé que si un emplacement est libre et qu'il n'est pas déjà possédé (sauf règle explicite de doublon).
 - Un Instrument possédé reçoit des améliorations jusqu'au rang maximum.
 - Si tous les Instruments sont au rang maximum, les options correspondantes sont retirées du pool.
 - Les options uniques déjà obtenues ne sont pas proposées une seconde fois.
 - Le système affiche un motif clair quand une récompense n'est pas disponible, sans remplir l'écran de messages techniques.
-- **Emplacements pleins :** aux montées de niveau, aucun nouvel Instrument ni nouvelle Relique n'est proposé ; seules des améliorations (rangs, bonus, évolutions) le sont. Le choix remplacer ou refuser ne concerne que les récompenses d'objet précises (§6.2).
+- **Emplacements pleins :** aux montées de niveau, aucun nouvel Instrument ni nouvelle Relique n'est proposé ; seules des améliorations (rangs, bonus, évolutions) le sont. Le choix remplacer ou refuser ne concerne que les récompenses d'objet précises (§7.2).
 
 ---
 
-## 10. Peinture au sol
+## 11. Peinture au sol
 
 La peinture au sol est une mécanique de déplacement et de combat, pas seulement un effet visuel. Pour préserver la lisibilité et limiter le coût de production, le MVP commence avec deux types de surface ; le système est étendu après validation.
 
-### 10.1 Règles générales
+### 11.1 Règles générales
 
 Une **surface** est une zone de gameplay temporaire créée par une arme, un personnage, un ennemi ou un événement. Elle possède :
 
@@ -1033,21 +1379,21 @@ Valeurs de départ :
 
 Les surfaces ne doivent ni enfermer le joueur ni rendre les déplacements imprévisibles. L'effet visuel peut s'estomper avant la disparition logique, tant que l'état de gameplay reste lisible. Ces valeurs sont testées dans l'arène réelle.
 
-### 10.2 Encre noire (terrain initial)
+### 11.2 Encre noire (terrain initial)
 
 - Le Patineur (futur) gagne de l'accélération sur une surface noire compatible, jusqu'à un plafond de vitesse.
 - L'Encré (futur) peut récupérer une petite quantité de ressource en traversant ses propres surfaces, si cette mécanique est activée.
 - Les ennemis ne sont pas ralentis par défaut : l'encre noire ne devient pas un contrôle universel.
 - Les surfaces noires ne modifient pas la friction du moteur physique de façon imprévisible ; le bonus est appliqué via le contrôleur de déplacement.
 
-### 10.3 Vermillon (terrain initial)
+### 11.3 Vermillon (terrain initial)
 
 - Peut appliquer un effet de marquage ou de dégâts aux ennemis qui entrent dans la zone, selon la source qui a créé la surface.
 - Un même ennemi ne reçoit le même déclenchement qu'une fois par intervalle défini (valeur de départ : 0,75 s).
 - Les déclenchements sont indépendants du nombre de colliders qui se chevauchent.
 - Les dégâts périodiques ne se cumulent pas sans limite : renouveler la durée ou appliquer une intensité plafonnée.
 
-### 10.4 Superposition et pigments futurs
+### 11.4 Superposition et pigments futurs
 
 Pour le MVP, seuls l'encre noire et le vermillon existent en gameplay. Si les deux se chevauchent :
 
@@ -1059,7 +1405,7 @@ Pour le MVP, seuls l'encre noire et le vermillon existent en gameplay. Si les de
 
 Pigments futurs (hors périmètre tant que les deux premiers ne sont pas validés, et jamais codés comme systèmes cachés dans le MVP) : un pigment bleu qui ralentit les ennemis, un pigment or, une peinture contaminée qui transmet un statut aux ennemis qui la traversent.
 
-### 10.5 Interactions entre surface et personnages
+### 11.5 Interactions entre surface et personnages
 
 | Personnage / rôle | Interaction proposée |
 |---|---|
@@ -1073,7 +1419,7 @@ Pigments futurs (hors périmètre tant que les deux premiers ne sont pas validé
 | Encré (futur) | Récupère une ressource sur ses surfaces compatibles |
 | Marionnettiste (futur) | Peut exploiter les surfaces comme support visuel ; aucun bonus implicite |
 
-### 10.6 Performance et lisibilité
+### 11.6 Performance et lisibilité
 
 - Séparer les surfaces de gameplay des particules décoratives.
 - Réutiliser les objets visuels par pooling si le profilage confirme un gain.
@@ -1085,13 +1431,13 @@ Pigments futurs (hors périmètre tant que les deux premiers ne sont pas validé
 
 ---
 
-## 11. Ennemis communs, mini-boss et boss
+## 12. Ennemis communs, mini-boss et boss
 
-### 11.1 Principes
+### 12.1 Principes
 
 Les modèles sont stylisés, simples et lisibles. Plusieurs ennemis peuvent partager des animations ou des composants. Une variante apporte un comportement ou un rôle distinct, pas seulement une couleur. Chaque ennemi configure ses points de vie, sa vitesse, ses dégâts, sa portée et ses délais d'attaque. Les récompenses ne sont attribuées qu'une seule fois. Les noms, formes, animations et attaques s'intègrent à l'esthétique du jeu.
 
-### 11.2 Ennemis communs et familles de comportement
+### 12.2 Ennemis communs et familles de comportement
 
 Le jeu distingue trois niveaux de menace : **ennemis communs → mini-boss → boss**. Il n’existe pas de catégorie séparée d’« élites » dans la conception actuelle. Les ennemis communs utilisent des comportements simples, réutilisables et lisibles. Chaque ennemi doit idéalement avoir trois états maximum et un télégraphe principal.
 
@@ -1136,12 +1482,12 @@ Le jeu distingue trois niveaux de menace : **ennemis communs → mini-boss → b
 
 1. **Coulure** — poursuivant de mêlée simple.
 2. **Masque Fêlé** — rapide, avec une charge annoncée.
-3. **Chevalet Brisé** — ennemi lourd, lent et résistant.
-4. **Éclat de Toile** — rôle d’artilleur à distance, avec le tir en arc défini ci-dessus.
+3. **Éclat de Toile** — rôle d’artilleur à distance, avec le tir en arc défini ci-dessus.
+4. **Chevalet Brisé** — ennemi lourd, lent et résistant, ajouté après validation des trois premiers.
 
 L’Essaim est reporté après validation du jeu de base. Il ne fait pas partie du MVP simplifié et son intérêt sera évalué lors d'un test ultérieur consacré aux attaques de zone.
 
-### 11.3 Répartition proposée par carte
+### 12.3 Répartition proposée par carte
 
 | Carte | Suiveurs | Ennemis spéciaux |
 |---|---|---|
@@ -1153,15 +1499,15 @@ L’Essaim est reporté après validation du jeu de base. Il ne fait pas partie 
 
 Les noms et associations sont des propositions de contenu, pas des exigences de production immédiates. Le MVP ne produit que les quatre ennemis listés ci-dessus.
 
-### 11.4 Mini-boss
+### 12.4 Mini-boss
 
 Un mini-boss est un ennemi nommé, nettement plus dangereux qu’un ennemi commun et associé à une récompense importante. Il n’existe pas de palier « élite » séparé. Un mini-boss comporte au moins deux attaques et un changement de comportement vers 50 % de ses points de vie. Durée cible : 45 à 75 s ; toutes les attaques majeures sont télégraphiées et aucune phase d’invulnérabilité prolongée n’est autorisée.
 
-La victoire donne un **Sceau d’Évolution garanti** et **une Relique à choisir parmi trois** (§14.4). Si aucun Instrument n’est éligible, le Sceau est conservé ; une récompense alternative peut être proposée sans consommer le Sceau. Pour le MVP : un seul mini-boss.
+La victoire donne un **Sceau d’Évolution garanti** et **une Relique à choisir parmi trois** (§15.4). Si aucun Instrument n’est éligible, le Sceau est conservé ; une récompense alternative peut être proposée sans consommer le Sceau. Pour le MVP : un seul mini-boss.
 
 | Mini-boss | Famille principale | Attaques | Changement vers 50 % |
 |---|---|---|---|
-| **Colosse de Marbre** (MVP) | Suiveur lourd | Balayage frontal en cône (télégraphe 0,9 s) ; piétinement en cercle (télégraphe 1,2 s) | Enchaîne les deux attaques et appelle 3 Gribouilleurs |
+| **Colosse de Marbre** (MVP) | Suiveur lourd | Balayage frontal en cône (télégraphe 0,9 s) ; piétinement en cercle (télégraphe 1,2 s) | Enchaîne les deux attaques et appelle 3 Coulures |
 | **Maître du Fusain** (futur) | Attaques aériennes plongeantes, à retravailler sans téléportation | Plongeon en ligne annoncé par une ombre au sol pendant 1 s ; volée d’éclats | Invoque un groupe d’ennemis volants ou un Essaim |
 | **Coulée Mère** (futur) | Traînée + explosion | Traînée d’encre poisseuse ; Gouttes Vermillon qui explosent après 2 s | Traînée plus large et davantage de gouttes |
 | **Matrice des Taches** (futur) | Zones au sol | Poursuite lente, flaques successives, explosion télégraphiée | Plus de flaques, suivies d’une fenêtre de récupération |
@@ -1171,7 +1517,7 @@ La victoire donne un **Sceau d’Évolution garanti** et **une Relique à choisi
 | **Peintre Bourreau** (futur) | Attaques de zone | Deux coups de pinceau, arc de peinture, rectangle dangereux | Enchaînements plus serrés avec zones distinctes |
 | **Conservateur Brisé** (futur) | Bouclier / projectiles | Garde frontale, éventail d’éclats, zones multiples | Récupération vulnérable après une attaque lourde |
 
-### 11.5 Principes des mini-boss et choix du MVP
+### 12.5 Principes des mini-boss et choix du MVP
 
 - Le mini-boss doit tester une compétence apprise : déplacement, saut, esquive, lecture d’une zone ou contournement.
 - Chaque attaque doit avoir un signal visuel, un délai, une zone, une durée, des dégâts et une récupération documentés.
@@ -1179,7 +1525,7 @@ La victoire donne un **Sceau d’Évolution garanti** et **une Relique à choisi
 - Le Colosse de Marbre est le mini-boss retenu pour le MVP. Le Conservateur Sans Visage est désormais le boss final du MVP ; le Portrait Sans Visage devient un concept de boss futur à retravailler.
 - Les anciens concepts initialement nommés élites (Masque Royal, Conservateur protecteur, Tache Couronnée, Copiste, Portrait Inachevé) peuvent être réutilisés comme variantes d’ennemis communs ou concepts de mini-boss ; ils ne constituent pas une catégorie de progression distincte.
 
-### 11.6 Boss
+### 12.6 Boss
 
 **Règles communes :**
 
@@ -1189,7 +1535,7 @@ La victoire donne un **Sceau d’Évolution garanti** et **une Relique à choisi
 - attaques évitables par déplacement ou esquive, sauf exception annoncée ;
 - effets du joueur ne masquant pas les zones dangereuses ;
 - conditions de victoire fiables et vérifiables ;
-- les apparitions ordinaires cessent dès le début du combat (§12.6) ;
+- les apparitions ordinaires cessent dès le début du combat (§13.6) ;
 - phases d'invulnérabilité longues à éviter : le boss teste le déplacement, la lecture des attaques et la construction du joueur.
 
 **Boss envisagés :**
@@ -1215,13 +1561,13 @@ La victoire donne un **Sceau d’Évolution garanti** et **une Relique à choisi
 
 **Chaque attaque de boss précise :** son signal visuel et sonore, son délai avant impact, sa zone et sa durée, si le saut peut l'éviter, si l'esquive peut l'éviter, ses dégâts et effets, sa récupération et ses cas limites de collision.
 
-Le boss est testé avec tous les profils de personnage prévus, notamment celui dont le saut est le plus bas et celui dont l'esquive est la plus courte. Aucune attaque obligatoire n'est impossible à éviter avec les statistiques de base d'un personnage. Les fiches de boss suivent le modèle du §21.6.
+Le boss est testé avec tous les profils de personnage prévus, notamment celui dont le saut est le plus bas et celui dont l'esquive est la plus courte. Aucune attaque obligatoire n'est impossible à éviter avec les statistiques de base d'un personnage. Les fiches de boss suivent le modèle du §22.6.
 
 ---
 
-## 12. Vagues et difficulté
+## 13. Vagues et difficulté
 
-### 12.1 Durée et phases d'une run
+### 13.1 Durée et phases d'une run
 
 Durée cible : 20 à 30 minutes, boss compris. Le prototype peut être raccourci pour itérer. Le directeur de vague est piloté par le chronomètre de run et des paliers explicites.
 
@@ -1248,7 +1594,7 @@ Durée cible : 20 à 30 minutes, boss compris. Le prototype peut être raccourci
 
 Les repères de niveau sont des cibles d’équilibrage : niveau 10 vers 9:00, niveau 15 vers 14:00 et niveau 20 vers 19:00. Le boss du mode Normal arrive à 20:00 ; l’annonce commence à 18:30 et les apparitions ordinaires cessent à 19:45. Le mini-boss supplémentaire à 15:30 reste hors MVP et pourra être testé plus tard.
 
-### 12.2 Directeur de vague
+### 13.2 Directeur de vague
 
 Le directeur décide :
 
@@ -1262,7 +1608,7 @@ Le directeur décide :
 
 Il tient aussi compte du type de zone et de la proximité du boss. Il ne fait pas apparaître d'ennemis si la limite globale est atteinte. Pendant un écran de choix, le temps de combat est réellement en pause.
 
-### 12.3 Budget de menace et d'apparition
+### 13.3 Budget de menace et d'apparition
 
 Chaque ennemi reçoit un **coût de menace**. Le directeur choisit une combinaison dont le coût total ne dépasse pas le budget de la phase : la difficulté ne repose pas uniquement sur les points de vie.
 
@@ -1271,15 +1617,15 @@ Le directeur respecte :
 - une limite d'ennemis actifs ;
 - une limite de créations par intervalle ;
 - une distance minimale de sécurité autour du joueur ;
-- des points d'apparition hors caméra ou clairement télégraphiés ;
+- des points d'apparition hors caméra ou clairement télégraphés ;
 - les contraintes de navigation et de collision ;
 - une réserve de budget pour les mini-boss et les événements importants.
 
-Les nombres exacts d'ennemis actifs sont fixés après les tests de performance sur la machine cible. Les 1 000 ennemis du §20.1 sont une cible de stress test, pas une population de jeu.
+Les nombres exacts d'ennemis actifs sont fixés après les tests de performance sur la machine cible. Les 1 000 ennemis du §21.1 sont une cible de stress test, pas une population de jeu.
 
 **Règle de placement initiale à tester :** apparition à 25–40 m du joueur, jamais à moins de 15 m, sur une surface accessible et généralement hors champ ; environ 70 % des apparitions peuvent provenir de l’hémisphère avant. Les Artilleurs cherchent une distance de 18–25 m. Aucun ennemi ne doit apparaître directement dans une zone d’impact imminente.
 
-### 12.4 Paramètres de difficulté
+### 13.4 Paramètres de difficulté
 
 La difficulté peut augmenter par :
 
@@ -1294,11 +1640,11 @@ Elle ne se contente pas d'augmenter toutes les statistiques de façon uniforme. 
 
 Le joueur choisit une difficulté au lancement de la run : **Normal, Difficile ou Expert**. Cette sélection règle la variété des configurations, la fréquence/complexité des événements et la pression des ennemis, sans modifier l’identité fondamentale ni les limites principales de la carte. Les valeurs exactes sont calibrées après tests. Le mode Infini pourra reprendre ces profils, avec une progression de menace propre au mode.
 
-### 12.5 Transitions
+### 13.5 Transitions
 
 Les changements de phase sont perceptibles : annonce, son, changement de musique ou de lumière, puis arrivée des nouvelles menaces. Pas d'apparition soudaine au contact du joueur.
 
-### 12.6 Apparition du boss
+### 13.6 Apparition du boss
 
 Au début de l'introduction du boss :
 
@@ -1311,9 +1657,9 @@ Au début de l'introduction du boss :
 
 ---
 
-## 13. Cartes et navigation
+## 14. Cartes et navigation
 
-### 13.1 Principe central : la toile vierge devient un monde
+### 14.1 Principe central : la toile vierge devient un monde
 
 Toutes les runs commencent sur le même principe visuel : **une toile presque vierge**, gris ivoire, dont la trame est légèrement visible. La toile est la surface jouable et la base de l’identité artistique de BROKEN CANVAS. Elle peut être abîmée, grattée, déchirée sur ses bords et encadrée par des morceaux de cadres brisés, mais le centre de combat reste suffisamment stable et lisible.
 
@@ -1327,7 +1673,7 @@ Au fil de l’exploration, des combats ou d’événements prédéfinis, des mar
 - Une fois matérialisé, un élément conserve une collision stable et lisible, si cet élément est prévu comme obstacle. Les éléments purement visuels n’ont pas de collider.
 - Le MVP utilise seulement deux ou trois types de matérialisation visuelle. Les transformations influençant réellement le cheminement ou les combats sont reportées après validation du prototype.
 
-### 13.2 Structure et lisibilité des cartes
+### 14.2 Structure et lisibilité des cartes
 
 Chaque carte est un ensemble de points d’apparition prévus pour ses éléments modulaires, et non un monde entièrement reconstruit aléatoirement. Elle comprend :
 - une aire de combat dégagée pour les esquives, les sauts et la lecture des attaques ;
@@ -1338,18 +1684,18 @@ Chaque carte est un ensemble de points d’apparition prévus pour ses élément
 
 Les sauts ont une utilité concrète, mais aucun saut de précision n’est requis pour terminer une run standard. Les pentes et les reliefs ne doivent pas piéger le `CharacterController`. Les dimensions exactes sont définies dans la scène prototype et ajustées après tests ; la taille initiale recommandée est une petite arène, pas une grande carte d’exploration.
 
-### 13.3 V1 — Musée des Ombres
+### 14.3 V1 — Musée des Ombres
 
 Le Musée des Ombres est la première carte et le seul environnement requis pour le MVP. Au début de la run, le joueur apparaît sur une toile gris ivoire presque vierge, entourée de bords effilochés, de quelques fragments de cadres et d’un vide sombre.
 
 Pendant la run, des événements visuels font émerger progressivement un petit nombre d’éléments :
 1. **Cadre brisé :** des traits noirs se dessinent, puis un cadre se matérialise près du bord de l’arène.
 2. **Sculpture :** une silhouette dessinée se remplit de pigment et devient une statue simple, placée hors du chemin critique.
-3. **Marque de peinture :** un coup de pinceau vermillon ou noir apparaît au sol ; pour le MVP, son effet de gameplay reste limité aux surfaces déjà définies au §10.
+3. **Marque de peinture :** un coup de pinceau vermillon ou noir apparaît au sol ; pour le MVP, son effet de gameplay reste limité aux surfaces déjà définies au §11.
 
 L’ordre et l’emplacement de ces apparitions peuvent varier parmi des points prévalidés, mais le prototype n’exige pas que la disposition complète soit générée aléatoirement. La zone centrale reste assez dégagée pour le combat. Le boss n’est jamais entouré de nouveaux obstacles apparus pendant ses télégraphes.
 
-### 13.4 Cartes futures et identité propre
+### 14.4 Cartes futures et identité propre
 
 Chaque carte future conserve le principe de la toile vierge, mais possède ses propres formes, matériaux, éléments modulaires et événements de matérialisation. Ne pas mélanger tous les thèmes dans une seule carte.
 
@@ -1361,7 +1707,7 @@ Chaque carte future conserve le principe de la toile vierge, mais possède ses p
 
 Ces cartes sont du contenu futur, hors MVP. Chacune devra être conçue à partir d’un petit kit modulaire réutilisable plutôt que d’exiger un ensemble de modèles entièrement uniques.
 
-### 13.5 Variété entre les runs
+### 14.5 Variété entre les runs
 
 La variété doit donner l’impression de découvrir une nouvelle composition de la même œuvre, sans rendre la production imprévisible. Elle repose sur trois couches :
 - **Identité fixe de la carte :** palette, types d’objets, silhouettes, motifs et événements possibles.
@@ -1379,7 +1725,7 @@ Les limites, la silhouette globale et l’identité artistique de chaque carte r
 
 La génération est **semi-aléatoire** au MVP. Une future seed devra reproduire au minimum la difficulté, la configuration initiale, l’ordre des matérialisations et les événements. Aucun écran de seed ni outil de partage de seed n’est requis au MVP.
 
-### 13.6 Vue finale du canvas et œuvre de la run
+### 14.6 Vue finale du canvas et œuvre de la run
 
 À la victoire ou à la défaite, la caméra peut s’élever et reculer pour révéler la toile entière vue du dessus. Cette séquence est conçue comme une récompense visuelle et un récapitulatif de la composition produite par la run : structures matérialisées, marques de peinture, sculptures et zones liées aux événements.
 
@@ -1388,25 +1734,25 @@ La génération est **semi-aléatoire** au MVP. Une future seed devra reproduire
 - Le jeu n’a pas besoin d’enregistrer une vidéo ni chaque position du joueur. Il conserve seulement les données utiles à la composition finale : configuration choisie, éléments apparus et événements majeurs.
 - La caméra de bilan ne change pas le résultat de la run et ne doit pas empêcher l’affichage des récompenses, de la victoire ou de la défaite.
 
-### 13.6 Navigation
+### 14.7 Navigation
 
 Pour le MVP, la petite arène ne nécessite pas de mini-carte. Les aides de navigation ci-dessous sont prévues pour une version future avec des cartes plus grandes.
 
-- **Mini-carte (V1) :** un plan du musée en vue de dessus, simplifié, qui montre la position et l'orientation du joueur ainsi que les marqueurs d’objectifs (mini-boss, coffres, Fractures, autels, événement actif). Elle ne montre pas les ennemis ordinaires, pour préserver la lisibilité. Son emplacement dans le HUD est au §17.4.
+- **Mini-carte (Futur) :** un plan du musée en vue de dessus, simplifié, qui montre la position et l'orientation du joueur ainsi que les marqueurs d’objectifs (mini-boss, coffres, Fractures, autels, événement actif). Elle ne montre pas les ennemis ordinaires, pour préserver la lisibilité. Son emplacement dans le HUD est au §18.4.
 - **Marqueurs d’objectifs (Futur) :** des indicateurs peuvent guider vers des objectifs éloignés si les cartes futures le nécessitent. Pour le MVP, le boss est annoncé par l’interface et la caméra, sans système de navigation dédié.
 - **Révélation progressive (Futur) :** le plan se peint à mesure que le joueur explore.
 - **Présentation proposée :** mini-carte fixe orientée nord en haut ; seule la flèche du joueur tourne. Rayon représenté d’environ 80 m, taille proche de 15 % de la hauteur d’écran, opacité de 75 %, coin inférieur droit. Ces valeurs sont des points de départ.
 - Le joueur est toujours affiché ; les ennemis ordinaires ne le sont jamais. Mini-boss et boss sont marqués dès leur annonce ; les marqueurs d’objectif, événements et récompenses apparaissent lorsqu’ils sont découverts ou actifs. Les coffres communs futurs peuvent être révélés dans un rayon de 40 m.
 - La mémoire des zones déjà explorées est une fonctionnalité future ; aucune option de zoom, taille ou opacité n’est prévue en V1, mais le masquage de la mini-carte est possible.
-- Les deux aides se désactivent séparément dans les options (§18).
-- Technique : la mini-carte utilise une texture pré-calculée ou une caméra orthographique dédiée en basse résolution ; son coût est mesuré (§20.8).
+- Les deux aides se désactivent séparément dans les options (§19).
+- Technique : la mini-carte utilise une texture pré-calculée ou une caméra orthographique dédiée en basse résolution ; son coût est mesuré (§21.8).
 - Aucun déplacement rapide via la carte (§1.3).
 
 ---
 
-## 14. Objectifs, événements et récompenses
+## 15. Objectifs, événements et récompenses
 
-### 14.1 Événements de carte
+### 15.1 Événements de carte
 
 Un événement explique clairement : son point ou sa zone d'activation, sa condition de déclenchement, le risque encouru, la récompense, et s'il est facultatif ou requis.
 
@@ -1423,35 +1769,35 @@ Pas de téléporteurs ni de portails. Les transitions entre cartes passent par l
 | Surface rare | Surface bénéfique temporaire | À exploiter rapidement |
 | Rencontre itinérante | Un mini-boss ou une rencontre spéciale apparaît sur la carte | Récompense annoncée et adaptée à la rencontre |
 
-**Fréquence de départ :** un tirage toutes les 90 s à partir de 3:00, avec 35 % de chance ; au moins 2 minutes entre deux événements ; un seul événement actif à la fois ; 4 à 5 événements par run au maximum ; aucun événement après 18:00 ni pendant le boss. En mode Infini, au plus un événement par acte. Chaque événement est annoncé avant d'agir (§12.5), respecte le budget de menace (§12.3) et se nettoie complètement à sa fin.
+**Fréquence de départ :** un tirage toutes les 90 s à partir de 3:00, avec 35 % de chance ; au moins 2 minutes entre deux événements ; un seul événement actif à la fois ; 4 à 5 événements par run au maximum ; aucun événement après 18:00 ni pendant le boss. En mode Infini, au plus un événement par acte. Chaque événement est annoncé avant d'agir (§13.5), respecte le budget de menace (§13.3) et se nettoie complètement à sa fin.
 
-### 14.2 Objectifs secondaires
+### 15.2 Objectifs secondaires
 
-Pendant une run, le joueur peut faire autre chose que tuer des ennemis. Ces objectifs sont facultatifs et aucun n'est requis pour gagner. Chacun précise sa zone, sa condition, son risque et sa récompense (§14.1). Phase : Futur.
+Pendant une run, le joueur peut faire autre chose que tuer des ennemis. Ces objectifs sont facultatifs et aucun n'est requis pour gagner. Chacun précise sa zone, sa condition, son risque et sa récompense (§15.1). Phase : Futur.
 
 | Objectif | Principe | Récompense proposée |
 |---|---|---|
-| Restaurer un tableau | Rester dans la zone d'un autel de restauration pendant une durée (valeur de départ : 20 s) ; la progression redescend lentement si le joueur sort | Un bonus de run (§14.5) |
+| Restaurer un tableau | Rester dans la zone d'un autel de restauration pendant une durée (valeur de départ : 20 s) ; la progression redescend lentement si le joueur sort | Un bonus de run (§15.5) |
 | Briser des toiles marquées | Détruire un nombre défini de toiles destructibles dispersées dans une zone | Pigment |
-| Vaincre une cible spéciale désignée | Une cible ou un groupe est marqué sur la carte ; le vaincre dans le temps imparti | Coffre doré du contrat (§14.4) |
+| Vaincre une cible spéciale désignée | Une cible ou un groupe est marqué sur la carte ; le vaincre dans le temps imparti | Coffre doré du contrat (§15.4) |
 | Repeindre une zone | La zone se peint par la présence du joueur, sans exiger un Instrument particulier | Pigment ou bonus de run |
 | Tenir sans dégât | Survivre une durée définie sans subir de dégâts, avec compteur visible | Pigment |
 
 Aucun objectif n'est impossible pour un personnage donné (§5.1).
 
-### 14.3 Défis facultatifs : Fractures et contrats
+### 15.3 Défis facultatifs : Fractures et contrats
 
 Une **Fracture** est une anomalie visible dans un tableau de la carte. Elle propose un **contrat** : un défi facultatif, plus risqué, avec de meilleures récompenses. Phase : Futur.
 
 - Le joueur accepte en entrant dans la zone de la Fracture et peut ignorer sans pénalité.
-- Un seul contrat est actif à la fois ; son compteur est affiché dans le HUD (§17.4).
-- Récompense : un coffre doré (§14.4) et 2 Fragments de Toile (§15.2).
+- Un seul contrat est actif à la fois ; son compteur est affiché dans le HUD (§18.4).
+- Récompense : un coffre doré (§15.4) et 2 Fragments de Toile (§16.2).
 - En cas d'échec, le contrat disparaît, sans autre effet.
 - Apparition : 2 à 3 Fractures par run (valeur de départ), à des endroits variés, jamais pendant le boss.
 - Exemples de contrats : éliminer 30 ennemis marqués en 60 s ; tenir 45 s dans une zone ; vaincre une cible spéciale désignée ; tenir 60 s sans subir de dégâts.
 - Une Fracture n'ouvre ni portail ni déplacement (§1.3).
 
-### 14.4 Coffres et récompenses
+### 15.4 Coffres et récompenses
 
 Les récompenses sont garanties, aléatoires ou à choix selon leur source. Aucune récompense ne dépend d’une catégorie « élite » : chaque gain doit être relié à un mini-boss, un coffre, un événement ou un contrat précis.
 
@@ -1460,18 +1806,18 @@ Les récompenses sont garanties, aléatoires ou à choix selon leur source. Aucu
 | Mini-boss | Garantie | Sceau d'Évolution et 1 Relique parmi 3 | V1 |
 | Coffre de récompense de rencontre | À choix, uniquement lorsqu’une rencontre ou un événement le prévoit explicitement | 1 récompense parmi 3 : Relique, Instrument ou bonus | Selon le contenu |
 | Coffre commun (carte) | Aléatoire | Une récompense tirée : Pigment, soin ou bonus de run | Futur |
-| Coffre doré (contrat) | Garantie, à choix | 1 parmi 3, avec un pool amélioré (§14.3) | Futur |
+| Coffre doré (contrat) | Garantie, à choix | 1 parmi 3, avec un pool amélioré (§15.3) | Futur |
 
 Règles :
 
 - Un coffre s'ouvre par contact : aucune commande d'interaction supplémentaire n'est ajoutée (§3.1).
-- Les choix à trois options suivent le générateur du §9.2 et l'éligibilité du §9.5 ; une option impossible n'est jamais affichée.
+- Les choix à trois options suivent le générateur du §10.2 et l'éligibilité du §10.5 ; une option impossible n'est jamais affichée.
 - Une récompense n'est attribuée qu'une seule fois.
-- Emplacements pleins : remplacer ou refuser (§6.2).
+- Emplacements pleins : remplacer ou refuser (§7.2).
 - En mode Normal, le joueur reçoit au moins une récompense à choix entre 8:00 et 18:00. Aucun coffre commun n'apparaît après 18:00 ni dans l'espace du boss.
 - En mode Infini, chaque acte terminé donne un coffre d’acte garanti (§2.3).
 
-### 14.5 Bonus de run
+### 15.5 Bonus de run
 
 Les récompenses hors montée de niveau sont classées en quatre catégories, afin que leur durée et leur cumul soient prévisibles.
 
@@ -1479,7 +1825,7 @@ Les récompenses hors montée de niveau sont classées en quatre catégories, af
 |---|---|---|---|
 | **Instantané** | Fiole de soin (+25 % des PV max), aimant à Pigment (30 m), éclat de Pigment doublé | Instantanée | Le soin ne dépasse pas les PV max ; au plus un ramassable de soin par minute |
 | **Temporaire** | Cadence d’encre (+20 % pendant 12 s), Armure d’encre (−20 % dégâts reçus pendant 10 s), Pigment éclatant (+50 % pendant 15 s) | 10–15 s | Même effet renouvelable mais non empilable ; au plus deux effets temporaires différents actifs |
-| **De run** | Cartes génériques et bonus d’interactifs | Jusqu’à la fin de la run | Plafond par statistique, voir §9.4 |
+| **De run** | Cartes génériques et bonus d’interactifs | Jusqu’à la fin de la run | Plafond par statistique, voir §10.4 |
 | **Évolution** | Transformation d’un Instrument | Jusqu’à la fin de la run | Une évolution par Instrument ; trois évolutions maximum par run, selon les paliers de niveau |
 
 **Bonus génériques de run proposés :**
@@ -1502,9 +1848,9 @@ Les bonus temporaires affichent une icône et un anneau de durée dans le HUD. L
 
 ---
 
-## 15. Progression permanente, archives et statistiques
+## 16. Progression permanente, archives et statistiques
 
-### 15.1 Séparer run et méta-progression
+### 16.1 Séparer run et méta-progression
 
 **État temporaire de run** (réinitialisé à chaque nouvelle run, sauf fonction de reprise ajoutée explicitement plus tard) :
 
@@ -1528,11 +1874,11 @@ Les bonus temporaires affichent une icône et un anneau de durée dans le HUD. L
 
 La sauvegarde ne restaure jamais par erreur la position, la santé ou l'équipement temporaire d'une ancienne run, et les données temporaires ne sont jamais sauvegardées comme progression permanente.
 
-### 15.2 Récompenses et déblocages permanents
+### 16.2 Récompenses et déblocages permanents
 
 - Victoires et défaites peuvent donner une ressource permanente selon la durée ou les objectifs atteints. Nom provisoire : **Fragments de Toile**.
 - Usages possibles : débloquer des personnages, ajouter des objets aux pools de récompenses, acheter de petits bonus, compléter les Archives.
-- Le nom est provisoire ; les gains ci-dessous sont des valeurs de départ, et les coûts et valeurs finales des retouches restent à définir (§26.2).
+- Le nom est provisoire ; les gains ci-dessous sont des valeurs de départ, et les coûts et valeurs finales des retouches restent à définir (§27.2).
 - Une même récompense permanente n'est jamais attribuée deux fois, y compris après une défaite.
 - Les conditions de déblocage sont visibles dans les Archives.
 
@@ -1553,55 +1899,55 @@ Chaque déblocage a : un identifiant stable, une condition, une récompense, une
 
 **Coûts provisoires des Retouches :** dix Retouches de trois rangs à 30 / 60 / 120 Fragments, soit 2 100 Fragments pour tout acheter. À environ 60 Fragments par run en moyenne, la complétion totale représenterait environ 30 à 45 runs. Un joueur sans Retouche doit pouvoir gagner.
 
-**Déblocages de personnages proposés :** Graveur — atteindre le niveau 15 ; Alchimiste — appliquer 500 statuts cumulés ; Sculpteur — vaincre trois mini-boss cumulés ; Virtuose — vaincre le boss une fois ; Restauratrice — vaincre le boss avec deux personnages. Ordre et difficulté à tester ; le premier déblocage est visé après 3 à 5 runs.
+**Déblocages de personnages :** conditions et ordre proposés au §16.3 ; le premier déblocage est visé après 3 à 5 runs.
 
-Le total de la run est ensuite multiplié selon l'issue (§2.5). Objectif de test : le premier déblocage de personnage arrive en 3 à 5 runs.
+Le total de la run est ensuite multiplié selon l'issue (§2.5).
 
-**Déblocages par accomplissements.** Les personnages, Instruments, Reliques et cartes se débloquent par des accomplissements (§15.3), pas par achat.
+**Déblocages par accomplissements.** Les personnages, Instruments, Reliques et cartes se débloquent par des accomplissements (§16.3), pas par achat.
 
-**Retouches.** Les Fragments de Toile s'échangent contre une dizaine de petites améliorations permanentes, chacune avec plusieurs rangs et un plafond. Ordres de grandeur à tester : +10 % de points de vie maximum, +10 % de rayon de ramassage, une relance du choix de niveau par run, un bannissement d'option par run (§9.2).
+**Retouches.** Les Fragments de Toile s'échangent contre une dizaine de petites améliorations permanentes, chacune avec plusieurs rangs et un plafond. Ordres de grandeur à tester : +10 % de points de vie maximum, +10 % de rayon de ramassage, une relance du choix de niveau par run, un bannissement d'option par run (§10.2).
 
 **Musée à restaurer (Futur).** Le menu principal montre un musée qui se restaure visuellement à mesure des déblocages ; cet effet est purement cosmétique.
 
 **Équilibrage.** Les bonus permanents de puissance restent **modestes**, pour préserver l'importance des décisions de la run et ne pas rendre les premières difficultés triviales. Prioriser l'ouverture de nouvelles options de construction (personnages, Instruments, Reliques, évolutions, défis, éléments de lore) plutôt que des augmentations de dégâts permanentes.
 
-### 15.3 Défis permanents
+### 16.3 Défis permanents
 
 Les défis permanents sont suivis entre les parties. Le MVP n'en a pas besoin (Futur).
 
 - **Catégories :** découverte, maîtrise, boss, Instruments (rang maximum, évolutions), cumul.
-- **Suivi :** chaque défi a un identifiant, une progression, un état « terminé » et un état « récompense reçue », enregistrés dans la sauvegarde (§19.6).
+- **Suivi :** chaque défi a un identifiant, une progression, un état « terminé » et un état « récompense reçue », enregistrés dans la sauvegarde (§20.6).
 - **Attribution :** une notification apparaît pendant la run quand un défi est terminé, mais la récompense n'est validée **qu'au bilan de run**, une seule fois.
 - **Récompenses :** déblocages (personnages, Instruments, Reliques, cartes), Fragments de Toile et éléments cosmétiques.
 
 Exemples de défis de déblocage de personnages (à valider) :
 
-| Personnage | Défi |
-|---|---|
-| La Virtuose | Vaincre le boss une fois |
-| Le Graveur | Atteindre le niveau 20 |
-| L'Alchimiste | Appliquer 500 statuts cumulés |
-| Le Sculpteur | Vaincre 3 mini-boss cumulés |
-| La Restauratrice | Vaincre le boss avec deux personnages différents |
+| Ordre | Personnage | Défi |
+|---:|---|---|
+| 1 | Le Graveur | Atteindre le niveau 15 |
+| 2 | L'Alchimiste | Appliquer 500 statuts cumulés |
+| 3 | Le Sculpteur | Vaincre 3 mini-boss cumulés |
+| 4 | La Virtuose | Vaincre le boss une fois |
+| 5 | La Restauratrice | Vaincre le boss avec deux personnages différents |
 
-### 15.4 Archives
+### 16.4 Archives
 
-Les Archives sont accessibles par « Le catalogue » (§17.3).
+Les Archives sont accessibles par « Le catalogue » (§18.3).
 
 - **Onglets :** Personnages, Instruments (et leurs évolutions), Reliques, Ennemis (ennemis communs, mini-boss et boss), Synergies, Cartes, Statistiques.
 - **États d'un contenu :** *inconnu* (« ??? » avec sa condition de déblocage), *découvert* (description et notes), *maîtrisé* (critère propre à chaque contenu, par exemple un Instrument porté à son rang maximum).
 - Une évolution reste une silhouette jusqu'à sa première obtention, pour ne pas dévoiler la surprise.
-- Les découvertes sont enregistrées à la fin de la run (§19.6).
+- Les découvertes sont enregistrées à la fin de la run (§20.6).
 - Pour le MVP : une liste simple des découvertes, sans onglets.
 
-### 15.5 Statistiques
+### 16.5 Statistiques
 
-- **Par run :** le bilan de run (§17.7).
+- **Par run :** le bilan de run (§18.7).
 - **Globales (Futur) :** meilleur temps de survie par mode, ennemis éliminés au total, boss vaincus (par boss), runs jouées et victoires, plus gros coup, niveau maximum atteint, défis réussis, records du mode Infini (actes et temps).
 - **Détail (Futur) :** par personnage et par Instrument (temps équipé, dégâts, victoires).
-- **Technique :** les compteurs sont accumulés en mémoire pendant la run et écrits à la fin, sans allocation à chaque coup, pour rester compatible avec les hordes (chapitre 20).
+- **Technique :** les compteurs sont accumulés en mémoire pendant la run et écrits à la fin, sans allocation à chaque coup, pour rester compatible avec les hordes (chapitre 21).
 
-### 15.6 Fin de jeu
+### 16.6 Fin de jeu
 
 Quand le joueur a débloqué tous les personnages et terminé toutes les cartes :
 
@@ -1609,19 +1955,19 @@ Quand le joueur a débloqué tous les personnages et terminé toutes les cartes 
 - des défis de maîtrise : gagner avec chaque personnage, obtenir chaque évolution, remplir le catalogue à 100 % ;
 - des éléments cosmétiques : cadres de portrait et titres ;
 - des rangs de maîtrise par personnage, purement cosmétiques ;
-- les Fragments restants continuent de servir aux retouches (§15.2).
+- les Fragments restants continuent de servir aux retouches (§16.2).
 
 ---
 
-## 16. Direction artistique, effets et audio
+## 17. Direction artistique, effets et audio
 
-### 16.1 Direction artistique
+### 17.1 Direction artistique
 
-Palette principale : toile gris ivoire presque monochrome, noir d’encre, charbon et ombres profondes. Le cyan distingue le joueur et certains effets bénéfiques ; le rouge vermillon signale les attaques et impacts ; le violet est réservé à la corruption et à certains ennemis spéciaux. Ces accents restent rares pour ressortir nettement sur la toile. Les cadres brisés, les bords déchirés, les fibres visibles et les traces effacées renforcent l’impression d’une œuvre vivante. La palette et les matériaux de l'interface sont détaillés au §17.2.
+Palette principale : toile gris ivoire presque monochrome, noir d’encre, charbon et ombres profondes. Le cyan distingue le joueur et certains effets bénéfiques ; le rouge vermillon signale les attaques et impacts ; le violet est réservé à la corruption et à certains ennemis spéciaux. Ces accents restent rares pour ressortir nettement sur la toile. Les cadres brisés, les bords déchirés, les fibres visibles et les traces effacées renforcent l’impression d’une œuvre vivante. La palette et les matériaux de l'interface sont détaillés au §18.2.
 
 Privilégier les silhouettes lisibles, les modèles stylisés réutilisables, les effets reconnaissables et les télégraphes de boss qui ne se confondent pas avec les attaques du joueur. Les formes en relief doivent paraître sculptées dans des couches de toile ou de peinture solidifiée, mais rester simples à modéliser. Réutiliser matériaux, accessoires, éclairages et éléments de décor d'une carte à l'autre.
 
-### 16.2 Effets
+### 17.2 Effets
 
 **Effets prioritaires de la V1 :**
 
@@ -1635,17 +1981,17 @@ Privilégier les silhouettes lisibles, les modèles stylisés réutilisables, le
 
 **Effets futurs :** évolutions d'Instruments, Fractures, réactions complexes entre pigments, effets propres aux personnages, transformations visuelles de carte.
 
-Règle de priorité : les signaux essentiels d'une attaque dangereuse passent avant tout effet cosmétique. Les contraintes de rendu et de performance sont aux §10.6 et §20.6.
+Règle de priorité : les signaux essentiels d'une attaque dangereuse passent avant tout effet cosmétique. Les contraintes de rendu et de performance sont aux §11.6 et §21.6.
 
-### 16.3 Audio
+### 17.3 Audio
 
 **Audio de la V1 :** sons de coups, projectiles, dégâts reçus, collecte, montée de niveau, signal d'attaque du boss, musique d'ambiance et de boss, victoire et défaite. Les sons restent lisibles sans saturation pendant les hordes.
 
 ---
 
-## 17. Interface et expérience du joueur
+## 18. Interface et expérience du joueur
 
-### 17.1 Intention visuelle et principes
+### 18.1 Intention visuelle et principes
 
 L'interface évoque un **atelier de restauration interdit** : une toile encore humide, des pigments qui réagissent à la présence du joueur, des cadres fendus, du papier ancien et de l'encre vivante. Elle est organique, élégante et inquiétante, mais les informations utiles priment sur la décoration.
 
@@ -1657,9 +2003,9 @@ Principes directeurs :
 4. **Une intensité contextuelle.** L'interface peut s'agiter quand la menace augmente, puis se calmer dès que la pression retombe.
 5. **Séparation entre décor et gameplay.** Les effets décoratifs de l'interface ne se confondent pas avec les attaques, zones dangereuses ou projectiles du jeu.
 
-Priorité de production : **fonctionnalité et lisibilité d'abord**, puis identité « atelier de restauration interdit » par couches. Les éléments décoratifs ne retardent pas la validation du déplacement, du saut, de l'esquive, du combat, de la progression, de la pause et des écrans de fin (ordre de production au §24.3).
+Priorité de production : **fonctionnalité et lisibilité d'abord**, puis identité « atelier de restauration interdit » par couches. Les éléments décoratifs ne retardent pas la validation du déplacement, du saut, de l'esquive, du combat, de la progression, de la pause et des écrans de fin (ordre de production au §25.3).
 
-### 17.2 Palette et matériaux
+### 18.2 Palette et matériaux
 
 **Palette fonctionnelle de l'interface :**
 
@@ -1684,7 +2030,7 @@ Les couleurs de rareté (vert, bleu, violet, jaune) restent distinctes de cette 
 
 Les panneaux porteurs d'une information essentielle gardent un fond suffisamment opaque et un contraste élevé : les textures sont des finitions, jamais un obstacle à la lecture.
 
-### 17.3 Menu principal et navigation
+### 18.3 Menu principal et navigation
 
 Le menu principal ressemble à une toile encore vierge dans un atelier inquiétant. Le personnage peut y apparaître, avec un lent écoulement d'encre. L'ambiance est contemplative et discrète ; les animations ne retardent pas l'accès au jeu.
 
@@ -1693,12 +2039,12 @@ Entrées :
 - **Nouvelle toile :** lancer une partie.
 - **Les artistes :** sélectionner un personnage et consulter son passif ; les personnages verrouillés indiquent leur condition de déblocage.
 - **Le catalogue :** consulter les Archives (Instruments, évolutions, Reliques et ennemis découverts).
-- **Options :** cinq onglets — Jeu, Vidéo, Commandes, Audio et Effets (§18).
+- **Options :** cinq onglets — Jeu, Vidéo, Commandes, Audio et Effets (§19).
 - **Quitter :** fermer le jeu.
 
 Toute option non implémentée est masquée ou clairement indiquée comme indisponible. Au clic ou au survol, une trace de pinceau temporaire peut souligner le cadre ; la sélection reste clairement visible à la souris, au clavier et à la manette. Les transitions sont courtes et interrompables : le joueur n'attend jamais une longue animation pour confirmer ou annuler.
 
-### 17.4 HUD en jeu
+### 18.4 HUD en jeu
 
 Le HUD reste lisible pendant les combats denses sans prendre inutilement de place.
 
@@ -1710,8 +2056,8 @@ Le HUD reste lisible pendant les combats denses sans prendre inutilement de plac
 - icônes d'Instruments (avec rangs et état d'évolution) et de Reliques équipés ;
 - état de recharge de l'esquive, immédiatement compréhensible ;
 - santé du boss pendant son combat, avec nom et indication de phase si cela améliore la lecture ;
-- compteur du contrat actif, le cas échéant (§14.3) ;
-- marqueurs d'objectifs en bord d'écran (§13.4) ;
+- compteur du contrat actif, le cas échéant (§15.3) ;
+- marqueurs d'objectifs en bord d'écran (Futur, §14.7) ;
 - avertissements de danger, près du personnage ou dans le monde.
 
 Les temps de recharge et jauges d'Instrument ne sont affichés que s'ils servent à une décision. Éviter les chiffres permanents pour chaque dégât s'ils masquent le combat.
@@ -1724,7 +2070,7 @@ Les temps de recharge et jauges d'Instrument ne sont affichés que s'ils servent
 - **Haut centre :** chronomètre, phase ou vague, annonces de boss.
 - **Sous le chronomètre ou en haut à droite :** niveau de menace et objectif actif, si la phase en cours en a besoin.
 - **Boss :** barre de santé dédiée.
-- **Bas droit :** mini-carte (§13.4), assez petite pour ne pas masquer l'action ; emplacement à tester en résolution cible.
+- **Bas droit (Futur) :** mini-carte (§14.7), assez petite pour ne pas masquer l'action ; emplacement à tester en résolution cible.
 
 **Feedback de danger.** Quand le joueur subit des dégâts importants, un débordement vermillon bref peut apparaître sur les bords de l'écran ; il peut devenir plus marqué à faible santé mais ne masque jamais le centre de l'action. Ordre de priorité des alertes :
 
@@ -1736,11 +2082,11 @@ Les temps de recharge et jauges d'Instrument ne sont affichés que s'ils servent
 
 Les animations décoratives cèdent la place aux alertes de gameplay.
 
-Lors du premier lancement, ou dans un écran d'aide, afficher les commandes de saut et d'esquive, tant que l'option « Rappel des commandes à l'écran » est activée (§18). Distinguer par des télégraphes cohérents une attaque évitable par le saut d'une attaque évitable par l'esquive.
+Lors du premier lancement, ou dans un écran d'aide, afficher les commandes de saut et d'esquive, tant que l'option « Rappel des commandes à l'écran » est activée (§19). Distinguer par des télégraphes cohérents une attaque évitable par le saut d'une attaque évitable par l'esquive.
 
-### 17.5 Choix d'amélioration
+### 18.5 Choix d'amélioration
 
-Le jeu est en **pause réelle** et présente trois cartes (ou le nombre d'options valides disponibles, §9.2). Chaque carte affiche :
+Le jeu est en **pause réelle** et présente trois cartes (ou le nombre d'options valides disponibles, §10.2). Chaque carte affiche :
 
 - nom et icône ;
 - catégorie (Instrument, Relique, bonus ou évolution) et élément concerné ;
@@ -1754,11 +2100,11 @@ La rareté n'annonce jamais une nouvelle mécanique : une carte légendaire qui 
 
 Les cartes apparaissent par traits de pinceau ; le survol peut révéler un léger relief. Après confirmation, la carte est absorbée par l'encre, l'effet est appliqué **une seule fois**, puis le jeu reprend avec un feedback bref. Le curseur est visible et déverrouillé. Jamais d'amélioration invalide à l'écran.
 
-### 17.6 Écran d'évolution
+### 18.6 Écran d'évolution
 
 La rareté décrit la valeur d'un bonus statistique ; **une évolution est une transformation mécanique dédiée**. Elle possède un nom distinct, une illustration ou un aperçu distinct, une description de la nouvelle mécanique, des prérequis affichés et ses synergies principales lorsqu'elles sont connues. L'interface ne fait jamais passer une amélioration statistique rare pour une évolution.
 
-Parcours (conditions au §6.6) :
+Parcours (conditions au §7.6) :
 
 1. annoncer qu'une possibilité d'évolution est disponible ;
 2. montrer les Instruments éligibles et leurs prérequis, et expliquer pourquoi un Instrument ne l'est pas ;
@@ -1769,7 +2115,7 @@ Parcours (conditions au §6.6) :
 
 Si aucun Instrument n'est éligible au palier atteint, le joueur reçoit une récompense alternative ; le Sceau n'est pas consommé sans transformation obtenue.
 
-### 17.7 Pause, victoire, défaite et bilan
+### 18.7 Pause, victoire, défaite et bilan
 
 **Pause.** L'écran apparaît comme une feuille sombre posée sur la toile ; **Reprendre** est l'action la plus visible. Échap ouvre et ferme le menu. Le jeu n'inflige aucun dégât et ne fait pas progresser le combat pendant la pause. Le curseur est visible et déverrouillé, et la caméra ne le recapture pas tant que le menu est ouvert. Toute sortie de run qui entraîne la perte d'une progression temporaire demande une confirmation ; les boutons désactivés ont une explication. L'option « Abandonner la run » (avec confirmation) mène au bilan de run (§2.5).
 
@@ -1789,7 +2135,7 @@ Si aucun Instrument n'est éligible au palier atteint, le joueur reçoit une ré
 
 Les commandes **Recommencer** et **Retour au menu** fonctionnent et réinitialisent l'état temporaire de la run (§2.5).
 
-### 17.8 Jauges et feedbacks visuels
+### 18.8 Jauges et feedbacks visuels
 
 - **Santé :** trait d'encre dans une forme lisible ; les variations restent faciles à estimer.
 - **Expérience :** le Pigment se répand dans la jauge jusqu'au prochain niveau.
@@ -1800,7 +2146,7 @@ Les commandes **Recommencer** et **Retour au menu** fonctionnent et réinitialis
 
 Chaque animation communique une information identifiable et reste secondaire par rapport aux télégraphes ennemis.
 
-### 17.9 Micro-interactions
+### 18.9 Micro-interactions
 
 Durées de départ, à tester :
 
@@ -1825,9 +2171,9 @@ Règles d'animation :
 - limiter le nombre de particules et d'effets simultanés ;
 - ne jamais transmettre une information essentielle par une animation seule.
 
-### 17.10 Apprentissage
+### 18.10 Apprentissage
 
-Il n'y a pas de tutoriel séparé : l'apprentissage prolonge la minute d'introduction intégrée à l'action (§12.1). Chaque conseil :
+Il n'y a pas de tutoriel séparé : l'apprentissage prolonge la minute d'introduction intégrée à l'action (§13.1). Chaque conseil :
 
 - apparaît **une seule fois**, déclenché par la situation ;
 - est non bloquant : il ne met pas le jeu en pause et n'interrompt pas le combat ;
@@ -1842,9 +2188,9 @@ Il n'y a pas de tutoriel séparé : l'apprentissage prolonge la minute d'introdu
 | Évolution | Obtention du premier Sceau d'Évolution |
 | Surfaces de peinture | Première apparition d'une surface |
 
-Les conseils de commandes (déplacement, saut, esquive) dépendent de l'option « Rappel des commandes à l'écran » (§18) et affichent les touches du périphérique utilisé. Les astuces du menu sont distinctes : ce sont de courts conseils affichés dans les menus. Le MVP implémente au minimum les trois premiers conseils. Une salle d'entraînement dans le musée (mannequins et attaques télégraphées) est une piste Futur.
+Les conseils de commandes (déplacement, saut, esquive) dépendent de l'option « Rappel des commandes à l'écran » (§19) et affichent les touches du périphérique utilisé. Les astuces du menu sont distinctes : ce sont de courts conseils affichés dans les menus. Le MVP implémente au minimum les trois premiers conseils. Une salle d'entraînement dans le musée (mannequins et attaques télégraphées) est une piste Futur.
 
-### 17.11 Accessibilité et ergonomie
+### 18.11 Accessibilité et ergonomie
 
 À prévoir dès le prototype :
 
@@ -1858,9 +2204,9 @@ Les conseils de commandes (déplacement, saut, esquive) dépendent de l'option �
 - commandes affichées selon le périphérique utilisé, si possible ;
 - joueur toujours visible dans les effets de foule.
 
-Les réglages correspondants sont regroupés dans le menu Options (§18). Les options d'accessibilité modifient réellement le comportement visuel concerné : une option affichée mais non fonctionnelle n'est pas présentée comme disponible. Les effets de peinture sont testés sur un écran chargé pour vérifier que le personnage et les attaques ennemies restent visibles.
+Les réglages correspondants sont regroupés dans le menu Options (§19). Les options d'accessibilité modifient réellement le comportement visuel concerné : une option affichée mais non fonctionnelle n'est pas présentée comme disponible. Les effets de peinture sont testés sur un écran chargé pour vérifier que le personnage et les attaques ennemies restent visibles.
 
-### 17.12 Mise en œuvre technique de l'interface (Unity 6 URP)
+### 18.12 Mise en œuvre technique de l'interface (Unity 6 URP)
 
 **Couches séparées :**
 
@@ -1885,19 +2231,19 @@ La décoration et les effets ne contrôlent jamais la logique du jeu : les syst�
 
 ---
 
-## 18. Menu Options
+## 19. Menu Options
 
-Le menu Options est accessible depuis le menu principal (§17.3) et depuis le menu pause ; le jeu reste en pause pendant qu'il est ouvert. Il comporte **cinq onglets : Jeu, Vidéo, Commandes, Audio et Effets**. La difficulté de la run est choisie avant son lancement : Normal, Difficile ou Expert (§12.4).
+Le menu Options est accessible depuis le menu principal (§18.3) et depuis le menu pause ; le jeu reste en pause pendant qu'il est ouvert. Il comporte **cinq onglets : Jeu, Vidéo, Commandes, Audio et Effets**. La difficulté de la run est choisie avant son lancement : Normal, Difficile ou Expert (§13.4).
 
-### 18.1 Règles communes
+### 19.1 Règles communes
 
-- Une option affichée fonctionne réellement. Une option marquée **Futur** est masquée ou indiquée comme indisponible (§17.3).
-- Les réglages de Vidéo et d'Effets ne suppriment jamais l'information de gameplay : les télégraphes d'attaque et les surfaces de peinture de gameplay restent visibles à tous les réglages ; seules les décorations sont réduites (§10.6, §20.6).
-- Les réglages sont enregistrés avec les paramètres, séparément de la progression permanente (§19.6), et conservés d'une session à l'autre.
+- Une option affichée fonctionne réellement. Une option marquée **Futur** est masquée ou indiquée comme indisponible (§18.3).
+- Les réglages de Vidéo et d'Effets ne suppriment jamais l'information de gameplay : les télégraphes d'attaque et les surfaces de peinture de gameplay restent visibles à tous les réglages ; seules les décorations sont réduites (§11.6, §21.6).
+- Les réglages sont enregistrés avec les paramètres, séparément de la progression permanente (§20.6), et conservés d'une session à l'autre.
 - Un changement de Vidéo se valide par « Appliquer ». Sans confirmation après quelques secondes, le jeu revient automatiquement à l'ancien réglage, pour ne jamais bloquer le joueur sur une résolution invalide.
 - Les valeurs par défaut sont des valeurs de départ à tester.
 
-### 18.2 Onglet Jeu
+### 19.2 Onglet Jeu
 
 | Option | Valeurs | Défaut | Phase |
 |---|---|---|---|
@@ -1907,10 +2253,10 @@ Le menu Options est accessible depuis le menu principal (§17.3) et depuis le me
 | Vignette de dégâts | Oui / Non | Oui | V1 |
 | Montrer les astuces dans le menu | Oui / Non | Oui | V1 |
 | Rappel des commandes à l'écran | Oui / Non | Oui | V1 |
-| Afficher la mini-carte | Oui / Non | Oui | V1 |
-| Marqueurs d'objectifs | Oui / Non | Oui | V1 |
+| Afficher la mini-carte | Oui / Non | Oui | Futur |
+| Marqueurs d'objectifs | Oui / Non | Oui | Futur |
 
-### 18.3 Onglet Vidéo
+### 19.3 Onglet Vidéo
 
 | Option | Valeurs | Défaut | Phase |
 |---|---|---|---|
@@ -1924,7 +2270,7 @@ Le menu Options est accessible depuis le menu principal (§17.3) et depuis le me
 | Qualité des ombres | Désactivées / Basse / Moyenne / Élevée | Moyenne | V1 |
 | Post-traitement (lueur, vignettage d'objectif, etc.) | Désactivé / Réduit / Complet | Complet | V1 |
 
-### 18.4 Onglet Commandes
+### 19.4 Onglet Commandes
 
 | Option | Valeurs | Défaut | Phase |
 |---|---|---|---|
@@ -1936,7 +2282,7 @@ Le menu Options est accessible depuis le menu principal (§17.3) et depuis le me
 | Remappage des touches et boutons de la manette | Par action, avec détection des conflits | Commandes par défaut (§3.1) | Futur |
 | Rétablir les commandes par défaut | Bouton, avec confirmation | — | Futur |
 
-### 18.5 Onglet Audio
+### 19.5 Onglet Audio
 
 | Option | Valeurs | Défaut | Phase |
 |---|---|---|---|
@@ -1944,7 +2290,7 @@ Le menu Options est accessible depuis le menu principal (§17.3) et depuis le me
 | Volume de la musique | 0 % à 100 % | 70 % | V1 |
 | Volume des effets sonores | 0 % à 100 % | 80 % | V1 |
 
-### 18.6 Onglet Effets
+### 19.6 Onglet Effets
 
 | Option | Valeurs | Défaut | Phase |
 |---|---|---|---|
@@ -1957,12 +2303,12 @@ Le menu Options est accessible depuis le menu principal (§17.3) et depuis le me
 | Télégraphes d'attaque à contraste renforcé | Oui / Non | Non | V1 |
 | Flou de mouvement | Oui / Non | Non | Futur |
 
-### 18.7 Précisions pour éviter les recoupements
+### 19.7 Précisions pour éviter les recoupements
 
 - **Dégâts affichés :** « Afficher les dégâts » et « Afficher les dégâts sur la durée » décident *si* les nombres apparaissent ; « Nombres de dégâts flottants » (Effets) règle seulement leur animation.
-- **Vignette de dégâts :** l'option de l'onglet Jeu active l'indicateur de dégâts reçus sur les bords de l'écran (§17.4). « Flashs d'écran et débordement » (Effets) règle l'intensité des flashs et de ce débordement. Si la vignette est désactivée, seuls les flashs restent réglables. Elle est distincte du vignettage d'objectif du post-traitement.
-- **Rappel des commandes :** affiche les commandes de saut et d'esquive du périphérique utilisé (clavier ou manette), au premier lancement et dans l'écran d'aide (§17.4).
-- **Mini-carte et marqueurs :** « Afficher la mini-carte » et « Marqueurs d'objectifs » (§13.4) se règlent séparément.
+- **Vignette de dégâts :** l'option de l'onglet Jeu active l'indicateur de dégâts reçus sur les bords de l'écran (§18.4). « Flashs d'écran et débordement » (Effets) règle l'intensité des flashs et de ce débordement. Si la vignette est désactivée, seuls les flashs restent réglables. Elle est distincte du vignettage d'objectif du post-traitement.
+- **Rappel des commandes :** affiche les commandes de saut et d'esquive du périphérique utilisé (clavier ou manette), au premier lancement et dans l'écran d'aide (§18.4).
+- **Mini-carte et marqueurs :** « Afficher la mini-carte » et « Marqueurs d'objectifs » (§14.7) se règlent séparément.
 - **Tremblement de caméra :** un seul réglage, dans Effets.
 - **Champ de vision :** un seul réglage, dans Vidéo.
 - **Sensibilité :** un curseur par périphérique ; le rapport entre axes horizontal et vertical est fixé dans la configuration de la caméra (§3.5).
@@ -1971,9 +2317,9 @@ Le menu Options est accessible depuis le menu principal (§17.3) et depuis le me
 
 ---
 
-## 19. Architecture technique Unity 6 URP et sauvegarde
+## 20. Architecture technique Unity 6 URP et sauvegarde
 
-### 19.1 Principes
+### 20.1 Principes
 
 - Séparer **données, logique de gameplay, présentation et sauvegarde**.
 - Les fiches de contenu sont configurables sans modifier la logique centrale.
@@ -1981,11 +2327,11 @@ Le menu Options est accessible depuis le menu principal (§17.3) et depuis le me
 - Les règles de dégâts, de rareté et de progression sont testables de manière isolée.
 - Les événements sont désabonnés correctement à la destruction ou à la réutilisation des objets.
 - Ne pas créer un système générique complexe tant que le prototype n'en a pas besoin.
-- Garder les comportements dans des composants C# faciles à comprendre. Les responsabilités du §19.3 ne sont pas une obligation de créer immédiatement une classe par ligne.
+- Garder les comportements dans des composants C# faciles à comprendre. Les responsabilités du §20.3 ne sont pas une obligation de créer immédiatement une classe par ligne.
 
 À éviter : un script géant, les recherches d'objets répétées à chaque image sans nécessité, les valeurs d'équilibrage dispersées, les références Inspector manquantes, les `GameManager` en double, et les changements de noms de champs sérialisés qui cassent les références.
 
-### 19.2 Organisation des dossiers
+### 20.2 Organisation des dossiers
 
 ```text
 Assets/
@@ -2010,7 +2356,7 @@ Assets/
       Boot/
       MainMenu/
       MuseumOfShadows/
-      Sandbox/            (TestMap_EnemySandbox, voir §20.7)
+      Sandbox/            (TestMap_EnemySandbox, voir §21.7)
     Scripts/
       Core/
       Player/
@@ -2040,7 +2386,7 @@ Assets/
       PlayMode/
 ```
 
-### 19.3 Responsabilités des systèmes
+### 20.3 Responsabilités des systèmes
 
 | Système | Responsabilité |
 |---|---|
@@ -2060,7 +2406,7 @@ Assets/
 | StatusEffectController | Application, durée, cumul et expiration des statuts |
 | PaintSurfaceSystem | Création, durée, chevauchement et limite des surfaces |
 | WaveDirector (EnemySpawner) | Budget de menace, sélection des apparitions, arrêt des apparitions |
-| EnemySimulationManager | Mise à jour centralisée des ennemis actifs (§20.2) |
+| EnemySimulationManager | Mise à jour centralisée des ennemis actifs (§21.2) |
 | EnemyBrain (EnemyAI) | Comportement individuel d'un ennemi |
 | BossController | Phases, télégraphes, attaques, transitions et état du boss |
 | SaveService (SaveSystem) | Lecture et écriture de la progression permanente |
@@ -2068,17 +2414,17 @@ Assets/
 
 Les noms sont indicatifs. Avant d'implémenter, inspecter les scripts réels et préserver les noms et références Inspector existants lorsque c'est nécessaire.
 
-### 19.4 Données configurables
+### 20.4 Données configurables
 
 Utiliser des **ScriptableObjects** pour les définitions statiques lorsque c'est utile : statistiques de base, icône, prefab, statistiques éligibles, poids de récompense, prérequis. Les valeurs qui changent pendant la run restent dans des états d'exécution séparés : ne jamais modifier l'asset de définition pour stocker l'état d'une run. Pour les personnages, voir aussi le §5.3.
 
-### 19.5 Pooling et performances
+### 20.5 Pooling et performances
 
 Le pooling peut être utilisé pour projectiles, impacts, ennemis communs, objets de Pigment et effets de surface si les tests montrent son utilité. Tout objet réutilisé réinitialise santé, cible, minuteries, propriétaire, statuts, vitesse et abonnements aux événements.
 
-Ne pas fixer d'objectif de FPS irréaliste sans connaître le matériel cible. Baseline à tester : **60 FPS** sur le PC de référence choisi, dans une scène avec le nombre cible d'ennemis, de projectiles et de surfaces. Le matériel minimum est défini avant la sortie publique (§26.2).
+Ne pas fixer d'objectif de FPS irréaliste sans connaître le matériel cible. Baseline à tester : **60 FPS** sur le PC de référence choisi, dans une scène avec le nombre cible d'ennemis, de projectiles et de surfaces. Le matériel minimum est défini avant la sortie publique (§27.2).
 
-### 19.6 Règles de sauvegarde
+### 20.6 Règles de sauvegarde
 
 - Format **versionné**, avec un numéro de version de schéma et une migration simple dès le début.
 - Écrire la progression permanente après une fin de run, après chaque déblocage important et à la fermeture du jeu, **jamais en pleine run**.
@@ -2095,9 +2441,9 @@ Ne pas fixer d'objectif de FPS irréaliste sans connaître le matériel cible. B
 
 ---
 
-## 20. Hordes, simulation et performance
+## 21. Hordes, simulation et performance
 
-### 20.1 Objectif
+### 21.1 Objectif
 
 Construire une base capable de gérer une horde importante dans Unity 6 URP tout en préservant :
 
@@ -2110,7 +2456,7 @@ Construire une base capable de gérer une horde importante dans Unity 6 URP tout
 
 **Le nombre de 1 000 ennemis est une valeur de test de charge, pas une densité de jeu.** Le jeu n'est pas conçu pour afficher normalement 1 000 ennemis simultanés. Ce nombre sert à mesurer les limites, détecter les pics de coût et vérifier que les systèmes ne se dégradent pas brutalement. Le nombre réel de la horde est défini après les tests de lisibilité, de gameplay et de performances, et aucune capacité de 1 000 ennemis n'est annoncée avant mesure sur la machine cible.
 
-### 20.2 Architecture de simulation
+### 21.2 Architecture de simulation
 
 **Trois responsabilités séparées :**
 
@@ -2119,6 +2465,8 @@ Construire une base capable de gérer une horde importante dans Unity 6 URP tout
 3. **Présentation :** mesh, animation, matériau, effets visuels, niveau de détail.
 
 La présence visuelle d'un ennemi n'impose pas une simulation complète. Inversement, un ennemi ne devient pas invulnérable ni étranger au gameplay parce qu'il est loin de la caméra.
+
+**MVP :** une simple liste d'ennemis actifs et un nombre d'ennemis limité (§1.8, §25.4). Le contrôleur central ci-dessous est la version cible, à construire seulement si le profilage le justifie.
 
 **Contrôleur central.** Un `EnemySimulationManager` organise les mises à jour des ennemis actifs, réparties en lots ou en ticks selon la priorité de chaque ennemi. Il :
 
@@ -2134,7 +2482,7 @@ La taille des lots est configurable et testée ; aucun lot arbitrairement grand 
 
 **Pas d'ECS/DOTS au départ.** Le prototype utilise des composants C# et une simulation centralisée simple. Entities/DOTS, Job System et Burst ne sont envisagés que si le Profiler montre que le prototype classique ne répond pas aux objectifs. Éviter d'ajouter prématurément une dépendance et une complexité d'outillage.
 
-### 20.3 Déplacement du joueur et physique des ennemis
+### 21.3 Déplacement du joueur et physique des ennemis
 
 **Joueur.** Il utilise initialement un `CharacterController` pour un contrôle direct du déplacement, du saut et de l'esquive. Les ennemis ne peuvent pas le pousser ou le bloquer de façon imprévisible par accumulation de forces physiques.
 
@@ -2150,9 +2498,11 @@ La taille des lots est configurable et testée ; aucun lot arbitrairement grand 
 
 **Cohérence avec la physique Unity.** Ne pas déplacer un `Rigidbody` dynamique en écrivant directement sa position à chaque image. Choisir une méthode de mouvement compatible avec son mode physique et respecter la séparation `Update` / `FixedUpdate`. La fréquence de l'IA et celle de la physique peuvent différer, mais leurs échanges de données restent cohérents.
 
-### 20.4 Navigation
+### 21.4 Navigation
 
 La poursuite directe par le vecteur « ennemi vers joueur » ne suffit pas : elle est complétée par une navigation qui comprend les obstacles.
+
+**MVP :** navigation simple validée dans l'arène de test (§1.8, §25.4). La solution ci-dessous est la piste recommandée après le MVP si le profilage la justifie.
 
 **Solution recommandée pour la horde :** une grille de navigation ou un **champ de direction partagé**.
 
@@ -2162,7 +2512,7 @@ La poursuite directe par le vecteur « ennemi vers joueur » ne suffit pas : ell
 4. Actualiser le champ à fréquence contrôlée quand le joueur change de zone.
 5. Compléter la direction globale par un évitement local (piliers, angles, autres ennemis).
 
-Cette approche évite de calculer un chemin complet par ennemi et convient à une arène dont la destination principale est le joueur. Sur une grande carte (§13.1), le champ n'est calculé que dans une zone active autour du joueur, pas sur toute la carte.
+Cette approche évite de calculer un chemin complet par ennemi et convient à une arène dont la destination principale est le joueur. Sur une grande carte (§14.2), le champ n'est calculé que dans une zone active autour du joueur, pas sur toute la carte.
 
 **Alternative de prototype :** un `NavMeshAgent` valide rapidement la navigation avec quelques ennemis. Ne pas supposer que 1 000 agents avec recalculs fréquents seront performants : mesurer avant de choisir.
 
@@ -2176,7 +2526,9 @@ Cette approche évite de calculer un chemin complet par ennemi et convient à un
 
 Murs et piliers utilisent des colliders adaptés ; les couches de collision sont configurées explicitement.
 
-### 20.5 Animation adaptative à la distance
+### 21.5 Animation adaptative à la distance
+
+**MVP :** animation classique uniquement ; les niveaux de détail ci-dessous sont reportés tant que le profilage ne montre pas de problème (§25.4).
 
 La distance au joueur choisit **la qualité et la fréquence de la représentation visuelle**, jamais les règles de gameplay. Seuils de départ :
 
@@ -2207,7 +2559,7 @@ Santé, dégâts, récompenses et état de combat restent corrects même si l'an
 - Tester des poses pré-calculées en meshes pour les types d'ennemis nombreux et répétitifs.
 - GPU instancing ou rendu groupé seulement après vérification de la compatibilité des meshes, matériaux et shaders URP.
 
-Les meshes pré-calculés sont une optimisation, pas une obligation ; leur coût mémoire, le nombre de poses, la qualité des transitions et le gain réel sont mesurés sur un ennemi test avant de construire une bibliothèque. Le choix final entre animation classique, poses pré-calculées et rendu instancié est pris après comparaison dans la test map (§20.7).
+Les meshes pré-calculés sont une optimisation, pas une obligation ; leur coût mémoire, le nombre de poses, la qualité des transitions et le gain réel sont mesurés sur un ennemi test avant de construire une bibliothèque. Le choix final entre animation classique, poses pré-calculées et rendu instancié est pris après comparaison dans la test map (§21.7).
 
 **Calcul du LOD :**
 
@@ -2218,16 +2570,16 @@ Les meshes pré-calculés sont une optimisation, pas une obligation ; leur coût
 - envisager la distance à la caméra et la taille à l'écran en complément ;
 - garder les seuils configurables par type d'ennemi, pas dispersés dans les scripts.
 
-### 20.6 Rendu, pooling et effets
+### 21.6 Rendu, pooling et effets
 
 - **Pooling** des ennemis ordinaires, projectiles et effets fréquents. À la mort d'un ennemi, remettre à zéro états, événements, effets, santé, cibles et données de simulation avant réutilisation ; éviter les abonnements d'événements en double.
 - Réutiliser matériaux et meshes ; utiliser LOD et GPU instancing quand ils sont compatibles.
 - Limiter matériaux uniques, transparences coûteuses, ombres inutiles et effets superposés.
 - Un ennemi éloigné n'utilise pas autant de particules et de détails qu'un ennemi au premier plan.
-- Conserver une silhouette claire et des couleurs de danger lisibles (§16.1).
+- Conserver une silhouette claire et des couleurs de danger lisibles (§17.1).
 - Réduire ou supprimer les effets cosmétiques à distance sans supprimer les signaux essentiels d'une attaque dangereuse. Limiter les sons simultanés répétitifs de la foule.
 
-### 20.7 Test map de performance
+### 21.7 Test map de performance
 
 Une scène séparée, `TestMap_EnemySandbox`, contient :
 
@@ -2237,11 +2589,11 @@ Une scène séparée, `TestMap_EnemySandbox`, contient :
 - des points d'apparition configurables ;
 - un affichage de diagnostic : ennemis actifs, niveau d'animation, temps de simulation ;
 - un moyen de sélectionner rapidement une charge de test : 10, 50, 100, 250, 500 et 1 000 ennemis ;
-- une variante à l'échelle d'une grande carte (§13.1), pour vérifier la navigation des ennemis, l'apparition hors caméra et la mini-carte sur de longues distances.
+- une variante à l'échelle d'une grande carte (§14.2), pour vérifier la navigation des ennemis, l'apparition hors caméra et la mini-carte sur de longues distances.
 
 Les tests sont reproductibles : même scène, même configuration graphique, mêmes comportements, même matériel.
 
-### 20.8 Méthode de profilage
+### 21.8 Méthode de profilage
 
 Mesurer séparément :
 
@@ -2257,11 +2609,9 @@ Tester dans l'éditeur pour itérer, puis confirmer dans une build Windows de d�
 
 ---
 
-## 21. Fiches de contenu normalisées
+## 22. Fiches de contenu normalisées
 
-Chaque contenu a une fiche stable. Les identifiants internes restent en anglais ou en PascalCase, stables entre versions ; les noms affichés peuvent rester en français.
-
-### 21.1 Fiche Personnage
+### 22.1 Fiche Personnage
 
 - **ID :**
 - **Nom affiché :**
@@ -2279,7 +2629,7 @@ Chaque contenu a une fiche stable. Les identifiants internes restent en anglais 
 - **Conditions de déblocage :**
 - **Critères de test :**
 
-### 21.2 Fiche Instrument
+### 22.2 Fiche Instrument
 
 - **ID :**
 - **Nom affiché :**
@@ -2297,12 +2647,12 @@ Chaque contenu a une fiche stable. Les identifiants internes restent en anglais 
 - **Cas limites :**
 - **Critères de test :**
 
-### 21.3 Fiche Évolution
+### 22.3 Fiche Évolution
 
 - **ID :**
 - **Instrument requis :**
 - **Nom affiché :**
-- **Palier de joueur :** 10, 15 ou 20, selon la branche.
+- **Palier de joueur :** 10, 15 ou 20, selon le nombre d'évolutions déjà choisies pendant la run (§7.6).
 - **Rang minimum de l'Instrument :**
 - **Sceau ou événement requis :**
 - **Conditions de synergie :**
@@ -2314,7 +2664,7 @@ Chaque contenu a une fiche stable. Les identifiants internes restent en anglais 
 - **Méthode de choix :**
 - **Critères de test :**
 
-### 21.4 Fiche Relique
+### 22.4 Fiche Relique
 
 - **ID :**
 - **Nom affiché :**
@@ -2330,7 +2680,7 @@ Chaque contenu a une fiche stable. Les identifiants internes restent en anglais 
 - **Feedback :**
 - **Critères de test :**
 
-### 21.5 Fiche Ennemi
+### 22.5 Fiche Ennemi
 
 - **ID :**
 - **Nom affiché :**
@@ -2346,11 +2696,11 @@ Chaque contenu a une fiche stable. Les identifiants internes restent en anglais 
 - **Récompense éventuelle :**
 - **Coût de menace :**
 - **Règles d'apparition :**
-- **Niveau d'animation par distance :** seuils spécifiques éventuels (§20.5).
+- **Niveau d'animation par distance :** seuils spécifiques éventuels (§21.5).
 - **Feedback visuel / audio :**
 - **Critères de test :**
 
-### 21.6 Fiche Boss
+### 22.6 Fiche Boss
 
 - **ID :**
 - **Nom affiché :**
@@ -2367,7 +2717,7 @@ Chaque contenu a une fiche stable. Les identifiants internes restent en anglais 
 - **Effets visuels / audio :**
 - **Critères de test :**
 
-### 21.7 Exemple de fiche — Exilé
+### 22.7 Exemple de fiche — Exilé
 
 - **ID :** `Exile`
 - **Nom affiché :** L'Exilé
@@ -2380,7 +2730,7 @@ Chaque contenu a une fiche stable. Les identifiants internes restent en anglais 
 - **Faiblesses :** moins spécialisé que les personnages futurs.
 - **Tests :** le bonus ne s'empile pas sans limite ; le joueur comprend visuellement quand le passif est actif.
 
-### 21.8 Exemple de fiche — Patineur (futur)
+### 22.8 Exemple de fiche — Patineur (futur)
 
 - **ID :** `Skater`
 - **Nom affiché :** Le Patineur
@@ -2394,20 +2744,20 @@ Chaque contenu a une fiche stable. Les identifiants internes restent en anglais 
 
 ---
 
-## 22. Tests et critères d'acceptation
+## 23. Tests et critères d'acceptation
 
-### 22.1 Niveaux de test
+### 23.1 Niveaux de test
 
 - **EditMode :** formules de dégâts, probabilités, seuils d'expérience, règles de cumul, éligibilité.
 - **PlayMode :** déplacement, esquive, combat, apparition des vagues, interfaces, transitions d'état.
 - **Tests de scène :** une run complète avec un contenu représentatif.
 - **Tests de régression :** rejouer les scénarios après chaque modification d'un système central.
-- **Tests de performance :** densité maximale de combat, projectiles, surfaces et effets (§22.10).
+- **Tests de performance :** densité maximale de combat, projectiles, surfaces et effets (§23.10).
 - **Tests utilisateurs :** lisibilité, compréhension des cartes, rythme et difficulté perçue.
 
 Les contrôles sont d'abord testés dans une scène dédiée, puis dans la carte réelle.
 
-### 22.2 Critères d'acceptation et de sortie du MVP
+### 23.2 Critères d'acceptation et de sortie du MVP
 
 La première version jouable est acceptée lorsque :
 
@@ -2440,7 +2790,7 @@ Le MVP est **prêt pour une première session de test externe** lorsque, de plus
 - au moins trois testeurs peuvent expliquer la boucle principale sans aide après une partie ;
 - les bugs bloquants et critiques connus sont corrigés ou documentés.
 
-### 22.3 Déplacement, saut, esquive et caméra
+### 23.3 Déplacement, saut, esquive et caméra
 
 **Déplacement**
 
@@ -2474,7 +2824,7 @@ Le MVP est **prêt pour une première session de test externe** lorsque, de plus
 - Le boss et les attaques importantes restent lisibles.
 - Sensibilité et inversion sont appliquées correctement.
 
-### 22.4 Combat et ennemis
+### 23.4 Combat et ennemis
 
 - Chaque Instrument acquiert une cible valide ; cadence, portée et ligne de vue sont respectées.
 - Dégâts normaux et critiques corrects ; un impact n'inflige les dégâts qu'une fois, même si un projectile touche plusieurs colliders d'un même ennemi.
@@ -2486,7 +2836,7 @@ Le MVP est **prêt pour une première session de test externe** lorsque, de plus
 - Pas de propagation récursive infinie ; pas de projectile orphelin après redémarrage.
 - Les apparitions ordinaires cessent au lancement du boss ; la défaite et la victoire ne se déclenchent qu'une fois ; le redémarrage ne laisse aucun état résiduel.
 
-### 22.5 Progression
+### 23.5 Progression
 
 - Collecter du Pigment et monter plusieurs niveaux ; l'expérience excédentaire n'est pas perdue.
 - Passage de niveau et pause ; trois cartes toutes valides ; aucun bonus appliqué deux fois.
@@ -2496,7 +2846,7 @@ Le MVP est **prêt pour une première session de test externe** lorsque, de plus
 - Une évolution n'est sélectionnée qu'une fois par Instrument.
 - État propre après recommencer ; récompenses permanentes jamais attribuées en double.
 
-### 22.6 Probabilités de rareté
+### 23.6 Probabilités de rareté
 
 Pour une table 60 / 25 / 12 / 3 :
 
@@ -2509,7 +2859,7 @@ Pour une table 60 / 25 / 12 / 3 :
 
 Un test statistique vérifie le comportement sur un grand échantillon ; il ne garantit pas que chaque petite série reflète exactement les pourcentages.
 
-### 22.7 Peinture au sol
+### 23.7 Peinture au sol
 
 - Surface créée puis supprimée à l'expiration ; limite du nombre de surfaces ; renouvellement.
 - Joueur entrant et sortant rapidement ; ennemi restant dans une surface.
@@ -2519,7 +2869,7 @@ Un test statistique vérifie le comportement sur un grand échantillon ; il ne g
 - Une surface ne masque pas les télégraphes de boss.
 - Pas de croissance illimitée des effets actifs.
 
-### 22.8 Interface
+### 23.8 Interface
 
 **Lisibilité en combat**
 
@@ -2558,7 +2908,7 @@ Un test statistique vérifie le comportement sur un grand échantillon ; il ne g
 - Aucun réglage d'Effets ou de Vidéo ne masque un télégraphe d'attaque ou une surface de peinture de gameplay.
 - Quand le remappage est disponible : conflits détectés, action Pause toujours assignée, rétablissement des commandes par défaut avec confirmation.
 
-### 22.9 Sauvegarde
+### 23.9 Sauvegarde
 
 - Première création de sauvegarde ; sauvegarde avec plusieurs déblocages.
 - Fermeture et relancement : déblocages et paramètres persistent.
@@ -2570,7 +2920,7 @@ Un test statistique vérifie le comportement sur un grand échantillon ; il ne g
 - Une récompense permanente n'est attribuée qu'une fois, même si le bilan est relu ou le jeu relancé juste après.
 - Dépense de Fragments : retouche et solde enregistrés en une seule écriture.
 
-### 22.10 Hordes et performances
+### 23.10 Hordes et performances
 
 **Critères de validation du prototype de foule :**
 
@@ -2589,7 +2939,7 @@ Un test statistique vérifie le comportement sur un grand échantillon ; il ne g
 
 Mesurer FPS, temps CPU et GPU, allocations mémoire par image et nombre d'objets actifs. Le seuil final est défini sur le PC de référence ; pour le prototype, viser 60 FPS et éviter les chutes prolongées sous 50 FPS sur la scène cible, puis ajuster selon le matériel choisi.
 
-### 22.11 Gravité des bugs
+### 23.11 Gravité des bugs
 
 - **Bloquant :** impossible de démarrer, terminer ou redémarrer une run.
 - **Critique :** perte de sauvegarde, progression dupliquée, combat impossible ou crash.
@@ -2599,13 +2949,13 @@ Mesurer FPS, temps CPU et GPU, allocations mémoire par image et nombre d'objets
 
 Aucun bug bloquant ou critique connu n'est accepté pour une version publique. Les bugs majeurs sont corrigés ou acceptés explicitement avec un plan de correction.
 
-### 22.12 Modes, récompenses et objectifs
+### 23.12 Modes, récompenses et objectifs
 
 - Le mode Infini n'est accessible qu'après une victoire en mode Normal ; il n'a ni boss programmé ni victoire ; les performances restent stables après 40 minutes (pas de croissance illimitée d'objets, d'ennemis ou de surfaces).
 - Un coffre ne s'ouvre qu'une fois ; les offres sont valides ; avec des emplacements pleins, remplacer, refuser et la compensation fonctionnent.
-- Un seul événement est actif à la fois ; la fréquence respecte les limites du §14.1 ; aucun événement après 18:00 ni pendant le boss ; chaque événement se nettoie à sa fin.
+- Un seul événement est actif à la fois ; la fréquence respecte les limites du §15.1 ; aucun événement après 18:00 ni pendant le boss ; chaque événement se nettoie à sa fin.
 - Un seul contrat est actif ; un échec n'a aucun effet ; la récompense n'est attribuée qu'une fois.
-- La mini-carte et les marqueurs indiquent des positions correctes, disparaissent quand l'objectif est accompli et respectent leurs options.
+- (Futur) La mini-carte et les marqueurs indiquent des positions correctes, disparaissent quand l'objectif est accompli et respectent leurs options.
 - Les Fragments sont attribués une seule fois selon l'issue (victoire, défaite, abandon) ; une run abandonnée est marquée comme telle.
 - Les défis permanents progressent, persistent entre deux sessions et ne valident leur récompense qu'au bilan.
 - Les découvertes des Archives persistent ; une évolution non obtenue reste une silhouette.
@@ -2613,9 +2963,9 @@ Aucun bug bloquant ou critique connu n'est accepté pour une version publique. L
 
 ---
 
-## 23. Équilibrage
+## 24. Équilibrage
 
-### 23.1 Mesures à collecter
+### 24.1 Mesures à collecter
 
 - durée moyenne et médiane des runs ;
 - taux de victoire et minute de décès ;
@@ -2629,18 +2979,18 @@ Aucun bug bloquant ou critique connu n'est accepté pour une version publique. L
 - dégâts évités par esquive ;
 - nombre d'ennemis simultanés et temps d'image.
 
-### 23.2 Procédure d'itération
+### 24.2 Procédure d'itération
 
 1. Définir une hypothèse précise (par exemple « les attaques à distance sont trop sûres »).
 2. Modifier un petit nombre de paramètres liés à cette hypothèse.
 3. Exécuter les mêmes scénarios de test.
 4. Comparer les métriques et observer des parties réelles.
 5. Conserver, annuler ou ajuster la modification.
-6. Inscrire la décision et sa raison dans le journal d'équilibrage (§26.3).
+6. Inscrire la décision et sa raison dans le journal d'équilibrage (§27.3).
 
 Ne pas changer simultanément dégâts, santé des ennemis, chances de rareté et cadence d'apparition : il deviendrait impossible de savoir quelle modification a produit le résultat. Ajuster une variable à la fois.
 
-### 23.3 Ordre de validation
+### 24.3 Ordre de validation
 
 1. Valider déplacement, saut et esquive sans ennemis.
 2. Tester les mêmes actions avec un ennemi poursuivant.
@@ -2655,7 +3005,7 @@ Ne pas changer simultanément dégâts, santé des ennemis, chances de rareté e
 
 Ne pas chercher à équilibrer six personnages, dix Instruments, dix Reliques et plusieurs cartes avant d'avoir validé le premier personnage et le premier combat de boss.
 
-### 23.4 Seuils de départ à surveiller
+### 24.4 Seuils de départ à surveiller
 
 Objectifs de test, pas garanties de conception :
 
@@ -2667,24 +3017,24 @@ Objectifs de test, pas garanties de conception :
 - la construction reste viable sans obtenir une rareté spécifique ;
 - une défaite s'explique par les décisions ou les menaces, pas par une absence prolongée de choix valides.
 
-### 23.5 Équilibrer les combinaisons
+### 24.5 Équilibrer les combinaisons
 
 Pour éviter qu'une combinaison de contenus soit beaucoup plus puissante que toutes les autres :
 
-- **Plafonds** par statistique : dégâts, cadence, critique, durée (§9.4).
+- **Plafonds** par statistique : dégâts, cadence, critique, durée (§10.4).
 - **Rendements décroissants** quand plusieurs bonus de même source s'empilent.
 - **Banc de simulation automatique** (EditMode) : il estime les dégâts par seconde de chaque Instrument au rang maximum et évolué, et signale tout contenu au-dessus de 130 % de la médiane (valeur de départ).
 - **Matrice de tests** Instrument × Relique sur les combinaisons les plus probables.
-- **Pas de difficulté adaptative :** le budget de menace suit le temps, pas la puissance du joueur (§12.3), pour rester lisible.
-- Les synergies respectent le contrat et les règles anti-boucle des §8.4 et §8.5 ; on ajuste une variable à la fois (§23.2).
+- **Pas de difficulté adaptative :** le budget de menace suit le temps, pas la puissance du joueur (§13.3), pour rester lisible.
+- Les synergies respectent le contrat et les règles anti-boucle des §9.4 et §9.5 ; on ajuste une variable à la fois (§24.2).
 
 ---
 
-## 24. Plan de production
+## 25. Plan de production
 
-### 24.1 Socle minimal (première tâche après création du projet)
+### 25.1 Socle minimal (première tâche après création du projet)
 
-1. Créer un projet Unity 6 URP et la structure de dossiers (§19.2).
+1. Créer un projet Unity 6 URP et la structure de dossiers (§20.2).
 2. Créer une scène de test simple.
 3. Configurer le New Input System.
 4. Créer un personnage provisoire capable de se déplacer, sauter et esquiver.
@@ -2696,7 +3046,7 @@ Pour éviter qu'une combinaison de contenus soit beaucoup plus puissante que tou
 
 **Condition de passage :** aucune progression complexe n'est ajoutée avant que déplacement, saut, esquive, caméra, combat élémentaire, mort et redémarrage soient fiables.
 
-### 24.2 Étapes de production
+### 25.2 Étapes de production
 
 **Étape A — Contrôle jouable**
 
@@ -2721,9 +3071,9 @@ Pour éviter qu'une combinaison de contenus soit beaucoup plus puissante que tou
 
 - expérience et niveaux ;
 - interface de choix ;
-- trois Instruments et quatre Reliques du MVP ;
+- deux Instruments puis un troisième après validation, et deux Reliques puis jusqu'à quatre (§1.5) ;
 - directeur de vague ;
-- quatre ennemis communs ;
+- trois ennemis communs, puis un quatrième après validation ;
 - mini-boss et Sceau d'Évolution ;
 - premier boss et transition de combat.
 
@@ -2737,13 +3087,13 @@ Pour éviter qu'une combinaison de contenus soit beaucoup plus puissante que tou
 
 **Étape E — Validation**
 
-- tests d'acceptation (chapitre 22) ;
+- tests d'acceptation (chapitre 23) ;
 - profils de personnages extrêmes ;
 - profilage CPU/GPU et allocations ;
 - build Windows ;
 - correction des problèmes avant extension du contenu.
 
-### 24.3 Piste interface
+### 25.3 Piste interface
 
 Développer l'interface par étapes vérifiables, chacune utilisable avant de passer à la suivante :
 
@@ -2758,7 +3108,7 @@ Développer l'interface par étapes vérifiables, chacune utilisable avant de pa
 
 Ne pas commencer par les shaders ou les animations complexes au détriment des systèmes fonctionnels.
 
-### 24.4 Piste ennemis et performance — version débutant
+### 25.4 Piste ennemis et performance — version débutant
 
 1. Construire une arène de test grise.
 2. Valider le déplacement du joueur et les collisions du décor.
@@ -2769,11 +3119,27 @@ Ne pas commencer par les shaders ou les animations complexes au détriment des s
 7. Profiler une scène chargée avant toute optimisation spécialisée.
 8. Ne développer ni navigation de foule personnalisée, ni simulation centralisée avancée, ni animation LOD tant que le profilage ne démontre pas un problème réel.
 
+### 25.5 Critères de passage entre les étapes
+
+Ne pas passer à l'étape suivante tant que les conditions de l'étape actuelle ne sont pas satisfaites.
+
+**Étape 1 — Contrôle :** le joueur peut se déplacer, tourner la caméra, sauter et esquiver sans se bloquer dans le décor. Le contrôle reste compréhensible pendant plusieurs minutes.
+
+**Étape 2 — Combat :** un ennemi peut poursuivre le joueur, recevoir des dégâts et mourir. Les dégâts ne sont ni doublés ni appliqués après la mort.
+
+**Étape 3 — Plaisir de jeu :** une attaque automatique et une petite horde donnent envie de continuer à bouger. Si le combat est ennuyeux, ajuster les sensations avant d'ajouter des systèmes.
+
+**Étape 4 — Progression :** le Pigment permet de gagner un niveau et de choisir une amélioration ; le choix s'applique une seule fois et le jeu reprend correctement.
+
+**Étape 5 — Run complète :** le mini-boss, le boss, la victoire, la défaite et le redémarrage fonctionnent dans le même build.
+
+**Étape 6 — Extension :** seulement après plusieurs runs de test, ajouter les systèmes futurs un par un, avec un objectif clair et un test associé.
+
 ---
 
-## 25. Règles de travail pour l'assistant IA
+## 26. Règles de travail pour l'assistant IA
 
-### 25.1 Règles générales
+### 26.1 Règles générales
 
 1. Lire ce cahier des charges avant toute tâche importante.
 2. Inspecter les scripts et assets réels avant de proposer ou d'effectuer des modifications ; ne jamais inventer le contenu d'un script non consulté.
@@ -2792,11 +3158,11 @@ Ne pas commencer par les shaders ou les animations complexes au détriment des s
 15. Pour les systèmes de foule, commencer par le cas minimal et le tester avant d'étendre.
 16. Construire un prototype jouable avant de produire beaucoup de contenu.
 
-### 25.2 Format de réponse pour une tâche technique non triviale
+### 26.2 Format de réponse pour une tâche technique non triviale
 
 Présenter : objectif, fichiers à inspecter, cause confirmée ou hypothèses, modification minimale, étapes Inspector/Hierarchy, tests manuels, limites restantes.
 
-### 25.3 Checklist avant de coder un système
+### 26.3 Checklist avant de coder un système
 
 - [ ] La règle est formulée sans ambiguïté.
 - [ ] Les données nécessaires sont identifiées.
@@ -2811,144 +3177,7 @@ Présenter : objectif, fichiers à inspecter, cause confirmée ou hypothèses, m
 
 ---
 
-## 26. Simplification de production et décisions de cohérence
-
-### 26.1 Principe directeur : livrer un jeu amusant avant un jeu vaste
-
-Le projet est développé par une personne débutante en game development. La spécification doit donc réduire le nombre de systèmes qui doivent fonctionner simultanément. Le critère de priorité est : **est-ce que cette fonctionnalité rend la boucle de combat immédiatement plus amusante ou plus compréhensible ?** Si la réponse n'est pas clairement oui, elle est reportée.
-
-**Ordre de priorité :**
-
-1. Le déplacement, la caméra, le saut et l'esquive sont agréables.
-2. Un ennemi est satisfaisant à combattre.
-3. Une attaque automatique est claire et plaisante.
-4. Le joueur devient progressivement plus puissant grâce aux choix.
-5. Le mini-boss et le boss sont lisibles et amusants.
-6. Une run peut être terminée, perdue, redémarrée et jouée à nouveau sans bug.
-7. Seulement ensuite : contenu, exploration, progression permanente et effets avancés.
-
-### 26.2 Décisions techniques à appliquer au MVP
-
-**États et pause**
-
-- Le `RunController` est l'unique propriétaire de l'état de la run.
-- L'état de jeu et l'affichage des menus sont séparés : la pause est une surcouche et mémorise l'état précédent.
-- Une seule récompense à choix est ouverte à la fois ; les autres attendent.
-- Tous les systèmes de gameplay vérifient l'autorisation de simuler avant d'avancer.
-- Victoire, défaite, mort, récompenses et redémarrage ne peuvent être exécutés qu'une fois par événement.
-
-**Dégâts**
-
-- Tous les dégâts passent par un seul résolveur.
-- Le résolveur vérifie cible valide, invulnérabilité, réduction, dégâts, réactions puis mort, dans cet ordre.
-- Le MVP utilise surtout les dégâts directs. Les statuts et réactions complexes sont reportés.
-- Les attaques multi-impacts doivent annoncer leur nombre d'impacts ; aucune répétition implicite à chaque image n'est autorisée.
-
-**Mouvement**
-
-- `CharacterController`, déplacement relatif à la caméra et une vitesse de base par personnage.
-- Pas de sprint, double saut, escalade, téléportation ou déplacement instantané.
-- Saut et esquive possèdent des durées et limites configurées à un seul endroit.
-- L'esquive a une récupération et une fenêtre d'invulnérabilité explicites.
-- Les valeurs exactes sont fixées par test, puis centralisées dans une configuration de mouvement ; elles ne sont pas dispersées dans les scripts.
-
-**Ciblage automatique**
-
-- Portée et cadence par Instrument.
-- Recherche de cible périodique, pas à chaque image.
-- Cible la plus proche par défaut ; en cas d'égalité, garder la cible actuelle si elle reste valide.
-- Aucun tir à travers les murs par défaut.
-- Pas de visée manuelle ni de système de verrouillage pour le MVP.
-
-**Apparitions et foule**
-
-- Commencer avec un maximum de 20 à 30 ennemis actifs, puis augmenter uniquement si le jeu est lisible et performant.
-- Les apparitions ne se font pas à portée de contact immédiate du joueur.
-- Les ennemis utilisent une navigation simple validée dans l'arène de test. Pas de champ de direction personnalisé, d'évitement de foule complexe ou de système d'animation adaptatif avant d'avoir mesuré un problème.
-- Le test de 1 000 ennemis est futur et ne constitue pas un critère de livraison du premier jeu.
-
-**Boss**
-
-- Le boss n'est activé qu'après le nettoyage de l'arène et une annonce courte.
-- La transition est déclenchée une seule fois par le contrôleur de run.
-- Le combat du boss est indépendant des apparitions ordinaires ; aucune nouvelle vague ordinaire n'est créée pendant ce combat.
-- Chaque attaque doit avoir un signal, un délai, une zone, une réponse possible et une récupération. Les attaques impossibles à éviter avec les statistiques de base sont rejetées ou redessinées.
-
-**Données et sauvegarde**
-
-- Les `ScriptableObject` décrivent le contenu statique ; ils ne stockent pas les valeurs temporaires modifiées pendant la run.
-- L'état de run est conservé dans des données runtime.
-- La progression permanente est reportée ; tant qu'elle n'est pas requise, ne pas construire de système de sauvegarde complexe.
-- Une fois la sauvegarde ajoutée, elle est versionnée et ne restaure jamais l'équipement temporaire d'une ancienne run.
-
-### 26.3 Cohérence des systèmes de gameplay : règles retenues
-
-| Système | Règle de cohérence |
-|---|---|
-| Instruments | Une attaque possède une cadence, une portée, une règle de ciblage et une seule voie d'application des dégâts. |
-| Reliques | Les bonus s'appliquent une seule fois et sont affichés avec leur effet réel. Les rangs de Reliques sont reportés tant qu'ils ne sont pas nécessaires. |
-| Rareté | Modifie uniquement les valeurs statistiques ; elle ne crée pas de nouvelle mécanique. Peut être reportée du tout premier prototype. |
-| Progression | Le Pigment est la seule ressource nécessaire au premier système de niveau. Pas de monnaie permanente dans le MVP initial. |
-| Évolution | Une évolution démonstrative suffit pour prouver le principe. Le système complet Sceau + rang 5 + paliers 10/15/20 attend la validation du combat. |
-| Statuts | Au plus un statut simple dans le MVP ; durée, intervalle et cumul définis avant intégration. |
-| Surfaces de peinture | Désactivées dans le premier prototype si elles ne sont pas indispensables. Si activées, elles sont plafonnées en nombre et durée, et ne peuvent pas infliger des dégâts chaque image sans intervalle. |
-| Événements et contrats | Reportés. Aucun flux de récompense concurrent du choix de niveau dans le MVP initial. |
-| Coffres | Reportés ; la récompense du mini-boss peut utiliser l'écran de choix existant plutôt qu'un nouveau système. |
-| Mini-carte | Reportée. L'arène initiale est assez petite pour être lisible sans navigation avancée. |
-| Mode Infini | Reporté jusqu'à ce qu'une run Normal soit complète et amusante. |
-| Progression permanente | Reportée jusqu'à ce que le joueur ait une raison claire de relancer une deuxième run. |
-| Options | Ne présenter que les options réellement fonctionnelles. Remappage, paramètres graphiques avancés et effets complexes sont reportés. |
-| Performance | Profiler avant optimisation ; limiter la foule avant d'introduire une architecture avancée. |
-
-### 26.4 Critères de passage entre les étapes
-
-Ne pas passer à l'étape suivante tant que les conditions de l'étape actuelle ne sont pas satisfaites.
-
-**Étape 1 — Contrôle :** le joueur peut se déplacer, tourner la caméra, sauter et esquiver sans se bloquer dans le décor. Le contrôle reste compréhensible pendant plusieurs minutes.
-
-**Étape 2 — Combat :** un ennemi peut poursuivre le joueur, recevoir des dégâts et mourir. Les dégâts ne sont ni doublés ni appliqués après la mort.
-
-**Étape 3 — Plaisir de jeu :** une attaque automatique et une petite horde donnent envie de continuer à bouger. Si le combat est ennuyeux, ajuster les sensations avant d'ajouter des systèmes.
-
-**Étape 4 — Progression :** le Pigment permet de gagner un niveau et de choisir une amélioration ; le choix s'applique une seule fois et le jeu reprend correctement.
-
-**Étape 5 — Run complète :** le mini-boss, le boss, la victoire, la défaite et le redémarrage fonctionnent dans le même build.
-
-**Étape 6 — Extension :** seulement après plusieurs runs de test, ajouter les systèmes futurs un par un, avec un objectif clair et un test associé.
-
-### 26.5 Décisions ouvertes à fermer avant le prototype concerné
-
-- Valeurs finales de vitesse, saut, esquive, santé et dégâts : à déterminer par tests de sensation, pas par théorie.
-- Les Instruments attaquent pendant le saut : **oui pour le premier prototype**, afin de limiter les exceptions.
-- Tir à travers les obstacles : **non par défaut**.
-- Instruments initiaux : Pinceau du Dernier Trait seul au premier prototype ; ajouter un Instrument à projectile après validation.
-- Reliques : commencer avec deux effets simples, sans rangs ni déclenchements complexes.
-- Nombre maximal d'ennemis actifs : commencer à 20–30 et ajuster selon le ressenti et le profilage.
-- Durée du prototype : 8–12 minutes ; cible 20–30 minutes après validation.
-- Boss du prototype : Conservateur Sans Visage dans une version simplifiée ; sa durée et ses attaques seront mesurées.
-- Surfaces de peinture : désactivées au tout début, sauf si le prototype perd trop de son identité artistique sans elles.
-- Sauvegarde : aucune progression permanente requise pour le premier prototype.
-- Les autres décisions de contenu futur restent ouvertes tant qu'elles ne bloquent pas le MVP.
-
 ## 27. Décisions et journal des changements
-
-### Version 3.4
-
-- Les cartes reposent désormais sur une toile presque vierge au début de chaque run.
-- Des éléments peints peuvent se matérialiser progressivement en 3D à partir de points et de modules prédéfinis.
-- Le Musée des Ombres sert de prototype : cadre brisé, sculpture et marque de peinture.
-- Les cartes futures ont chacune une identité visuelle et des familles de matérialisation propres.
-- La variété entre runs utilise des configurations validées plutôt qu’une génération procédurale complexe.
-- La navigation avancée est repoussée hors MVP ; la direction artistique précise le contraste toile ivoire/noir et accents cyan, vermillon, violet.
-
-### Version 3.5
-
-- Ajout des arbres de talents complets proposés pour les six personnages, avec branches verticales reliables, reset et talents statistiques/identitaires.
-- Remplacement de la difficulté unique par trois difficultés sélectionnables : Normal, Difficile et Expert.
-- Les difficultés supérieures augmentent la variété autorisée du canvas et la complexité des événements/rencontres, tout en préservant l’identité, les limites de carte et les voies d’évasion.
-- Le Cercle du Peintre est l’événement prioritaire du MVP.
-- Ajout de la vue aérienne finale du canvas ; l’animation complète de peinture reste une évolution future.
-- Les chiffres de talents et paramètres de difficulté sont des valeurs de conception à tester, non des résultats d’équilibrage validés.
 
 ### 27.1 Registre des décisions retenues
 
@@ -2956,79 +3185,88 @@ Ne pas passer à l'étape suivante tant que les conditions de l'étape actuelle 
 |---|---|---|
 | Vitesse de déplacement | Une seule vitesse par personnage ; ni sprint, ni marche/course | §3.2 |
 | Téléportation | Interdite : aucun portail ni déplacement instantané | §1.3 |
-| Pause pendant les choix de niveau | Pause complète | §2.1, §9.2 |
+| Pause pendant les choix de niveau | Pause complète | §2.1, §10.2 |
 | Esquive en l'air | Autorisée, avec la même récupération | §3.4 |
 | Esquive sans direction | Vers l'arrière par rapport à l'orientation du personnage | §3.4 |
-| Ennemis présents à l'entrée du boss | Retirés proprement avec une animation de dissolution | §12.6 |
-| Emplacements pleins | Aux niveaux, seules des améliorations sont proposées ; remplacer ou refuser (avec compensation) uniquement pour les récompenses d'objet précises | §6.2, §7.2, §9.5 |
-| Ciblage automatique | Règle définie par Instrument dans ses données, départage stable | §6.5 |
-| Rareté | Quantité de statistiques uniquement ; probabilités fixes 60/25/12/3 au prototype | §9.3 |
-| Rang d'Instrument vs palier de joueur | Deux progressions distinctes (rangs 1–5 ; paliers 10/15/20) | §6.6 |
-| Sceau d'Évolution | Consommé seulement lors d'une évolution appliquée ; conservé sinon | §6.6 |
-| Évolutions | Au moins deux branches mutuellement exclusives par Instrument | §6.6 |
-| Pigments de terrain du MVP | Encre noire et Vermillon uniquement | §10.4 |
-| Modes de jeu | Normal et Infini ; ni mode journalier ni seed exposée au joueur au MVP. Difficulté sélectionnable : Normal, Difficile, Expert | §2.3, §12.4 |
-| Structure de la run | Pilotée par le chronomètre et les phases ; aucune jauge ni zone de corruption | §12.1 |
-| Taille des cartes | Grandes cartes (valeur de départ : 300 à 500 m de côté) | §13.1 |
-| Navigation | Mini-carte et marqueurs d'objectifs, réglables séparément | §13.4, §18 |
-| Coffres et récompenses | Mini-boss et récompense associée garantis ; coffre d’acte en Infini ; coffre commun aléatoire ; coffre doré pour les contrats ; ouverture par contact | §14.4 |
-| Événements aléatoires | Un tirage toutes les 90 s dès 3:00, 35 %, 4 à 5 par run, aucun après 18:00 | §14.1 |
+| Ennemis présents à l'entrée du boss | Retirés proprement avec une animation de dissolution | §13.6 |
+| Emplacements pleins | Aux niveaux, seules des améliorations sont proposées ; remplacer ou refuser (avec compensation) uniquement pour les récompenses d'objet précises | §7.2, §8.2, §10.5 |
+| Ciblage automatique | Règle définie par Instrument dans ses données, départage stable | §7.5 |
+| Rareté | Quantité de statistiques uniquement ; probabilités fixes 60/25/12/3 au prototype | §10.3 |
+| Rang d'Instrument vs palier de joueur | Deux progressions distinctes (rangs 1–5 ; paliers 10/15/20) | §7.6 |
+| Sceau d'Évolution | Consommé seulement lors d'une évolution appliquée ; conservé sinon | §7.6 |
+| Évolutions | Au moins deux branches mutuellement exclusives par Instrument | §7.6 |
+| Évolution B du Cadre Fracturé | Toile Réfléchissante : déviation physique de projectiles sur une trajectoire visible, sans portail ni téléportation | §7.1 |
+| Pigments de terrain du MVP | Encre noire et Vermillon uniquement | §11.4 |
+| Modes de jeu | Normal et Infini ; ni mode journalier ni seed exposée au joueur au MVP. Difficulté sélectionnable : Normal, Difficile, Expert | §2.3, §13.4 |
+| Victoire du mode Normal | Vaincre le boss est requis ; l'Infini n'a pas de victoire programmée | §2.3, §12.6 |
+| Structure de la run | Pilotée par le chronomètre et les phases ; aucune jauge ni zone de corruption | §13.1 |
+| Taille des cartes | Petite arène au MVP ; grandes cartes futures (valeur de départ : 300 à 500 m de côté) | §14.2 |
+| Navigation | Futur : mini-carte et marqueurs d'objectifs, réglables séparément ; aucune navigation dédiée au MVP | §14.7, §19 |
+| Coffres et récompenses | Mini-boss et récompense associée garantis ; coffre d’acte en Infini ; coffre commun aléatoire ; coffre doré pour les contrats ; ouverture par contact | §15.4 |
+| Événements aléatoires | Un tirage toutes les 90 s dès 3:00, 35 %, 4 à 5 par run, aucun après 18:00 | §15.1 |
 | Fin de run | Victoire ×1,5 ; défaite ×1 ; abandon ×1 sans pénalité | §2.5 |
-| Fragments de Toile | Gains de départ par source ; retouches plafonnées ; déblocages par accomplissements | §15.2 |
-| Les 1 000 ennemis | Palier de stress test, pas une densité de jeu | §20.1 |
-| Architecture de foule | Composants C# et simulation centralisée ; pas d'ECS/DOTS au départ | §20.2 |
-| Joueur et physique | `CharacterController` pour le joueur ; ennemis ordinaires sans `Rigidbody` dynamique par défaut | §20.3 |
-| Navigation de la horde | Grille ou champ de direction partagé, avec évitement local | §20.4 |
-| Phases d'une run | Six phases A à F pilotées par le chronomètre de run | §12.1 |
-| Noms du menu principal | Nouvelle toile, Les artistes, Le catalogue, Options, Quitter | §17.3 |
-| Difficulté | Choix au lancement : Normal, Difficile ou Expert ; la difficulté élargit les configurations et la complexité sans changer l’identité de la carte | §12.4, §13.5 |
-| Arbres de talents | Un arbre vertical réinitialisable par personnage, talents statistiques et identitaires, branches reliables ; seul un sous-ensemble de L’Exilé au MVP | §28 |
-| Canvas final | Vue aérienne de fin de run ; reconstitution animée de toute la peinture reportée | §13.6 |
-| Variété du terrain | Sélection semi-aléatoire parmi configurations validées ; plus de configurations et de complexité aux difficultés élevées ; seed reproductible future | §13.5 |
-| Menu Options | Cinq onglets : Jeu, Vidéo, Commandes, Audio, Effets | §18 |
-| Réglages d'interface | Pas d'option de taille d'interface, de taille du texte, de contraste élevé ni de réinitialisation de la sauvegarde ; rappel des commandes à l'écran : option disponible | §17.11, §18 |
-| Sauvegarde | Format versionné ; run temporaire jamais restaurée | §19.6 |
-| Bonus permanents | Modestes ; priorité aux déblocages | §15.2 |
+| Fragments de Toile | Gains de départ par source ; retouches plafonnées ; déblocages par accomplissements | §16.2 |
+| Les 1 000 ennemis | Palier de stress test, pas une densité de jeu | §21.1 |
+| Architecture de foule | MVP : composants C# simples et nombre d'ennemis limité ; simulation centralisée avancée après profilage ; pas d'ECS/DOTS au départ | §21.2 |
+| Joueur et physique | `CharacterController` pour le joueur ; ennemis ordinaires sans `Rigidbody` dynamique par défaut | §21.3 |
+| Navigation de la horde | MVP : navigation simple validée dans l'arène de test ; piste après MVP : grille ou champ de direction partagé avec évitement local | §21.4 |
+| Phases d'une run | Six phases A à F pilotées par le chronomètre de run | §13.1 |
+| Noms du menu principal | Nouvelle toile, Les artistes, Le catalogue, Options, Quitter | §18.3 |
+| Difficulté | Choix au lancement : Normal, Difficile ou Expert ; la difficulté élargit les configurations et la complexité sans changer l’identité de la carte | §13.4, §14.5 |
+| Arbres de talents | Un arbre vertical réinitialisable par personnage, talents statistiques et identitaires, branches reliables ; seul un sous-ensemble de L’Exilé au MVP | §6 |
+| Canvas final | Vue aérienne de fin de run ; reconstitution animée de toute la peinture reportée | §14.6 |
+| Variété du terrain | Sélection semi-aléatoire parmi configurations validées ; plus de configurations et de complexité aux difficultés élevées ; seed reproductible future | §14.5 |
+| Menu Options | Cinq onglets : Jeu, Vidéo, Commandes, Audio, Effets | §19 |
+| Réglages d'interface | Pas d'option de taille d'interface, de taille du texte, de contraste élevé ni de réinitialisation de la sauvegarde ; rappel des commandes à l'écran : option disponible | §18.11, §19 |
+| Sauvegarde | Format versionné ; run temporaire jamais restaurée | §20.6 |
+| Bonus permanents | Modestes ; priorité aux déblocages | §16.2 |
 | Périmètre du MVP simplifié | 1 personnage, petite arène, 2 Instruments au maximum après prototype initial, 2 Reliques, 3 ennemis communs, 1 mini-boss, 1 boss simplifié ; run initiale 8–12 min | §1.5 |
-| Boss du MVP | Le Conservateur Sans Visage | §11.6 |
-| Mini-boss du MVP | Colosse de Marbre | §11.4 |
-| Ennemis communs du MVP | Coulure, Masque Fêlé, Chevalet Brisé, Éclat de Toile ; Essaim reporté à un test ultérieur | §11.2 |
-| Boss du mode Normal | Arrivée à 20:00 ; annonce à 18:30 ; arrêt des apparitions ordinaires à 19:45 | §12.1 |
-| Paliers d’évolution | Niveau 10, 15 et 20 selon le nombre d’évolutions déjà choisies pendant la run | §6.6 |
-| Catégorie « élite » | Supprimée ; chaque récompense est associée à un mini-boss, coffre, événement ou contrat identifié | §11, §14 |
-| Organisation du document | Document unique, sans addendum ; journal au §26.3 | Début du document |
+| Boss du MVP | Le Conservateur Sans Visage | §12.6 |
+| Mini-boss du MVP | Colosse de Marbre | §12.4 |
+| Ennemis communs du MVP | Coulure, Masque Fêlé, Éclat de Toile, puis Chevalet Brisé après validation ; Essaim reporté à un test ultérieur | §12.2 |
+| Boss du mode Normal | Arrivée à 20:00 ; annonce à 18:30 ; arrêt des apparitions ordinaires à 19:45 | §13.1 |
+| Paliers d’évolution | Niveau 10, 15 et 20 selon le nombre d’évolutions déjà choisies pendant la run | §7.6 |
+| Catégorie « élite » | Supprimée ; chaque récompense est associée à un mini-boss, coffre, événement ou contrat identifié | §12, §15 |
+| Attaque pendant le saut | Oui pour le premier prototype, afin de limiter les exceptions ; à confirmer par test | §3 |
+| Tir à travers les obstacles | Non par défaut ; exceptions futures déclarées dans les données de l'Instrument | §7.5 |
+| Instruments du prototype | Pinceau du Dernier Trait seul au premier prototype ; Instrument à projectile ajouté après validation | §1.5 |
+| Reliques du prototype | Deux effets simples, sans rangs ni déclenchements complexes | §1.5, §8.2 |
+| Ennemis actifs au départ | 20 à 30, ajustés selon le ressenti et le profilage | §13.3, §25.4 |
+| Durée du prototype | 8–12 minutes ; cible 20–30 minutes après validation | §1.5 |
+| Surfaces de peinture au prototype | Désactivées au tout début, sauf si le prototype perd trop de son identité sans elles | §1.5, §11 |
+| Sauvegarde au prototype | Aucune progression permanente requise pour le premier prototype | §1.5, §20.6 |
+| Organisation du document | Document unique, sans addendum ; journal au §27.3 | Début du document |
 
 ### 27.2 Décisions encore ouvertes
 
-Les propositions ci-dessous sont des points de départ, pas des décisions. Quand une décision est prise, la reporter dans la section concernée et déplacer sa ligne vers le registre (§26.1).
+Les propositions ci-dessous sont des points de départ, pas des décisions. Quand une décision est prise, la reporter dans la section concernée et déplacer sa ligne vers le registre (§27.1). Les numéros ne sont jamais réattribués : un numéro absent correspond à une décision déjà résolue et déplacée vers le registre.
 
 | # | Sujet | Recommandation actuelle ou candidats | Section |
 |---|---|---|---|
 | 1 | Touche finale d'esquive | Maj gauche (provisoire) ; bouton secondaire de la souris envisageable | §3.1 |
 | 2 | Valeurs finales de vitesse, saut, esquive, caméra et dégâts | Plages de départ aux chapitres 3 et 5 | §3, §5.3 |
-| 3 | Les Instruments attaquent-ils pendant le saut ? | Ouvert : à trancher et tester | §3.3 |
-| 4 | Certains Instruments peuvent-ils tirer à travers les obstacles ? | Ouvert | §6.5 |
-| 5 | Choix des trois Instruments du MVP | Pinceau du Dernier Trait (départ de l'Exilé) + un projectile + une zone persistante, par exemple Arbalète à Encre et Flacon de Vermillon (cohérent avec le pigment vermillon) | §1.5 |
-| 6 | Choix des quatre Reliques du MVP | Ouvert | §7.2 |
-| 7 | Sélection des quatre ennemis communs | Coulure, Masque Fêlé, Chevalet Brisé, Éclat de Toile | §11.2 |
-| 8 | Choix du mini-boss MVP | **Résolu : Colosse de Marbre** ; son rythme et ses attaques restent à tester | §11.4, §26.1 |
-| 9 | Poids des catégories de choix de niveau | Valeurs configurables à équilibrer | §9.2 |
-| 10 | Formule d'expérience et rythme de montée de niveau | À calibrer sur une run de 20 à 30 minutes | §9.1 |
-| 11 | Les Reliques ont-elles des rangs ? | Ouvert | §7.2 |
-| 12 | Mini-boss et évolutions : rang requis, nombre de Sceaux, nombre d'évolutions par Instrument, Sceau consommable ou non | Rang 5 proposé ; un Sceau par mini-boss | §6.6, §11.5 |
-| 13 | Évolution du Cadre Fracturé | Toile Réfléchissante : déviation physique de projectiles sur une trajectoire visible, sans portail ni téléportation | §6.1, §7.1 |
+| 3 | Les Instruments attaquent-ils pendant le saut ? | Oui pour le premier prototype ; à confirmer par test (le saut ne doit pas devenir trop sûr) | §3.3 |
+| 4 | Certains Instruments peuvent-ils tirer à travers les obstacles ? | Non par défaut ; exceptions futures à déclarer dans les données | §7.5 |
+| 5 | Choix des Instruments au-delà du Pinceau du Dernier Trait | Un Instrument à projectile (par exemple Arbalète à Encre), puis éventuellement une zone persistante (par exemple Flacon de Vermillon, cohérent avec le pigment vermillon) | §1.5 |
+| 6 | Choix des Reliques du MVP | Deux effets simples au départ, quatre au plus | §8.2 |
+| 7 | Sélection des ennemis communs | Coulure, Masque Fêlé, Éclat de Toile, puis Chevalet Brisé | §12.2 |
+| 9 | Poids des catégories de choix de niveau | Valeurs configurables à équilibrer | §10.2 |
+| 10 | Formule d'expérience et rythme de montée de niveau | À calibrer sur une run de 20 à 30 minutes | §10.1 |
+| 11 | Les Reliques ont-elles des rangs ? | Ouvert | §8.2 |
+| 12 | Mini-boss et évolutions : rang requis, nombre de Sceaux, nombre d'évolutions par Instrument, Sceau consommable ou non | Rang 5 proposé ; un Sceau par mini-boss | §7.6, §12.5 |
 | 14 | Règles de cumul précises de chaque statut | Règles disponibles au §4.6 ; à choisir statut par statut | §4.6 |
 | 15 | Effectif final de personnages | Six prévus ; trois pistes d'extension (Patineur, Encré, Marionnettiste) | §5.4 |
-| 16 | Liste définitive des cartes futures | Musée des Ombres, Atelier des Damnés, Corridor Impossible, Galerie des Portraits, Bassin des Pigments, Toile Originelle ; ordre de production futur à confirmer | §13.3 |
-| 17 | Nom définitif, coûts et valeurs finales des retouches de la ressource permanente | « Fragments de Toile » provisoire ; gains de départ au §15.2 | §15.2 |
-| 18 | Format et emplacement du fichier de sauvegarde | Format versionné requis ; format exact à choisir | §19.6 |
-| 19 | Dimensions exactes du Musée des Ombres, limites, obstacles, position du boss | Valeur de départ : 300 à 500 m de côté (§13.1) ; à valider dans la test map | §13.1, §13.2 |
-| 20 | Équilibrage : santé, dégâts, vitesse, XP, fréquence d'apparition, nombre maximal d'ennemis actifs | Après tests de performance et de lisibilité | §12.3, chapitre 23 |
-| 21 | Performances cibles et configuration PC minimale | Baseline 60 FPS sur le PC de référence | §19.5 |
-| 22 | Le boss est-il toujours obligatoire pour gagner ? | Résolu pour le mode Normal : vaincre le boss est requis pour la victoire ; l’Infini n’a pas de victoire programmée | §2.3, §11.6 |
-| 23 | Technologie d'animation des ennemis : classique, poses pré-calculées ou rendu instancié | Décision après comparaison dans la test map | §20.5 |
+| 16 | Liste définitive des cartes futures | Musée des Ombres, Atelier des Damnés, Corridor Impossible, Galerie des Portraits, Bassin des Pigments, Toile Originelle ; ordre de production futur à confirmer | §14.4 |
+| 17 | Nom définitif, coûts et valeurs finales des retouches de la ressource permanente | « Fragments de Toile » provisoire ; gains de départ au §16.2 | §16.2 |
+| 18 | Format et emplacement du fichier de sauvegarde | Format versionné requis ; format exact à choisir | §20.6 |
+| 19 | Dimensions exactes du Musée des Ombres, limites, obstacles, position du boss | Petite arène au MVP (§14.2) ; valeur de départ des grandes cartes futures : 300 à 500 m de côté ; à valider dans la test map | §14.2 |
+| 20 | Équilibrage : santé, dégâts, vitesse, XP, fréquence d'apparition, nombre maximal d'ennemis actifs | Après tests de performance et de lisibilité ; départ à 20–30 ennemis actifs | §13.3, chapitre 24 |
+| 21 | Performances cibles et configuration PC minimale | Baseline 60 FPS sur le PC de référence | §20.5 |
+| 23 | Technologie d'animation des ennemis : classique, poses pré-calculées ou rendu instancié | Décision après comparaison dans la test map | §21.5 |
 | 24 | Un boss apparaît-il en mode Infini ? | Recommandation : non dans une première version de ce mode (survie par actes) | §2.3 |
-| 25 | Mélange de pigments : bonus de palette liés aux tags | Idée Futur ; seuils et valeurs à définir | §8.2 |
+| 25 | Mélange de pigments : bonus de palette liés aux tags | Idée Futur ; seuils et valeurs à définir | §9.2 |
+| 26 | Cercle du Peintre : événement cité comme prioritaire pour le MVP dans le journal 3.5 mais non défini dans le corps du document | À décrire en §15.1 (zone, condition, risque, récompense) ou à retirer | §15.1 |
+| 27 | Arbres de talents : source et nombre de points de talent ; arbre permanent ou spécialisation choisie à chaque run | Reset gratuit et aucun bonus permanent tant que ce point n'est pas tranché | §6.10 |
 
 ### 27.3 Journal des changements
 
@@ -3041,272 +3279,14 @@ Pour chaque changement important, ajouter une ligne : version, date, sujet, anci
 | 1.4 | — | Direction artistique, UX/UI, HUD, accessibilité, intégration technique de l'interface |
 | 1.5 | — | Hordes : simulation centralisée, navigation, animations adaptatives à la distance, test map |
 | 1.6 | — | Contrôles et sensations de jeu : vitesse unique, saut, esquive, caméra, combat, profils de personnages, boss du MVP, cartes, validation |
-| 2.0 | 2026-10-18 | **Consolidation** en un document unique organisé par thème. Les règles répétées dans plusieurs versions sont fusionnées en un seul endroit. Contradictions tranchées : nombre d'ennemis présents au boss (dissolution retenue), pause complète retenue, esquive en l'air et direction par défaut retenues, découpage des phases de run unifié en six phases A à F, conditions d'évolution unifiées (rang + Sceau + palier), probabilités de rareté fixes au prototype, noms du menu alignés sur l'interface (« Nouvelle toile », etc.), deux arborescences de dossiers fusionnées en une. Conflit signalé et laissé ouvert : évolution « Portail de la Toile » contre l'interdiction de téléportation (§26.2, n° 13). Mentions de portails retirées de la Miniature Fracturée et du Corridor Impossible |
-| 2.1 | 2026-10-19 | Ajout du menu Options (§18) : cinq onglets Jeu, Vidéo, Commandes, Audio, Effets. À cette version, une seule difficulté progressive était retenue ; la version 3.5 remplace cette règle par trois difficultés sélectionnables. Doublons de la liste d'origine fusionnés (champ de vision, tremblement de caméra) ou distingués (dégâts affichés, vignette de dégâts). Réglages d'accessibilité du §17.11 absents de la liste (tranché en 2.2) |
-| 2.2 | 2026-10-19 | Décision : aucune option de taille d'interface, de taille du texte, de contraste élevé ni de réinitialisation de la sauvegarde (exigences retirées des §17.11 et §22.9 ; la sauvegarde de développement du §19.6 reste un outil interne). Ajout de l'option « Rappel des commandes à l'écran » dans l'onglet Jeu (§18). Décision ouverte n° 25 supprimée |
-| 2.3 | 2026-10-20 | Intégration des propositions validées : modes Normal et Infini sans corruption (§2.3), grandes cartes (§13.1), navigation (§13.4), objectifs secondaires (§14.2), défis facultatifs et contrats (§14.3), événements aléatoires (§14.1), coffres (§14.4), bonus de run (§14.5), synergies par tags (§8), emplacements pleins (§6.2, §7.2, §9.5), fin de run (§2.5), progression permanente (§15.2), défis permanents, Archives, statistiques et fin de jeu (§15.3 à §15.6), sauvegarde (§19.6), apprentissage (§17.10), équilibrage des combinaisons (§23.5), options mini-carte et marqueurs (§18). Incohérence entre §6.2, §7.2 et §9.5 sur les emplacements pleins résolue. Décision ouverte « contrats de restauration » remplacée par deux nouvelles (n° 24 et 25) |
+| 2.0 | 2026-10-18 | **Consolidation** en un document unique organisé par thème. Les règles répétées dans plusieurs versions sont fusionnées en un seul endroit. Contradictions tranchées : nombre d'ennemis présents au boss (dissolution retenue), pause complète retenue, esquive en l'air et direction par défaut retenues, découpage des phases de run unifié en six phases A à F, conditions d'évolution unifiées (rang + Sceau + palier), probabilités de rareté fixes au prototype, noms du menu alignés sur l'interface (« Nouvelle toile », etc.), deux arborescences de dossiers fusionnées en une. Conflit signalé et laissé ouvert : évolution « Portail de la Toile » contre l'interdiction de téléportation (§27.2, n° 13 ; résolu en 3.1). Mentions de portails retirées de la Miniature Fracturée et du Corridor Impossible |
+| 2.1 | 2026-10-19 | Ajout du menu Options (§19) : cinq onglets Jeu, Vidéo, Commandes, Audio, Effets. À cette version, une seule difficulté progressive était retenue ; la version 3.5 remplace cette règle par trois difficultés sélectionnables. Doublons de la liste d'origine fusionnés (champ de vision, tremblement de caméra) ou distingués (dégâts affichés, vignette de dégâts). Réglages d'accessibilité du §18.11 absents de la liste (tranché en 2.2) |
+| 2.2 | 2026-10-19 | Décision : aucune option de taille d'interface, de taille du texte, de contraste élevé ni de réinitialisation de la sauvegarde (exigences retirées des §18.11 et §23.9 ; la sauvegarde de développement du §20.6 reste un outil interne). Ajout de l'option « Rappel des commandes à l'écran » dans l'onglet Jeu (§19). Décision ouverte n° 25 supprimée |
+| 2.3 | 2026-10-20 | Intégration des propositions validées : modes Normal et Infini sans corruption (§2.3), grandes cartes (§14.2), navigation (§14.7), objectifs secondaires (§15.2), défis facultatifs et contrats (§15.3), événements aléatoires (§15.1), coffres (§15.4), bonus de run (§15.5), synergies par tags (§9), emplacements pleins (§7.2, §8.2, §10.5), fin de run (§2.5), progression permanente (§16.2), défis permanents, Archives, statistiques et fin de jeu (§16.3 à §16.6), sauvegarde (§20.6), apprentissage (§18.10), équilibrage des combinaisons (§24.5), options mini-carte et marqueurs (§19). Incohérence entre §7.2, §8.2 et §10.5 sur les emplacements pleins résolue. Décision ouverte « contrats de restauration » remplacée par deux nouvelles (n° 24 et 25) |
 | 3.0 | 2026-10-20 | **Réorganisation complète** en 26 chapitres, du général au particulier : projet (1–2), joueur et combat (3–8), progression, monde et récompenses (9–15), présentation (16–18), technique (19–20), production (21–26). Principaux déplacements : le combat passe avant les personnages et les Instruments (4) ; les synergies deviennent un chapitre (8) ; progression en partie, peinture, ennemis et vagues se suivent (9 à 12) ; objectifs, événements, coffres et bonus de run sont réunis (14) ; progression permanente, Archives et statistiques sont réunies (15) ; direction artistique, effets et audio sont réunis (16) ; l'interface (17) et le menu Options (18) sont séparés ; la sauvegarde rejoint l'architecture technique (19.6) ; les hordes et la performance passent côté technique (20) ; les principes de production de l'ancien §1.1 sont fusionnés avec les règles pour l'assistant IA (25). Tous les renvois sont renumérotés. Aucune règle ni valeur de gameplay n'est modifiée |
 | 3.1 | 2026-10-22 | Intégration des propositions détaillées de chronologie de run, bonus instantanés/temporaires/de run, économie permanente, navigation, contrats et contenu ennemi. Ajout des familles Artilleur et Essaim, remplacement de la famille Plongeon, reformulation du Portrait Effacé pour interdire la téléportation, et clarification de la hiérarchie ennemis communs → mini-boss → boss sans catégorie d’élites distincte. Ajout de propositions de mini-boss et de règles de placement. Les chiffres restent à tester. |
 | 3.2 | 2026-10-22 | Décisions validées : mini-boss MVP = Colosse de Marbre ; boss MVP = Conservateur Sans Visage ; quatre ennemis communs au MVP et Essaim reporté à un test ultérieur ; boss Normal à 20:00 ; paliers d’évolution 10, 15 et 20 selon le nombre d’évolutions déjà choisies ; suppression de la catégorie « élite » et rattachement des récompenses à une source explicite. Harmonisation du résumé, du périmètre MVP, des ennemis, de la chronologie, des récompenses, du mode Infini, des Archives, des critères d’acceptation et du registre de décisions. Les valeurs de combat du boss restent à tester. |
 | 3.3 | 2026-10-23 | Audit de cohérence et simplification pour une production solo débutante : MVP ramené à une petite arène, une run prototype de 8–12 minutes, deux Instruments au maximum après le prototype initial, deux Reliques, trois ennemis communs et une évolution démonstrative. Clarification de la pause et des états, du circuit unique de dégâts, du contrat de déplacement, du ciblage automatique et des transitions de boss. Navigation de foule avancée, mini-carte, surfaces complexes, événements, contrats, Infini et méta-progression sont reportés. Plan de production réordonné autour du plaisir de jeu et d'un build Windows complet. |
 | 3.4 | 2026-10-24 | Direction artistique et cartes : toile presque vierge, matérialisation progressive à partir de modules prévalidés, identité propre à chaque carte, variété contrôlée entre runs. |
 | 3.5 | 2026-10-24 | Ajout des arbres de talents détaillés pour les six personnages (statistiques + talents identitaires, branches verticales reliables, reset), sélection de difficulté Normal/Difficile/Expert qui augmente la variété autorisée du canvas et la complexité des rencontres sans changer l’identité des cartes, Cercle du Peintre prioritaire pour le MVP, vue aérienne finale du canvas et séquence de peinture en direct reportée. Les talents et chiffres restent à prototyper et équilibrer. |
-
-
-## 28. Arbres de talents des personnages
-
-### 28.1 Objectif et principes
-
-Chaque personnage possède **son propre arbre vertical**, conçu autour de son Instrument de départ et de son passif. L’arbre combine les améliorations statistiques simples de l’option A avec des talents identitaires qui changent ou renforcent le style de jeu. Il ne remplace ni les rangs d’Instrument (1 à 5), ni les évolutions d’Instrument, ni les bonus choisis pendant une run.
-
-Principes obligatoires :
-- Chaque palier présente **2 ou 3 choix**. Le joueur choisit un talent à ce palier.
-- L’arbre est visuellement vertical, mais les branches peuvent se rejoindre : un talent choisi peut ouvrir plusieurs chemins et les chemins ne sont pas des classes fermées.
-- Les liens affichés dans l’interface représentent les prérequis. Un talent ne peut être choisi que si au moins un de ses prérequis est acquis.
-- L’arbre peut être **réinitialisé**. La réinitialisation rembourse les points investis dans l’arbre et remet les choix à zéro ; elle ne retire pas les niveaux de personnage, les Instruments, les Reliques ou les déblocages. Le coût éventuel de réinitialisation est une décision de méta-progression ultérieure ; pendant le prototypage, reset gratuit.
-- Les statistiques sont des modificateurs, jamais des remplacements directs des valeurs de base. Le calcul final passe par le système central de modificateurs (§5.3, §19).
-- Les talents qui changent un comportement doivent expliquer leur effet, leur condition, leur durée et leurs limites. Pas de chance aléatoire cachée ni d’effet sans retour visuel.
-- Les talents statistiques ne doivent pas dépasser les plafonds globaux du jeu ni rendre le personnage invulnérable ou supprimer les décisions de déplacement.
-
-### 28.2 Structure commune et règles de progression
-
-Chaque arbre comprend un nœud d’identité initial, trois branches thématiques et quatre paliers de spécialisation. Chaque branche présente deux talents candidats par palier dans cette proposition ; l’interface pourra montrer trois choix lorsque des nœuds de liaison ou talents transversaux deviennent disponibles. Les talents listés ci-dessous forment la **version de conception complète proposée**, pas un contenu à produire intégralement dans le MVP.
-
-- **Palier I — Fondation :** statistiques modestes ou amélioration de base du passif.
-- **Palier II — Spécialisation :** amélioration plus marquée de l’arme, de la mobilité ou du passif.
-- **Palier III — Connexion :** nœuds pouvant ouvrir une branche voisine ; choix plus distinctifs, sans évolution complète d’Instrument.
-- **Palier IV — Signature :** talent fort qui approfondit un style de jeu, avec contrepartie ou limite lorsque nécessaire.
-- Les talents d’un même palier ne sont pas tous obligatoires. Les prérequis peuvent être reliés à un talent de la branche ou à un nœud transversal commun. Le joueur peut traverser d’une branche à l’autre dès qu’il possède un nœud de liaison compatible.
-- Pour garder l’arbre lisible, viser environ **18 à 24 talents proposés par personnage** à terme, mais n’implémenter qu’un petit sous-ensemble pour les tests initiaux.
-- Les chiffres ci-dessous sont des valeurs de départ à tester. Les talents identitaires sont décrits comme comportements attendus ; leur implémentation ne doit pas contourner le circuit central de dégâts (§4).
-
-### 28.3 L’Exilé — Pinceau du Dernier Trait
-
-**Identité :** polyvalence, éliminations qui entretiennent le Trait fondateur, coups de pinceau fiables. Nœud central : **Trait fondateur** — les éliminations renforcent temporairement les dégâts du Pinceau du Dernier Trait ; le bonus retombe après une période sans élimination.
-
-**Branche A — Puissance du trait**
-- **I-A1, Pigment dense :** dégâts du Pinceau +5 %.
-- **I-A2, Trait net :** le premier coup porté à une cible en pleine santé inflige +8 % de dégâts ; une même cible ne peut subir ce bonus qu’une fois toutes les quelques secondes.
-- **II-A1, Élan du peintre :** une élimination prolonge le bonus du Trait fondateur de 0,5 s.
-- **II-A2, Pointe incisive :** +3 points de pourcentage de chance de critique si cette statistique est active ; sinon, +4 % de dégâts.
-- **III-A1, Large balayage :** largeur du trait augmentée de 10 %, avec une légère hausse du temps de récupération si nécessaire pour l’équilibrage.
-- **III-A2, Encre persistante :** les cibles touchées restent marquées visuellement brièvement, facilitant le suivi ; pas de dégâts supplémentaires automatiques.
-- **IV-A1, Dernier mot :** à pleine puissance du Trait fondateur, le Pinceau inflige +10 % de dégâts supplémentaires.
-- **IV-A2, Signature profonde :** après plusieurs éliminations rapides, la prochaine attaque du Pinceau est renforcée ; déclenchement limité et clairement indiqué.
-
-**Branche B — Mobilité de l’exilé**
-- **I-B1, Pas de côté :** distance d’esquive +5 %.
-- **I-B2, Souffle retrouvé :** récupération de l’esquive réduite de 3 %, sans passer sous le minimum autorisé.
-- **II-B1, Saut dessiné :** impulsion de saut +5 %.
-- **II-B2, Retrait maîtrisé :** courte réduction de dégâts après la fin d’une esquive, sans prolonger l’invulnérabilité de l’esquive elle-même.
-- **III-B1, Trait en mouvement :** dégâts du Pinceau +5 % pendant un court instant après un saut, sans exiger de rester en l’air.
-- **III-B2, Reprise :** une élimination réduit légèrement le temps de récupération restant de l’esquive ; plafond de réduction par seconde.
-- **IV-B1, Fuite créatrice :** après une esquive réussie qui évite un coup, la prochaine attaque du Pinceau est renforcée.
-- **IV-B2, Corps léger :** vitesse de déplacement +3 %, plafonnée par la limite globale de mobilité.
-
-**Branche C — Maîtrise du Trait fondateur**
-- **I-C1, Enchaînement :** durée du bonus de Trait fondateur +10 %.
-- **I-C2, Première marque :** la première élimination de chaque vague donne une petite prolongation du bonus.
-- **II-C1, Cadence du pinceau :** cadence d’attaque +4 %.
-- **II-C2, Trace vive :** le bonus du passif se cumule plus vite, mais son plafond ne change pas.
-- **III-C1, Rémanence :** lors d’une élimination sous bonus actif, une marque visuelle frappe une cible proche ; dégâts modestes, sans chaîne récursive.
-- **III-C2, Discipline :** après une courte période sans subir de dégâts, +5 % de dégâts jusqu’au prochain coup reçu.
-- **IV-C1, Trait fondateur accompli :** le bonus du passif expire plus lentement et son indicateur devient plus précis.
-- **IV-C2, Dernière touche :** si le bonus du passif est sur le point d’expirer, la prochaine élimination le rafraîchit entièrement ; une seule fois par activation.
-
-### 28.4 La Virtuose — Rapière Vermillon
-
-**Identité :** attaques rapides et critiques, marquage de cibles, repositionnement. Nœud central : **Coup de maître** — un coup critique marque une cible ; le prochain critique contre cette cible reçoit un bonus défini par les données du personnage.
-
-**Branche A — Duel et précision**
-- **I-A1, Pointe précise :** dégâts de la Rapière +5 %.
-- **I-A2, Main sûre :** chance de critique +3 points ; si le système critique est désactivé, dégâts +4 %.
-- **II-A1, Ouverture :** dégâts +8 % contre une cible marquée par Coup de maître.
-- **II-A2, Fente courte :** portée de la Rapière +8 %, sans toucher à la portée de ciblage globale.
-- **III-A1, Duel prolongé :** frapper plusieurs fois la même cible augmente brièvement les dégâts contre elle, avec un plafond et une remise à zéro après changement de cible.
-- **III-A2, Contre-pointe :** après une esquive qui évite une attaque, le prochain coup critique inflige un bonus modéré.
-- **IV-A1, Coup parfait :** consommer la marque de Coup de maître inflige un bonus supplémentaire une fois par marque.
-- **IV-A2, Exécution vermillon :** bonus de dégâts contre les ennemis sous 25 % de santé, limité pour éviter les éliminations instantanées de boss.
-
-**Branche B — Danse vermillon**
-- **I-B1, Pas de danse :** distance d’esquive +5 %.
-- **I-B2, Récupération élégante :** récupération de l’esquive réduite de 3 %.
-- **II-B1, Fente mobile :** après un déplacement ou un saut, la prochaine attaque reçoit +5 % de portée ou de dégâts (un seul effet sera retenu au prototypage).
-- **II-B2, Talon vif :** vitesse de déplacement +3 %.
-- **III-B1, Passage sûr :** après une esquive réussie, réduction de dégâts très courte, distincte de l’invulnérabilité native.
-- **III-B2, Pirouette :** une élimination réduit légèrement la récupération d’esquive, avec un plafond par seconde.
-- **IV-B1, Danse sans faute :** une esquive parfaitement synchronisée renforce la prochaine attaque ; fenêtre généreuse et feedback visuel clair.
-- **IV-B2, Duel mobile :** les attaques n’imposent pas de ralentissement de déplacement supplémentaire, si un tel ralentissement existe.
-
-**Branche C — Maîtrise des marques**
-- **I-C1, Marque vive :** la marque de Coup de maître dure +15 %.
-- **I-C2, Sang-froid :** +5 % de dégâts contre les cibles non marquées.
-- **II-C1, Marque partagée :** lorsque la cible marquée meurt, une cible proche reçoit une marque faible ; pas de propagation en chaîne.
-- **II-C2, Rythme parfait :** cadence d’attaque +4 %.
-- **III-C1, Focalisation :** les attaques critiques contre une cible marquée augmentent légèrement la prochaine chance de critique, avec plafond.
-- **III-C2, Riposte ciblée :** la première attaque contre une cible marquée après une esquive est renforcée.
-- **IV-C1, Signature du maître :** consommer une marque restaure une petite fraction de la ressource de talent éventuelle ; si aucune ressource n’existe, bonus de dégâts fixe.
-- **IV-C2, Marque décisive :** le bonus du prochain critique contre une cible marquée augmente, mais la marque ne peut pas se cumuler sur une même cible.
-
-### 28.5 Le Graveur — Arbalète à Encre
-
-**Identité :** précision à distance et montée en puissance du passif Perspective. Nœud central : **Perspective** — les attaques à distance gagnent en puissance jusqu’à une limite clairement affichée.
-
-**Branche A — Précision**
-- **I-A1, Pointe gravée :** dégâts des projectiles +5 %.
-- **I-A2, Œil du graveur :** portée de ciblage +8 %, dans les limites de lisibilité.
-- **II-A1, Trait rectiligne :** vitesse des projectiles +10 %.
-- **II-A2, Point faible :** +3 points de critique ou +4 % de dégâts si les critiques ne sont pas retenus.
-- **III-A1, Tir tendu :** dégâts augmentés contre les cibles éloignées, plafonnés et sans bonus à travers les murs.
-- **III-A2, Pointe perforante :** le projectile peut traverser une cible supplémentaire avec dégâts réduits ; à valider techniquement et en lisibilité.
-- **IV-A1, Gravure parfaite :** à charge maximale de Perspective, le prochain tir inflige un bonus, puis la charge reste soumise aux règles normales.
-- **IV-A2, Point de fuite :** les tirs contre une cible isolée gagnent un bonus modéré ; aucune condition basée sur une distance impossible à lire.
-
-**Branche B — Positionnement**
-- **I-B1, Recul contrôlé :** distance d’esquive +5 %.
-- **I-B2, Appui stable :** après un court instant sans déplacement, dégâts à distance +4 %.
-- **II-B1, Saut du graveur :** contrôle aérien +5 % ou impulsion de saut +5 % (choisir une seule statistique dans l’implémentation).
-- **II-B2, Repli préparé :** après l’esquive, vitesse de déplacement +5 % pendant un bref instant.
-- **III-B1, Ligne de tir :** la sélection de cible privilégie une cible visible et éloignée si elle est presque aussi proche que la cible actuelle.
-- **III-B2, Déplacement tactique :** cadence d’attaque +4 % après un changement de position.
-- **IV-B1, Tireur insaisissable :** éviter une attaque par esquive améliore le prochain tir.
-- **IV-B2, Hauteur utile :** après un saut, le premier tir gagne un bonus modéré ; ne nécessite pas de saut de précision.
-
-**Branche C — Perspective**
-- **I-C1, Profondeur :** le bonus de Perspective atteint son plafond un peu plus vite.
-- **I-C2, Distance constante :** le bonus de Perspective se dissipe plus lentement.
-- **II-C1, Angle gravé :** les tirs à charge élevée infligent +5 % de dégâts.
-- **II-C2, Encre dense :** les projectiles appliquent une marque visuelle brève facilitant le suivi.
-- **III-C1, Écho lointain :** toucher une cible à distance maximale prolonge légèrement Perspective.
-- **III-C2, Gravure patiente :** après un court instant sans tir, le prochain projectile est renforcé.
-- **IV-C1, Perspective absolue :** une fois le plafond atteint, la première attaque contre une nouvelle cible reçoit un bonus ; déclenchement limité.
-- **IV-C2, Ligne maîtresse :** le bonus maximal de Perspective augmente légèrement, mais sa montée demande davantage de tirs réussis.
-
-### 28.6 L’Alchimiste — Palette Catalytique
-
-**Identité :** pigments, zones et réactions contrôlées. Nœud central : **Mélange instable** — certains effets de pigments peuvent provoquer une réaction de zone, à probabilité limitée et avec un signal visuel net.
-
-**Branche A — Catalyse**
-- **I-A1, Pigment concentré :** dégâts des réactions +5 %.
-- **I-A2, Mélange stable :** fréquence de déclenchement des réactions améliorée légèrement, dans un plafond défini.
-- **II-A1, Vermillon brûlant :** les effets vermillon infligent un petit bonus de dégâts.
-- **II-A2, Encre adhérente :** les effets d’encre persistent légèrement plus longtemps, sans augmenter la taille de leurs zones.
-- **III-A1, Réaction secondaire :** une réaction réussie laisse une petite marque de pigment sans dégâts en chaîne.
-- **III-A2, Catalyse rapide :** cadence d’attaque +4 %.
-- **IV-A1, Mélange critique :** une réaction renforcée survient après plusieurs applications réussies, avec indicateur et temps de recharge.
-- **IV-A2, Formule concentrée :** dégâts de réaction +10 %, mais durée des zones légèrement réduite si nécessaire à l’équilibrage.
-
-**Branche B — Contrôle de zone**
-- **I-B1, Goutte large :** rayon des zones +5 %.
-- **I-B2, Sol préparé :** durée des zones +8 %.
-- **II-B1, Bordure sûre :** le contour des zones dangereuses devient plus visible et se dessine plus tôt.
-- **II-B2, Pas de côté :** distance d’esquive +5 %.
-- **III-B1, Tache persistante :** les zones ralentissent légèrement les ennemis ordinaires ; effet réduit ou désactivé sur boss.
-- **III-B2, Répartition :** une zone touche les ennemis présents au moment de son activation, sans appliquer plusieurs fois le même tick.
-- **IV-B1, Bassin catalytique :** après plusieurs réactions, la prochaine zone gagne un rayon modéré ; déclenchement plafonné.
-- **IV-B2, Champ maîtrisé :** dégâts reçus réduits de 3 % tant que le joueur reste hors de ses propres zones dangereuses ; ne crée pas d’immunité.
-
-**Branche C — Maîtrise des pigments**
-- **I-C1, Encre noire :** bonus de dégâts contre les ennemis marqués par l’encre +4 %.
-- **I-C2, Vermillon vif :** bonus de durée des effets vermillon +8 %.
-- **II-C1, Mélange complémentaire :** appliquer deux pigments différents à une cible donne un petit bonus unique, sans réactions récursives.
-- **II-C2, Palette rapide :** temps de récupération de la Palette réduit de 3 %.
-- **III-C1, Résidu :** une réaction laisse une marque décorative qui n’inflige pas de dégâts supplémentaires.
-- **III-C2, Dosage :** probabilité de réaction plus stable et moins variable entre les activations.
-- **IV-C1, Réaction maîtrisée :** les réactions font +10 % de dégâts, mais leur fréquence est plafonnée.
-- **IV-C2, Signature instable :** chaque troisième réaction produit une zone spéciale simple ; elle ne peut ni se répliquer ni déclencher d’autre réaction.
-
-### 28.7 Le Sculpteur — Maillet de Marbre Noir
-
-**Identité :** impacts lourds, résistance et contrôle du terrain à petite échelle. Nœud central : **Œuvre monumentale** — les niveaux renforcent légèrement la résistance avec un compromis de mobilité.
-
-**Branche A — Impact monumental**
-- **I-A1, Tête de maillet :** dégâts du Maillet +5 %.
-- **I-A2, Onde courte :** rayon d’impact +5 %.
-- **II-A1, Fissure :** les impacts infligent un bonus contre les ennemis déjà blessés.
-- **II-A2, Fracas :** cadence d’attaque +3 %.
-- **III-A1, Onde de marbre :** certaines attaques lourdes produisent une petite onde au sol, télégraphiée et sans chaîne.
-- **III-A2, Brise-garde :** dégâts contre les ennemis résistants +6 %, sans ignorer les règles de mitigation.
-- **IV-A1, Coup monumental :** après plusieurs impacts, une attaque lourde renforcée se déclenche, avec indicateur.
-- **IV-A2, Fracture maîtrisée :** dégâts +10 %, mais temps de récupération de l’attaque lourde légèrement accru.
-
-**Branche B — Résistance**
-- **I-B1, Marbre épais :** points de vie maximum +8 %.
-- **I-B2, Peau de pierre :** réduction des dégâts reçus +3 %, sous le plafond global.
-- **II-B1, Assise solide :** résistance aux interruptions légèrement augmentée si cette mécanique existe.
-- **II-B2, Récupération lente :** après avoir éliminé un ennemi puissant, restaure une petite quantité de santé, avec temps de recharge.
-- **III-B1, Fondation :** le Sculpteur subit moins de recul, sans devenir insensible aux attaques qui déplacent le joueur.
-- **III-B2, Garde de marbre :** après une esquive, réduction de dégâts très courte.
-- **IV-B1, Statue vivante :** lorsque la santé passe sous 30 %, réduction de dégâts temporaire, une fois par intervalle long.
-- **IV-B2, Dernier pilier :** une fois par run, survivre à un coup fatal avec un point de vie ; réactivation uniquement après une condition de récupération clairement définie.
-
-**Branche C — Mobilité lourde**
-- **I-C1, Pas ferme :** pénalité éventuelle de déplacement pendant l’attaque réduite.
-- **I-C2, Saut de bloc :** impulsion de saut +5 %.
-- **II-C1, Esquive courte :** récupération de l’esquive réduite de 3 %.
-- **II-C2, Avancée lourde :** vitesse de déplacement +3 %, sans dépasser le plafond global.
-- **III-C1, Atterrissage puissant :** après un saut, la prochaine attaque gagne un petit rayon d’impact ; pas de dégâts gratuits à l’atterrissage.
-- **III-C2, Ancrage :** une esquive qui évite une attaque renforce brièvement la résistance.
-- **IV-C1, Masse maîtrisée :** le Maillet conserve une partie de son bonus de dégâts après un déplacement.
-- **IV-C2, Œuvre achevée :** les bonus de résistance du passif augmentent légèrement, mais la pénalité de mobilité du passif ne disparaît pas.
-
-### 28.8 La Restauratrice — Fil de Restauration
-
-**Identité :** récupération contrôlée, marques et survie sans annuler la pression des ennemis. Nœud central : **Retouche vitale** — éliminer certains ennemis marqués restaure un peu de santé, avec une limite de fréquence.
-
-**Branche A — Fil réparateur**
-- **I-A1, Fil tendu :** dégâts du Fil +5 %.
-- **I-A2, Point précis :** portée de ciblage +5 %.
-- **II-A1, Couture nette :** dégâts +6 % contre les ennemis marqués.
-- **II-A2, Fil rapide :** cadence d’attaque +4 %.
-- **III-A1, Point de rupture :** éliminer une cible marquée réduit légèrement le temps de recharge interne de Retouche vitale, dans un plafond.
-- **III-A2, Double couture :** une attaque peut toucher une cible proche supplémentaire avec dégâts réduits, si le système d’arme le permet.
-- **IV-A1, Couture maîtresse :** les cibles marquées reçoivent +10 % de dégâts du Fil.
-- **IV-A2, Dernier point :** éliminer une cible marquée avec le Fil donne un petit soin supplémentaire, soumis à la limite de soin par intervalle.
-
-**Branche B — Retouche vitale**
-- **I-B1, Retouche douce :** quantité de santé restaurée par Retouche vitale +8 %.
-- **I-B2, Marque durable :** durée des marques +15 %.
-- **II-B1, Réserve de vie :** points de vie maximum +8 %.
-- **II-B2, Main sûre :** réduction des dégâts reçus +3 %, sous le plafond global.
-- **III-B1, Récupération patiente :** si le soin est perdu car la santé est déjà pleine, une petite partie est convertie en bouclier temporaire plafonné ; à tester après le MVP.
-- **III-B2, Retouche fréquente :** délai interne de soin réduit légèrement, avec plafond de soins par minute.
-- **IV-B1, Restauration parfaite :** une élimination marquée restaure davantage de santé lorsque le joueur est sous 50 % de vie.
-- **IV-B2, Dernière réserve :** une fois par run, un soin renforcé se déclenche sous 20 % de vie ; délai et feedback explicites.
-
-**Branche C — Préservation et mobilité**
-- **I-C1, Pas prudent :** distance d’esquive +5 %.
-- **I-C2, Saut contrôlé :** contrôle aérien +5 %.
-- **II-C1, Recul restaurateur :** après une esquive réussie, la prochaine élimination marquée restaure un peu plus de santé.
-- **II-C2, Rayon de collecte :** rayon de ramassage +10 %.
-- **III-C1, Retrait protecteur :** après avoir reçu un coup, réduction de dégâts très courte ; temps de recharge long.
-- **III-C2, Fil conducteur :** les ennemis marqués sont plus faciles à repérer à l’écran.
-- **IV-C1, Dernière retouche :** si la santé tombe bas, Retouche vitale peut s’activer une fois plus tôt, mais jamais plusieurs fois sur un même événement.
-- **IV-C2, Conservatrice :** soin reçu augmenté de 10 %, mais dégâts directs du Fil réduits de 3 %.
-
-### 28.9 Interface et lisibilité de l’arbre
-
-- Afficher le nom du talent, son effet chiffré, son prérequis et son état : disponible, acquis, verrouillé ou incompatible avec les choix actuels.
-- Les liens doivent rester lisibles et les talents acquis distingués par forme et motif, pas uniquement par couleur.
-- Une comparaison avant/après indique la valeur actuelle et la valeur après sélection.
-- Le bouton de réinitialisation demande confirmation et indique ce qui sera remboursé. Pendant le prototype, aucun coût.
-- Le jeu reste en pause pendant la consultation de l’arbre.
-- Les talents non implémentés dans une version de développement ne doivent pas apparaître comme sélectionnables.
-
-### 28.10 Implémentation technique
-
-- Chaque arbre est décrit par des données dédiées (ScriptableObjects ou format de données équivalent) : identifiant stable, personnage propriétaire, palier, branche visuelle, prérequis, effets, limites et texte d’interface.
-- Un talent applique un ou plusieurs modificateurs ou appelle un effet spécialisé via une interface définie. Éviter les références de scène dans les assets de contenu.
-- Le système valide l’absence de cycle dans les prérequis, les identifiants uniques, l’existence des talents requis et les limites de cumul.
-- L’état de l’arbre appartient à la progression du personnage et ne doit pas être confondu avec l’état temporaire d’une run. La politique exacte de persistance (talents acquis entre les runs ou arbre redistribué à chaque run) doit être définie avant d’implémenter la sauvegarde.
-- **Décision de conception à confirmer avant production :** l’arbre est-il une progression permanente du personnage ou une spécialisation choisie au début de chaque run ? Dans l’attente, les arbres sont spécifiés comme arbres réinitialisables de spécialisation, sans coût de reset en prototype ; ne pas implémenter de bonus permanents sans validation explicite.
-- Les talents de combat réutilisent le circuit central de dégâts et ne peuvent pas appliquer de dégâts de manière récursive. Toute réduction de cooldown, tout soin ou toute réaction est plafonné et testé.
-
-### 28.11 Périmètre de production
-
-**Prototype initial :** un arbre réduit de L’Exilé, comprenant un nœud central, trois branches visuelles et six à neuf talents implémentés ; le reset doit fonctionner. Les autres talents sont documentés mais ne sont pas requis pour valider le combat.
-
-**MVP :** l’arbre de L’Exilé est fonctionnel avec un nombre limité de talents. Les cinq autres arbres restent définis dans le document, mais leur production complète est reportée après validation du jeu de base. Ne pas retarder le premier build Windows pour construire les six arbres intégralement.
-
-**Après MVP :** implémenter progressivement les autres arbres, tester les branches croisées, l’équilibrage et la persistance choisie. Les talents qui ajoutent de nouveaux projectiles, états, boucliers ou comportements de collision sont prioritaires seulement si leur coût technique est maîtrisé.
-
+| 4.0 | 2026-10-24 | **Réorganisation de la version 3.5** (aucune règle de jeu modifiée) : le chapitre « Arbres de talents » (ancien 28) rejoint les personnages (6) ; le chapitre « Simplification de production » (ancien 26) est réparti par thème (principe directeur, cohérence et décisions techniques en 1.6 à 1.8 ; critères de passage en 25.5 ; décisions de prototype dans le registre 27.1) ; les blocs MVP sans numéro (contrat de contrôle, règles de combat, ciblage) sont numérotés ou fusionnés (3.6, 4.7, 7.5) ; la navigation de la carte passe en 14.7 (numérotation en double supprimée) ; tous les renvois sont renumérotés (les renvois « §26.x » vers les décisions pointent maintenant vers le chapitre 27). Incohérences corrigées : phase de la mini-carte (Futur, comme le MVP simplifié), ennemis communs du MVP (Coulure, Masque Fêlé, Éclat de Toile, puis Chevalet Brisé), fiche d'évolution (palier selon le nombre d'évolutions), condition de déblocage du Graveur (niveau 15, ordre des déblocages), navigation et simulation de foule (version simple au MVP), Colosse de Marbre (appelle des Coulures, ennemi présent au MVP), difficulté (choix au lancement), numéros de décisions ouvertes conservés. Décisions ouvertes ajoutées : Cercle du Peintre (n° 26) et persistance des talents (n° 27) |
